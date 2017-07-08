@@ -1,13 +1,7 @@
-
-
 How To Contribute
 =================
 
-**TL;DR**
-
-Pull Requests should be opened to the branch `develop`.
-
----
+This project is based on GitHub and can be accessed by [clicking here][15].
 
 Here are the basic of contributing to GitHub:
 
@@ -49,7 +43,7 @@ your system:
 
 Ok, now you're ready to contribute.
 
-Fork the `js-scp` repository and then clone your own repository.
+Fork the `go-webapp-scp` repo and then clone your own repository.
 
 The next step is to enable Git Flow hooks; enter your local repository
 
@@ -65,7 +59,7 @@ $ git flow init
 
 We're good to go with git flow default values.
 
-In a nutshell, every time you want to work on a section, you should start a
+In a nutshell, everytime you want to work on a section, you should start a
 "feature":
 
 ```shell
@@ -123,3 +117,4 @@ The shell output will include a `localhost` URL where you can preview the book.
 [11]: https://github.com/jaspernbrouwer/git-flow-hooks#install
 [12]: https://github.com/GitbookIO/gitbook-cli#how-to-install-it
 [14]: http://help.github.com/articles/about-pull-requests
+[15]: https://github.com/Checkmarx/js-scp
