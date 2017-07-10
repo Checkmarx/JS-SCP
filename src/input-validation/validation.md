@@ -1,0 +1,189 @@
+Validation
+==========
+
+In validation checks, the user input is checked against a set of conditions in
+order to guarantee that the user is indeed entering the expected data.
+
+**IMPORTANT:** If the validation fails, the input must be rejected.
+
+This is important not only from a security standpoint but from the perpective
+of data consistency and integrity, since data is usually used across a variety
+of systems and applications.
+
+This article lists the security risks developers should be aware of when
+developing web applications in JavaScript.
+
+## User Interactivity
+
+Any part of an application that allows user input is a potential security risk.
+Problems can occur not only from bad agents that seek a way to compromise the
+application, but also from erroneous input caused by human error (statistically,
+the majority of the invalid data situations are usually caused by human error).
+
+Historically JavaScript native APIs for data validation were not as complete as
+desired but with the [Node.js][1] and [npm][2] proliferation right now
+developers have access to great validation controls.
+
+When dealing with strings we can use the following APIs:
+
+### String conversion to:
+
+* [`Number`][5]
+    * [`Number.ParseInt`][3]: parses a string and returns an integer; [^1]
+    * [`Number.ParseFloat`][4]: parses a string and returns a floating point
+      number;
+
+The same conversions can be done using the [Unary `+` Operator][6] for _type
+coercion_: `+"10"` returns `10` and `+"10.5"` returns `10.5`, both
+[`Number`][5]s.
+
+* [`Boolean`][7] JavaScript has a native Boolean type, consisting of the
+  primitive `true` and `false` values.
+  When handling strings, we should be careful because any non empty string
+  evaluates to `true`, e.g. TODO 
+  
+
+### String handling
+
+* `strings` package contains all functions that handle strings and its
+  properties.
+    * [`Trim`](https://golang.org/pkg/strings/#Trim)
+    * [`ToLower`](https://golang.org/pkg/strings/#ToLower)
+    * [`ToTitle`](https://golang.org/pkg/strings/#ToTitle)
+* [`regexp`][4] package support for regular expressions to accommodate custom
+   formats[^2].
+* [`utf8`][9] package implements functions and constants to support text
+  encoded in UTF-8. It includes functions to translate between runes and UTF-8
+rse
+  byte sequences.
+
+  Validating UTF-8 encoded runes:
+    * [`Valid`](https://golang.org/pkg/unicode/utf8/#Valid)
+    * [`ValidRune`](https://golang.org/pkg/unicode/utf8/#ValidRune)
+    * [`ValidString`](https://golang.org/pkg/unicode/utf8/#ValidString)
+
+  Encoding UTF-8 runes:
+    * [`EncodeRune`](https://golang.org/pkg/unicode/utf8/#EncodeRune)
+
+  Decoding UTF-8:
+    * [`DecodeLastRune`](https://golang.org/pkg/unicode/utf8/#DecodeLastRune)
+    * [`DecodeLastRuneInString`](https://golang.org/pkg/unicode/utf8/#DecodeLastRuneInString)
+    * [`DecodeRune`](https://golang.org/pkg/unicode/utf8/#DecodeLastRune)
+    * [`DecodeRuneInString`](https://golang.org/pkg/unicode/utf8/#DecodeRuneInString)
+
+
+**Note**: `Forms` are treated by Go as `Maps` of `String` values.
+
+Other techniques to ensure the validity of the data include:
+
+* _Whitelisting_ - whenever possible validate the input against a whitelist
+  of allowed characters. See [Validation - Strip tags][1].
+* _Boundary checking_ - both data and numbers length should be verified.
+* _Character escaping_ - for special characters such as standalone quotation
+  marks.
+* _Numeric validation_ - if input is numeric.
+* _Check for Null Bytes_ - `(%00)`
+* _Checks for new line characters_ - `%0d`, `%0a`, `\r`, `\n`
+* _Checks forpath alteration characters_ - `../` or `\\..`
+* _Checks for Extended UTF-8_ - check for alternative representations of
+  special characters
+
+**Note**: Ensure that the HTTP request and response headers only contain
+ASCII characters.
+
+Third-party packages exist that handle security in Go:
+
+* [Gorilla][6] - One of the most used packages for web
+  application security.
+  It has support for `websockets`, `cookie sessions`, `RPC`, among
+  others.
+
+* [Form][7] - Decodes `url.Values` into Go value(s) and Encodes Go value(s)
+  into `url.Values`.
+  Dual `Array` and Full `map` support.
+
+* [Validator][8] - Go `Struct` and `Field` validation, including `Cross Field`,
+  `Cross Struct`, `Map` as well as `Slice` and `Array` diving.
+
+## File Manipulation
+
+Any time file usage is required ( `read` or `write` a file ), validation checks
+should also be performed, since most of the file manipulation operations deal
+with user data.
+
+Other file check procedures include "File existence check", to verify that a
+filename exists.
+
+Addition file information is in the [File Management][2] section and information
+regarding `Error Handling` can be found in the [Error Handling][3] section of
+the document.
+
+## Data sources
+
+Anytime data is passed from a trusted source to a less trusted source,
+integrity checks should be made.
+This guarantees that the data has not been tampered with and we are receiving
+the intended data. Other data source checks include:
+
+* _Cross-system consistency checks_
+* _Hash totals_
+* _Referential integrity_
+
+**Note:** In modern relational databases, if values in the primary key field
+are not constrained by the database's internal mechanisms then they should be
+validated.
+
+* _Uniqueness check_
+* _Table look up check_
+
+## Post-validation Actions
+
+According to Data Validation's best practices, the input validation is only
+the first part of the data validation guidelines. As such,
+_Post-validation Actions_ should also be performed.
+The _Post-validation Actions_ used vary with the context and are divided in
+three separate categories:
+
+* **Enforcement Actions**
+
+  Several types of _Enforcement Actions_ exist in order to better secure our
+  application and data.
+
+  * inform the user that submitted data has failed to comply with the
+    requirements and therefor the data should be modified in order to comply
+    with the required conditions.
+
+  * modify user submitted data on the server side without notifying the user of
+    said changes. This is most suitable in systems with interactive usage.
+
+  **Note:** The latter is used mostly in cosmetic changes (modifying sensitive
+  user data can lead to problems like truncating, which incur in data loss).
+* **Advisory Action**
+
+  Advisory Actions usually allow for unchanged data
+  to be entered, but the source actor is informed that there were issues with
+  said data. This is most suitable for non-interactive systems.
+* **Verification Action**
+
+  Verification Action refer to special cases in
+  Advisory Actions. In these cases, the user submits the data and the source
+  actor asks the user to verify said data and suggests changes. The user then
+  accepts these changes or keeps his original input.
+
+A simple way to illustrate this is a Billing address form, where the user
+enters his address and the system suggests addresses associated with the
+account. The user then accepts one of these suggestions or ships to the address
+that was initially entered.
+
+---
+
+[^1]: `Number.parseInt()` and globally accessible `parseInt()` functions are the same: `parseInt === Number.parseInt // true` (the same is valid for `Number.parseFloat()` and `parseFloat()`)
+[^2]: Before writing your own regular expression have a look at [OWASP Validation Regex Repository][5]
+
+[1]: https://nodejs.org/en/
+[2]: https://www.npmjs.com/
+[3]: http://www.ecma-international.org/ecma-262/6.0/index.html#sec-number.parseint
+[4]: http://www.ecma-international.org/ecma-262/6.0/index.html#sec-number.parsefloat
+[5]: http://www.ecma-international.org/ecma-262/6.0/index.html#sec-number-objects
+[6]: http://www.ecma-international.org/ecma-262/6.0/index.html#sec-unary-plus-operator
+[7]: http://www.ecma-international.org/ecma-262/6.0/index.html#sec-terms-and-definitions-boolean-type

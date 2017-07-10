@@ -3,6 +3,8 @@ Summary
 
 * [Introduction](README.md)
 * [Input Validation](input-validation/README.md)
+    * [Validation](input-validation/validation.md)
+    * [Sanitization](input-validation/sanitization.md)
 * [Output Encoding](output-encoding/README.md)
 * [Authentication and Password Management](authentication-password-management/README.md)
 * [Session Management](session-management/README.md)
