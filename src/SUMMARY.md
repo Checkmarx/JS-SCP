@@ -3,8 +3,14 @@ Summary
 
 * [Introduction](README.md)
 * [Input Validation](input-validation/README.md)
-    * [Validation](input-validation/validation.md)
-    * [Sanitization](input-validation/sanitization.md)
+  * [Validation](input-validation/validation.md)
+    * [Data Sources](input-validation/data-sources.md)
+    * Data types
+      * [Strings](input-validation/strings.md)
+      * [Numbers](input-validation/numbers.md)
+      * [Files](input-validation/files.md)
+    * [Post validation actions](input-validation/post-validation-actions.md)
+  * [Sanitization](input-validation/sanitization.md)
 * [Output Encoding](output-encoding/README.md)
 * [Authentication and Password Management](authentication-password-management/README.md)
 * [Session Management](session-management/README.md)
