@@ -38,7 +38,7 @@ internally, applications may expect numeric values (e.g. user's age).
 
 Looking at [`Number` constructor properties][8] we find the
 [`Number.parseInt`][9] and [`Number.parseFloat`][10][^1] methods: both expect a
-`String` argument, returning respectively an _integer_ and _float_ number.
+`String` argument, returning respectively an _integer_ and _float_ numbers.
 
 `Number.parseInt` also accepts a _radix_ which when not specified or
 _undefined_ defaults to 10 (decimal base) except when the `String` argument
@@ -72,8 +72,10 @@ console.log('User is %d years old', userAge);
 ```
 
 Despite of the fact that input string is alphanumeric, `Number.parseInt`
-returns its "integer part" (leading white spaces are removed). If the first non
-white space character is other than `-` (`HYPHEN-MINUS), `+` (`PLUS SIGN`) // TODO
+returns its "integer part" (leading white spaces are removed), but if the first
+character after removing any leading white spaces is other than `-`
+(HYPHEN-MINUS), `+` (PLUS SIGN) or a digit, we will get `NaN` -
+**N**ot-**a**-**N**umber
 
 ```javascript
 const userInputAge = 'thirty 2';
@@ -113,7 +115,7 @@ console.log('User is %d years old');
 ```
 
 **Note**: [`Number.isInteger`][11] returns `false` for `Infinity`/`-Infinity`.
-User's age upper limit was omitted for code sample biefness.
+User's age upper limit was omitted for code sample briefness.
 
 Now that we've received a validation error it may look safe but...
 What if user provides his age using hexadecimal base (at least he will look
@@ -152,6 +154,21 @@ console.log('You are %d years old', userAge);
 ```
 
 And as expected we have the validation error.
+
+Even at this point we can't be sure that what was entered was a decimal integer
+number: providing `32,5` will end up being parsed as `32`
+
+```javascript
+const userInputAge = '32,5';
+const userAge = Number.parseInt(userInputAge, 10);
+
+if (!Number.isInteger(userAge) || userAge <= 0) {
+    throw new Error('invalid age');
+}
+
+console.log('You are %d years old', userAge);
+// You are 32 years old
+```
 
 ### Requesting weight
 
@@ -218,7 +235,7 @@ but this may not lead to the expected results
 
   ```javascript
   const octalString = '0o12';
-  +octalString;   // 10
+  +octalString;                 // 10
   ```
 
 ## Safe Integer
@@ -228,7 +245,7 @@ integer that "_can be exactly represented as an IEEE-754 double precision
 number and whose IEEE-754 representation cannot be the result of rounding any
 other integer to fit the IEEE-754 representation_" ([source][6]).
 
-Why is this important? Let's have a look at some simple _integer_ arithmethics
+Why is this important? Let's have a look at some simple _integer_ arithmetic
 
 ```javascript
 const N = 9007199254740992;
@@ -254,7 +271,7 @@ for (let i = MIN; i < MAX; i++) {
 }
 ```
 
-Yes, this is an infinte loop. `MIN` is not a "Safe Integer", in fact the
+Yes, this is an infinite loop. `MIN` is not a "Safe Integer", in fact the
 last "Safe Integer" is exactly `MIN - 1` which you can get from
 `Number.MAX_SAFE_INTEGER` (2⁵³-1): although there's no representation for
 `MIN` and we're doing an _integer_ operation, JavaScript won't throw any error.
@@ -269,7 +286,9 @@ Number.MAX_VALUE;                           // 1.7976931348623157e+308
 
 ## Division by Zero
 
-You can get `Infinity`/`-Infinit` dividing by `0` (zero):
+Don't worry, you'll never get close to a "division by zero" error. Instead you
+will get... _infinity_ as per the [IEEE 754-2008 standard][3]
+
 ```javascript
 1/0;  // Infinity
 -1/0; // -Infinity
@@ -277,107 +296,109 @@ You can get `Infinity`/`-Infinit` dividing by `0` (zero):
 
 ## Precision
 
+This is not a JavaScript only problem. In fact this is an issue you will find
+in most programming languages as it is a limitation of the already mentioned
+[IEEE 754 specification][3]. It is better to be aware of this as rounding
+errors may lead rockets to miss theirs targets[^3]
+
 ```javascript
 0.1+0.2;    // 0.30000000000000004
 ```
 
-To know how to convert Numbers between bases, please refer to // TODO
+## Converting
 
-* [`Boolean`][7] JavaScript has a native Boolean type, consisting of primitive
-  `true` and `false` values.
+### to `boolean`
 
-  In JavaScript any non empty string evaluates to `true`, what may not suit
-  your expectations specially when you're handling form data coming from client
-  side e.g.
+JavaScript has a native Boolean type, consisting of primitive `true` and
+`false` values, nevertheless some `Number`s evaluate to `false` and others to
+`true`
 
-  ```javascript
-  ''? true : false;      // false
-  '0'? true : false;     // true
-  'false'? true : false; // true
-  '1'? true : false;     // true
-  'true'? true : false;  // true
+```javascript
+-1? true : false;           // true
+1? true : false;            // true
+Infinity? true : false;     // true
+-Infinity? true : false;    // true
+0? true : false;            // false
+-0? true : false;           // false
+NaN? true : false;          // false
+```
+
+The conversion can be done using double logical NOT operator `!`
+
+```javascript
+const number = -1;
+
+if (!!number === true) {
+    console.log('true');
+} else {
+    console.log('false');
+}
+```
+
+### to `String`
+
+Type coercion is commonly used to convert a number into string and it does the
+trick when you're using a decimal base
+
+```javascript
+''+1;             // '1'
+''+0.1;           // '0.1'
+''+Math.pow(4,3); // '64'
   ```
 
-  To do it safely, strings should be tested for equality using the
-  [strict equality operator][8] `===` e.g.
+but if you're using a non-decimal base like Octal or Hexadecimal, the result
+may not be what you're expecting as you will get a string representation of
+number's decimal representation
 
-  ```javascript
-  const YES = 'yes';
-  const NO = 'no';
+```javascript
+''+012;   // '10'
+''+0xA;   // '10'
+```
 
-  const value = 'yes';
-  if (value === YES) {
-    // do stuff
-  }
-  ```
+To avoid mistakes, use always the same pattern when getting a textual
+representation of a `Number`: use the [Number.toString()][10] method,
+specifying the _radix_ (if not present or _undefined_, the `Number` 10 is used
+by default)
 
-### Number conversion to:
+```javascript
+const n1 = 10;
+const n2 = 012;
+const n3 = 0xA;
 
-* [String][9] type coercion is commonly used to convert a number into string
-  and it does the trick when you're using a decimal base
-  ```javascript
-  ''+1;             // '1'
-  ''+0.1;           // '0.1'
-  ''+Math.pow(4,3); // '64'
-  ```
+n1.toString();          // '10'
+n1.toString(10);        // '10'
+n1.toString(undefined); // '10';
+n2.toString(8);         // '12';
+n3.toString(16);        // 'a';
+```
 
-  but if you're using a non-decimal base like Octal or Hexadecimal, the result
-  may not be what you're expecting
+This is also the closer you have to decimal bases conversion as you can get an
+octal representation from a decimal _integer_ or from an hexadecimal value
 
-  ```javascript
-  ''+012;   // '10'
-  ''+0xA;   // '10'
-  ```
+```javascript
+const decimalInt = 10;
+const hexValue = 0xA;
 
-  In this case, you should use the [Number.toString()][10] method, specifying
-  the _radix_ (if not present or _undefined_, the Number 10 is used by default)
+console.log(decimalInt.toString(8));    // '12';
+console.log(hexValue.toString(8));      // '12';
+```
 
-  ```javascript
-  Number(012).toString(8);  // '12'
-  Number(0xA).toString(16); // 'a';
-  ```
+## Conclusion
 
-* [Boolean][7]: any non-zero `Number` evaluates to `true` (no matter what the
-  Number base is) and zero evaluates to `false`.
+As said before, over HTTP what you get server-side is always a String.
+Because of that, before converting `String` to `Number`
 
-  The easiest way to get a boolean value from a Number is using the
-  [strict equality operator][8] `===`
+1. _always validate the input against a "white" list of allowed characters_
+  (e.g. for decimal integers `^(0|[1-9][0-9]*)$`;
+2. then _validate for expected data types_ (e.g. parsing `String` to `Number`);
+3. and last, _validate data range_;
 
-  ```javascript
-  const v1 = 2;
-  const v2 = 02;
-  const v3 = x2;
-  const v4 = 0;
-  const v5 = 00;
-  const v6 = 0x0;
-
-  v1 !== 0; // true
-  v2 !== 0; // true
-  v3 !== 0; // true
-  v4 !== 0; // false
-  v5 !== 0; // false
-  v6 !== 0; // false
-  ```
-
-* other bases: it worth mentioning that JavaScript stores 
-  * Octal to Decimal
-    ```javascript
-    const octalNumber = 0777;
-    const decimalNumber = octalNumber.toNumber(10); // 255
-    ```
-
-  * Hexadecimal to Decimal
-    ```javascript
-    const hexNumber = 0xa;
-    const decimalNumber = parseInt(hexNumber, 16); // 10
-    ```
-
-You can read more about [How numbers are encoded in JavaScript][] at
-http://2ality.com/2012/04/number-encoding.html
-
+You can read more about [How numbers are encoded in JavaScript][14] by
+Dr. Axel Rauschmayer at 2ality.com.
 
 [^1]: The implementation is shared with globals `parseInt()` and `parseFloat()` functions: `parseInt === Number.parseInt && parseFloat === Number.parseFloat // true`)
-[^2]: "_In computing, a locale is a set of parameters that defines the user's language, region and any special variant preferences that the user wants to see in their user interface._" ([source][locale])
+[^2]: "_In computing, a locale is a set of parameters that defines the user's language, region and any special variant preferences that the user wants to see in their user interface._" ([source][13])
+[^3]: https://en.wikipedia.org/wiki/MIM-104_Patriot#Failure_at_Dhahran
 
 [1]: http://www.ecma-international.org/ecma-262/6.0/
 [2]: http://www.ecma-international.org/ecma-262/6.0/#sec-terms-and-definitions-number-value
@@ -391,16 +412,5 @@ http://2ality.com/2012/04/number-encoding.html
 [10]: http://www.ecma-international.org/ecma-262/6.0/index.html#sec-number.parsefloat
 [11]: http://www.ecma-international.org/ecma-262/6.0/#sec-number.isinteger
 [12]: http://www.ecma-international.org/ecma-262/6.0/index.html#sec-unary-plus-operator
-[locale]: https://en.wikipedia.org/wiki/Locale_(computer_software)
-
-
-
-[1]: https://nodejs.org/en/
-[2]: https://www.npmjs.com/
-
-[5]: http://www.ecma-international.org/ecma-262/6.0/index.html#sec-number-objects
-
-[7]: http://www.ecma-international.org/ecma-262/6.0/index.html#sec-terms-and-definitions-boolean-type
-[8]: http://www.ecma-international.org/ecma-262/6.0/#sec-strict-equality-comparison 
-[9]: http://www.ecma-international.org/ecma-262/6.0/#sec-terms-and-definitions-string-type
-[10]: http://www.ecma-international.org/ecma-262/6.0/#sec-number.prototype.tostring
+[13]: https://en.wikipedia.org/wiki/Locale_(computer_software)
+[14]: http://2ality.com/2012/04/number-encoding.html
