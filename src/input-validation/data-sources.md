@@ -1,9 +1,19 @@
 # Data sources
 
-Anytime data is passed from a trusted source to a less trusted source,
-integrity checks should be made.
-This guarantees that the data has not been tampered with and we are receiving
-the intended data. Other data source checks include:
+Modern Web Applications have multiple data sources such as user interfaces and
+third party services via APIs.
+
+These **data sources should be identified and classified as trusted and
+untrusted**. **Anytime data is passed from a trusted source to a less trusted
+one, integrity checks should be made** in order to guarantee that the data has
+not been tampered with.
+
+While classifying data sources don't take them as trusted because of the size
+or importance of the entity ruling them. If the data source is out of your
+control you're better classifying them as untrusted, otherwise your application
+can be compromised through them.
+
+Other data source checks include:
 
 * _Cross-system consistency checks_
 * _Hash totals_
