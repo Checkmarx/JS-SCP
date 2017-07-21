@@ -22,15 +22,14 @@ three separate categories:
   user data can lead to problems like truncating, which incur in data loss).
 * **Advisory Action**
 
-  Advisory Actions usually allow for unchanged data
-  to be entered, but the source actor is informed that there were issues with
-  said data. This is most suitable for non-interactive systems.
+  Usually allow for unchanged data to be entered, but the source actor is
+  informed that there were issues with said data. This is most suitable for
+  non-interactive systems.
 * **Verification Action**
 
-  Verification Action refer to special cases in
-  Advisory Actions. In these cases, the user submits the data and the source
-  actor asks the user to verify said data and suggests changes. The user then
-  accepts these changes or keeps his original input.
+  Refer to special cases in Advisory Actions. In these cases, the user submits
+  the data and the source actor asks the user to verify said data and suggests
+  changes. The user then accepts these changes or keeps his original input.
 
 A simple way to illustrate this is a Billing address form, where the user
 enters his address and the system suggests addresses associated with the
