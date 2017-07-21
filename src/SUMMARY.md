@@ -6,9 +6,9 @@ Summary
   * [Validation](input-validation/validation.md)
     * [Data Sources](input-validation/data-sources.md)
     * Data types
-      * [Strings](input-validation/strings.md)
-      * [Numbers](input-validation/numbers.md)
-      * [Files](input-validation/files.md)
+      * [Strings](input-validation/data-types/strings.md)
+      * [Numbers](input-validation/data-types/numbers.md)
+      * [Files](input-validation/data-types/files.md)
     * [Post validation actions](input-validation/post-validation-actions.md)
   * [Sanitization](input-validation/sanitization.md)
 * [Output Encoding](output-encoding/README.md)
