@@ -74,77 +74,82 @@ const userName = userInputName.toString('utf8');
 console.log('Hello %s', userName);
 ```
 
-## _Validate all input against a "white" list of allowed characters_
+## Validate all input against a "white" list of allowed characters
 
 Whenever possible this is an important first step from security standpoint as
-it will contribute to prevent [Injections][^3] nevertheless if any potential
-hazardous characters must be allowed as input, 
+it will contribute to prevent Injections[^3] nevertheless **if any potential
+hazardous characters must be allowed as input you should implement additional
+controls like [Output Encoding][13]**.
 
+Regarding the _"white" list of allowed characters_, you may feel tempted to do
+it using Regular Expressions but you should be aware that they are a real
+source of problems. Not only they are hard to write but also they are subject
+of a denial of service attack called Regular expression Denial of Service
+(ReDoS)[^4].
 
+Below a simple example of a evil Regex to validate decimal numbers and the
+correspondent payload (you can [test it on regex101.com][16]).
 
-// TODO redirect to Output Encoding section due to hazardous characters
+* **Regex:** `^\d*[0-9](|.\d*[0-9]|)*$`
+* **Payload:** `1111111111111111111111111!`
 
-   formats[^2].
+There's no doubt that Regular Expressions are a valuable and powerful
+mechanism but they should be used carefully.
 
-  Use [safe-regex](https://www.npmjs.com/package/safe-regex) to avoid
-  [regular expression denial of service](https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS) attacks
+**For validation purposes the first options should always be actively
+maintained validation modules** like [validator.js][17]. The second one should
+be Regular Expressions under the same condition (actively maintained) like
+[OWASP Validation Regex Repository][18].
 
-* [`utf8`][9] package implements functions and constants to support text
-  encoded in UTF-8. It includes functions to translate between runes and UTF-8
-rse
-  byte sequences.
+```javascript
+'use strict';
 
-  Validating UTF-8 encoded runes:
-    * [`Valid`](https://golang.org/pkg/unicode/utf8/#Valid)
-    * [`ValidRune`](https://golang.org/pkg/unicode/utf8/#ValidRune)
-    * [`ValidString`](https://golang.org/pkg/unicode/utf8/#ValidString)
+var validator = require('validator');
 
-  Encoding UTF-8 runes:
-    * [`EncodeRune`](https://golang.org/pkg/unicode/utf8/#EncodeRune)
+const number1 = '10.5';
+const number2 = '10,5';
 
-  Decoding UTF-8:
-    * [`DecodeLastRune`](https://golang.org/pkg/unicode/utf8/#DecodeLastRune)
-    * [`DecodeLastRuneInString`](https://golang.org/pkg/unicode/utf8/#DecodeLastRuneInString)
-    * [`DecodeRune`](https://golang.org/pkg/unicode/utf8/#DecodeLastRune)
-    * [`DecodeRuneInString`](https://golang.org/pkg/unicode/utf8/#DecodeRuneInString)
+validator.isDecimal(number1);   // true
+validator.isDecimal(number2):   // false
+```
 
+If there's no other chance and you have to write your own Regular Expression,
+make use of [Safe Regex module][19] to validate it.
 
-**Note**: `Forms` are treated by Go as `Maps` of `String` values.
+## Validate data length
 
-Other techniques to ensure the validity of the data include:
+Long enough strings may impact negatively on your system, creating security
+issues. Although _overflows_ are not a common problem in JavaScript (still they
+can happen[^5]) some database fields may have fixed length.
 
-* _Whitelisting_ - whenever possible validate the input against a whitelist
-  of allowed characters. See [Validation - Strip tags][1].
-* _Boundary checking_ - both data and numbers length should be verified.
-* _Character escaping_ - for special characters such as standalone quotation
-  marks.
-* _Numeric validation_ - if input is numeric.
-* _Check for Null Bytes_ - `(%00)`
-* _Checks for new line characters_ - `%0d`, `%0a`, `\r`, `\n`
-* _Checks forpath alteration characters_ - `../` or `\\..`
-* _Checks for Extended UTF-8_ - check for alternative representations of
-  special characters
+So, after converting input strings to the system default character encoding,
+validate it length
 
-**Note**: Ensure that the HTTP request and response headers only contain
-ASCII characters.
+```javascript
+'use strict';
 
-Third-party packages exist that handle security in Go:
+const addressInput = '123 Main St Anytown, USA';
+validator.isLength(string, {min: 3, max: 255}); // true
+```
 
-* [Gorilla][6] - One of the most used packages for web
-  application security.
-  It has support for `websockets`, `cookie sessions`, `RPC`, among
-  others.
+## Check for _special characters_
 
-* [Form][7] - Decodes `url.Values` into Go value(s) and Encodes Go value(s)
-  into `url.Values`.
-  Dual `Array` and Full `map` support.
+If the standard validation routine can not address the following inputs, then
+you should check them specifically
 
-* [Validator][8] - Go `Struct` and `Field` validation, including `Cross Field`,
-  `Cross Struct`, `Map` as well as `Slice` and `Array` diving.
+* null bytes (`%00`)
+* new line (`%0d`, `%0a`, `\r`, `\n`)
+* "dot-dot-slash" (`../` or `..\`)
+
+Remember that alternative representations like `%c0%ae%c0%ae/` should be
+covered. Canonicalization should be used to address double encoding or other
+forms of obfuscation attacks.
 
 [^1]: [HTTP/2][1], the first new version of HTTP since HTTP/1.1, is now a binary protocol intead of textual.
 [^2]: "_Browserify lets you `require('modules')` in the browser by bundling up all of your dependencies._" ([source][11])
 [^3]: Injection is an OWASP TOP 10 security vulnerability. This topic is covered in detail on [Output Encoding section][13]).
+[^4]: ["Regular Expression Denial of Service"][15] by Alex Roichamn and Adar Weidman from Checkmarx
+[^5]: ["ngineering Heap Overflow Exploits with JavaScript"][20] by Mark Daniel, Jake Honoroff and Charlie Miller
 
 [1]: https://en.wikipedia.org/wiki/HTTP/2
 [2]: ./../validation.md
@@ -159,3 +164,9 @@ Third-party packages exist that handle security in Go:
 [11]: http://browserify.org/
 [12]: https://www.owasp.org/index.php/Top_10_2017-A1-Injection
 [13]: ../../output-encoding/README.md
+[14]: http://www.regular-expressions.info/
+[15]: https://www.checkmarx.com/wp-content/uploads/2015/03/ReDoS-Attacks.pdf
+[16]: https://regex101.com/r/7192zY/1
+[17]: https://github.com/chriso/validator.js
+[18]: https://www.owasp.org/index.php/OWASP_Validation_Regex_Repository
+[19]: https://www.npmjs.com/package/safe-regex
