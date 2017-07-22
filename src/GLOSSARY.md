@@ -27,4 +27,13 @@ to input size).
 
 Path alteration characters like `../` and `..\`
 
+## Sanitization
+
+Sanitization refers to the process of removing or replacing submitted data to
+ensure that it is valid and safe.
+
+## Canonicalize
+
+To reduce various encodings and representations of data to a single simple form.
+
 [1]: http://www.regular-expressions.info/

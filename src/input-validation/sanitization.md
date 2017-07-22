@@ -5,92 +5,81 @@ Sanitization refers to the process of removing or replacing submitted data.
 When dealing with data, after the proper validation checks have been made, an
 additional step that is usually taken to strengthen data safety is sanitization.
 
+The [validator.js module][1] introduced for [Strings validation][2] also 
+[offers a sanitizer API][3] which will be used in this section.
+
 The most common uses of sanitization are as follows:
 
 ## Convert single less-than characters `<` to entity
 
-In the native package `html` there are two functions used for sanitization:
-one for escaping HTML text and another for unescaping HTML.
-The function `EscapeString()`, accepts a string and returns the same string
-with the special characters escaped. i.e. `<` becomes `&lt;`.
-Note that this function only escapes the following five characters: `<`, `>`,
-`&`, `'` and `"`.
-Conversely there is also the `UnescapeString()` function to convert from
-entities to characters.
+The characters `<` and `>` have special meaning, for example, on an HTML
+context as the represent respectively the start and end of a tag. If the user
+input is intended to be outputted on an HTML context, it should be sanitized as
+soon as possible.
 
-## Strip all tags
+The [validator.js `escape(input)`][3] method, replaces `<`, `>`, `&`, `'`, `"`
+and `/` by their correspondent [HTML entities][4], making it safe for output
+(to know more about output safety  please refer to the [Output Encoding
+section][5])
 
-Although the `html/template` package has a `stripTags()` function, it's
-unexported. Since no other native package has a function to strip all tags, the
-alternatives are to use a third-party library, or to copy the whole function
-along with it's private classes and functions.
+```javascript
+'use strict';
 
-Some of the third-party libraries availilable to achieve this are:
+var sanitizer = require('validator');
 
-* https://github.com/kennygrant/sanitize
-* https://github.com/maxwells/sanitize
-* https://github.com/microcosm-cc/bluemonday
+const sampleSourceCode = '<script>alert("Hello World");</script>';
+const sanitizedSampleSourceCode = sanitizer.escape(sampleSourceCode);
+
+console.log(sanitizedSampleSourceCode);
+// &lt;script&gt;alert(&quot;Hello World&quot;);&lt;&#x2F;script&gt;
+```
+
+Note that [validator.js `unescape(input)`][3] does it the other way around,
+replacing back HTML encoded entities.
 
 ## Remove line breaks, tabs and extra white space
 
-The `text/template` and the `html/template` include a way to remove
-whitespaces from the template, by using a minus sign `-` inside the action's
-delimiter.
+The control sequence `\r\n` is used as headers delimiter on some textual
+protocols like HTTP and mail.
 
-Executing the template with source
+If you're setting headers from input value, you have to remove all these
+characters to avoid, for example, [HTTP Spliting][6].
 
-```
-{{- 23}} < {{45 -}}
-```
+[validator.js `stripLow(input \[, keep_new_lines\])`][3] does exactly this:
 
-will lead to the following output
+> remove characters with a numerical value < 32 and 127, mostly control
+> characters. If keep_new_lines is true, newline characters are preserved (\n
+> and \r, hex 0xA and 0xD). Unicode-safe in JavaScript.
 
-```
-23<45
-```
+`ltrim(input \[, chars\])` and `rtrim(input \[, chars])` functions are also of
+interest to remove leading and trailing characters (JavaScript native `trim()`
+function only handles characters that represent white spaces).
 
-**NOTE**: If the minus `-` sign is not placed immediately after the opening
-action delimiter ``{{`` or before the closing action delimiter ``}}``, the
-minus sign `-` will be applied to the value
+```javascript
+'use strict';
 
-Template source
+var sanitizer = require('validator');
 
-```
-{{ -3 }}
-```
+const string = '\tHello\r\nWorld.\n\nThis  is a test!';
+const safe = sanitizer.stripLow(string);
 
-leads to
-
-```
--3
+console.log(safe);
+// HelloWorld.This  is a test!
 ```
 
 ## URL request path
 
-In the `net/http` package there is an HTTP request multiplexer type called
-`ServeMux`. It is used to match the incoming request to the registered
-patterns, and calls the handler that most closely matches the
-requested URL.
-In addition to it's main purpose, it also takes care of sanitizing the URL
-request path, redirecting any request containing `.` or `..` elements or
-repeated slashes to an equivalent, cleaner URL.
+The dot-dot-slash characters sequence was already [referred as subject of
+validation][7]: **if you're not handling them deliberately any input
+containing the sequence should be rejected.**
 
-A simple Mux example to illustrate:
+Be sure that you do canonicalize all URLs, converting them to an unified form:
+usually absolute URLs/paths are a good option.
 
-```go
-func main() {
-  mux := http.NewServeMux()
-
-  rh := http.RedirectHandler("http://yourDomain.org", 307)
-  mux.Handle("/login", rh)
-
-  log.Println("Listening...")
-  http.ListenAndServe(":3000", mux)
-}
-```
-
-Third-party packages:
-
-* [Gorilla Toolkit - MUX][1]
-
-[1]: http://www.gorillatoolkit.org/pkg/mux
+[1]: https://github.com/chriso/validator.js
+[2]: ./data-types/strings.md
+[3]: https://github.com/chriso/validator.js#sanitizers
+[4]: https://www.w3schools.com/html/html_entities.asp
+[5]: ../output-encoding/README.md
+[6]: https://www.owasp.org/index.php/HTTP_Response_Splitting
+[7]: ./data-types/strings.html#check-for-special-characters
