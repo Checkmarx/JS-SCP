@@ -5,7 +5,7 @@ Summary
 * [Input Validation](input-validation/README.md)
   * [Validation](input-validation/validation.md)
     * [Data Sources](input-validation/data-sources.md)
-    * Data types
+    * [Data types](input-validation/data-types/strings.md)
       * [Strings](input-validation/data-types/strings.md)
       * [Numbers](input-validation/data-types/numbers.md)
       * [Files](input-validation/data-types/files.md)
