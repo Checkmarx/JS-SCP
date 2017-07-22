@@ -97,9 +97,7 @@ There's no doubt that Regular Expressions are a valuable and powerful
 mechanism but they should be used carefully.
 
 **For validation purposes the first options should always be actively
-maintained validation modules** like [validator.js][17]. The second one should
-be Regular Expressions under the same condition (actively maintained) like
-[OWASP Validation Regex Repository][18].
+maintained validation modules** like [validator.js][17].
 
 ```javascript
 'use strict';
@@ -112,6 +110,26 @@ const number2 = '10,5';
 validator.isDecimal(number1);   // true
 validator.isDecimal(number2):   // false
 ```
+
+[validator.js][17] has a more generic `isWhitelisted(str, chars)` method which
+can be used to perform a this validation
+
+```javascript
+'use strict';
+
+var validator = require('validator');
+
+const allowedChars = '0123456789.';
+const decimal1 = '10.5';
+const decimal2 = '10,5';
+
+validator.isWhitelisted(decimal1, allowedChars);    // true
+validator.isWhitelisted(decimal2, allowedChars);    // false
+```
+
+The second options should be well tested and activily maintained Regular
+Expressions like the ones present in the
+[OWASP Validation Regex Repository][18].
 
 If there's no other chance and you have to write your own Regular Expression,
 make use of [Safe Regex module][19] to validate it.
