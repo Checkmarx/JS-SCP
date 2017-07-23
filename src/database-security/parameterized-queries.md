@@ -10,3 +10,5 @@ of database queries, we strongly suggest to read [Input Validation][1] and
 [Output Encoding][2] sections.
 
 
+[1]: /input-validation/README.md
+[2]: /output-encodeing/README.md

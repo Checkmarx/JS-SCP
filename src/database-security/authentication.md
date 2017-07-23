@@ -23,4 +23,6 @@ everything.
 
 Also, don't forget to remove your credentials and/or private key(s) if you're
 going to post your code on a publicly accessible repository in Github.
+
+
 [1]: https://strongpasswordgenerator.com/
