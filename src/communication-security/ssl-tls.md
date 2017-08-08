@@ -28,7 +28,7 @@ In Node.js, you have 2 distinct packages to create a server using `SSL/TLS`:
 In fact, these 2 packages are very similar. The only difference is when using `https`, you are specifically using HTTP over TLS instead of manipulating only the TLS layer.
 This means in fact when you are using the `https` module, you are also using module the `tls` module.
 
-The following is a simple example of an HTTP server using the `tls` module (but it will work the same for `https` mdoule):
+The following is a simple example of an HTTP server using the `tls` module (but it will work the same for `https` module):
 
 ```javascript
 
