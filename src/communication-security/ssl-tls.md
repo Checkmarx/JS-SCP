@@ -58,7 +58,7 @@ This is a simple out-of-the-box implementation of SSL/TLS in a webserver using N
 
 ## SSL/TLS ciphers
 
-It is important to underline that Node.js disable, by default, all weak and medium ciphers. 
+It is important to underline that Node.js, by default, accept only a subset of strong ciphers. 
 Quoting the Node.js documentation about the [Default TLS Cipher Suite] [2]:
 > The default cipher suite included within Node.js has been carefully selected to reflect current security best practices and risk mitigation. 
 > Changing the default cipher suite can have a significant impact on the security of an application. 
@@ -112,12 +112,26 @@ to the header, in order to enforce HSTS (HTTP Strict Transport Security):
 res.SetHeader("Strict-Transport-Security", "max-age=63072000; includeSubDomains")
 ```
 
+It is also possible to use a package called `helmet` to add the HSTS header, but also other security HTTP headers:
+```javascript
+var express = require('express'); 
+var helmet = require('helmet');
+
+var app = express();
+app.use(helmet.hsts({maxage: 63072000, includeSubDomains: true}));
+```
+
 ## TLS certificate: client-side validation
 
 Invalid TLS certificates should always be rejected.
 Make sure that the `NODE_TLS_REJECT_UNAUTHORIZED` environment variable is not set
 to `0` in a production environment.  
 
+## TLS compression
+
+The [CRIME] [6] attack exploits a flaw with data compression. 
+
+By default, Node.js disable all compression.
 
 ## UTF-8 encoding
 
@@ -136,3 +150,4 @@ Another important aspect when handling HTTP connections is to verify that the HT
 [3]: https://wiki.mozilla.org/Security/Server_Side_TLS
 [4]: https://nodejs.org/api/tls.html
 [5]: https://nodejs.org/api/https.html
+[6]: https://www.nccgroup.trust/us/about-us/newsroom-and-events/blog/2012/september/details-on-the-crime-attack/
