@@ -16,56 +16,64 @@ Before to start, a gentle reminder of a code vulnerable to SQL injection.
 ```javascript
 // evilUserData parameter is an input given by a user
 // For the example it could be someting like that: or 1=1
-var sql    = 'SELECT * FROM users WHERE id = ' + evilUserData;
+const sql = 'SELECT * FROM users WHERE id = ' + evilUserData;
 client.query(sql, function (error, results, fields) {
   if (error) throw error;
   // ...
 });
 ```
 
-An attacker is able to modify the SQL request in order to exfiltrate information or modify the database.
-When performing SQL queries, using String concatenation is the worst thing to do!
+An attacker is able to modify the SQL request in order to exfiltrate
+information or modify the database.
+When performing SQL queries, using String concatenation is the worst thing to
+do!
 
-Let's have a look to [Postgres] [3] and [MySQL] [4] modules in order to avoid this situation.
+Let's have a look to [Postgres][3] and [MySQL][4] modules in order to avoid
+this situation.
 
 ## Postgres
-The [`postgres`] [5] module supports parameterized queries. It is really easy to use. 
+
+The [postgres module][5] supports parameterized queries. It is really easy
+to use.
 Looking at the previous vulnerable code, we just need to do the following:
+
 ```javascript
 // evilUserData parameter is an input given by a user
 // For the example it could be someting like that: or 1=1
-
-var sql    = 'SELECT * FROM users WHERE id = $1';
+const sql = 'SELECT * FROM users WHERE id = $1';
 
 client.query(sql, evilUserData, function (error, results, fields) {
   if (error) throw error;
   // ...
 });
 ```
+
 ## MySQL
-The [`mysql`] [6] module doesn't support parameterrized queries, but the module gives different methods to escape parameters such as `mysql.escape()`, `connection.escape()` and `pool.escape()`.
-Here is an example:
+
+Although [mysql module][6] doesn't support parameterized queries, it offers
+placeholder `?`
+
 ```javascript
 // evilUserData parameter is an input given by a user
 // For the example it could be someting like that: or 1=1
+const sql = 'SELECT * FROM users WHERE id = ?';
 
-var sql    = 'SELECT * FROM users WHERE id = ' + connection.escape(evilUserData);
-
-connection.query(sql, function (error, results, fields) {
+connection.query(sql, [evilUserData], function (error, results, fields) {
   if (error) throw error;
   // ...
 });
-``` 
+```
 
-Or you can also use `?` characters as a placeholder in order to escape values automatically by the module without using the escaping functions.
-Another example with placeholders:
+This is almost the same than escaping `evilUserData` yourself with a great
+advantage: you will never forget to escape it.
+
+
 ```javascript
 // evilUserData parameter is an input given by a user
 // For the example it could be someting like that: or 1=1
+const sql = 'SELECT * FROM users WHERE id = ' + connection.escape(evilUserData);
 
-var sql    = 'SELECT * FROM users WHERE id = ?';
-
-connection.query(sql, [evilUserData], function (error, results, fields) {
+connection.query(sql, function (error, results, fields) {
   if (error) throw error;
   // ...
 });
