@@ -36,4 +36,11 @@ ensure that it is valid and safe.
 
 To reduce various encodings and representations of data to a single simple form.
 
+## CSRF
+
+Cross-Site Request Forgery (CSRF) "_is an attack that forces an end user to
+execute unwanted actions on a web application in which they're currently
+authenticated._" ([source][2]).
+
 [1]: http://www.regular-expressions.info/
+[2]: https://www.owasp.org/index.php/Cross-Site_Request_Forgery_(CSRF)
