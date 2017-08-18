@@ -11,6 +11,7 @@ Summary
 * [Error Handling and Logging](error-handling-logging/README.md)
 * [Data Protection](data-protection/README.md)
 * [Communication Security](communication-security/README.md)
+  * [SSL/TLS](communication-security/ssl-tls.md)
 * [System Configuration](system-configuration/README.md)
 * [Database Security](database-security/README.md)
 * [File Management](file-management/README.md)
