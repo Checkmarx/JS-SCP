@@ -59,5 +59,20 @@ security over a computer network.
 
 [TLS](#tls) is the successor of SSL.
 
+## POODLE
+
+Padding Oracle On Downgraded Legacy Encryption is a Man-in-the-Middle (MitM)
+exploit which takes advantage of internet and security software clients'
+fallback to SSL 3.0, allowing an attacker to reveal unencrypted messages (on
+average after 256 requests, 1 byte of unencrypted messages will be revealed).
+
+## BEAST
+
+Browser Exploit Against SSL/TLS is a proof-of-concept demonstrated by Thai
+Duong and Juliano Rizzo back in 2011, which violates browsers'  same origin
+policy constraints, for a long-known cipher block chaining (CBC) vulnerability
+in TLS 1.0. ([source][3])
+
 [1]: http://www.regular-expressions.info/
 [2]: https://www.owasp.org/index.php/Man-in-the-middle_attack
+[3]: https://en.wikipedia.org/wiki/Transport_Layer_Security#BEAST_attack
