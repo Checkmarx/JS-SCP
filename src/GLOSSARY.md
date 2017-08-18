@@ -36,4 +36,14 @@ ensure that it is valid and safe.
 
 To reduce various encodings and representations of data to a single simple form.
 
+## MitM
+
+The Man-in-the-Middle attack intercepts a communication between two systems.
+Using different techniques, the attacker splits the original TCP connection
+into 2 new connections, one between the client and the attacker and the other
+between the attacker and the server. Once the TCP connection is intercepted,
+the attacker acts as a proxy, being able to read, insert and modify the data in
+the intercepted communication. ([source][2])
+
 [1]: http://www.regular-expressions.info/
+[2]: https://www.owasp.org/index.php/Man-in-the-middle_attack
