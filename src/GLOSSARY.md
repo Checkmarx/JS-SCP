@@ -45,5 +45,19 @@ between the attacker and the server. Once the TCP connection is intercepted,
 the attacker acts as a proxy, being able to read, insert and modify the data in
 the intercepted communication. ([source][2])
 
+## TLS
+
+Transport Layer Security is a cryptographic protocol that provides
+communication security over a computer network.
+
+[SSL](#ssl) is the TLS predecessor. 
+
+## SSL
+
+Secure Sockets Layer is a cryptographic protocol that provides communication
+security over a computer network.
+
+[TLS](#tls) is the successor of SSL.
+
 [1]: http://www.regular-expressions.info/
 [2]: https://www.owasp.org/index.php/Man-in-the-middle_attack
