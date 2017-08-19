@@ -19,6 +19,8 @@ Summary
 * [Access Control](access-control/README.md)
 * [Cryptographic Practices](cryptographic-practices/README.md)
 * [Error Handling and Logging](error-handling-logging/README.md)
+  * [Error Handling](error-handling-logging/error-handling.md)
+  * [Logging](error-handling-logging/logging.md)
 * [Data Protection](data-protection/README.md)
 * [Communication Security](communication-security/README.md)
 * [System Configuration](system-configuration/README.md)
