@@ -1,7 +1,42 @@
 SQL Injection
 =============
 
+When using SQL databases one of the most common attacks is called SQL injection.
+Essentially it relies on database query manipulation through expected parameters
+before sending it to the database engine to be executed.
 
+As a simple analogy, consider a robot that's ready to execute the following
+instruction as soon as user provides the instruction parameter, filling the
+blanks
+
+```
+GET CAR NUMBER ___ FROM GARAGE ___ AND PAINT IT ___.
+```
+
+A user may request car number `1` from garage `3` to be painted `red`. So the
+instruction sent to the robot will look like
+
+```
+GET CAR NUMBER 1 FROM GARAGE 3 AND PAINT IT red.
+```
+
+What if a user submits something that he wasn't supposed to? Well, the robot
+will execute anything as long as it is syntactically valid.
+
+Let's keep the car number (`1`) and the color (`red`) but let's play a little
+with the garage number. This time let's try something like `3 and remove it's
+wheels`. How would the full instruction look like?
+
+```
+GET CAR NUMBER 1 FROM GARAGE 3 and remove it's wheels AND PAINT IT red.
+```
+
+As long as robot understands the injected `and remove it's wheels` and the full
+query is syntactically valid it will execute it and you will get the same red
+car but without wheels.
+
+This is exactly how a SQL/No-SQL injection looks like but of course using their
+own syntax.
 
 ## Node.js and MySQL
 
