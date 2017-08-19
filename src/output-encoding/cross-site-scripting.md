@@ -213,15 +213,180 @@ attribute quotes, or add an extra layer of encoding (`'` can be encoded as `%27`
 
 #### Node.JS
 
-In Node.JS there are some modules that help with output
-//TODO: Add libraries for encoding
+In Node.JS there are some modules that help with output encoding. To demonstrate
+this we will use the `xss-filters` npm package, available [here](https://www.npmjs.com/package/xss-filters).
+This example is using the package on top of `express`.
+Taken from the documentation:
+
+```javascript
+var express = require('express');
+var app = express();
+var xssFilters = require('xss-filters');
+
+app.get('/', function(req, res){
+  var firstname = req.query.firstname; //an untrusted input collected from user
+  res.send('<h1> Hello, ' + xssFilters.inHTMLData(firstname) + '!</h1>');
+});
+
+app.listen(3000);
+```
+
+Notice that when we're dealing with untrusted user input we first pass the
+input to the `xssFilters.inHTMLData()` function to safely encode the output.
+
+There are a few warnings that accompany this package.
+Namely:
+  - Filters __MUST ONLY__ be applied to UTF-8 encoded documents.
+  - DON'T apply any filters inside any scriptable contexts, i.e., `<script>`,
+  `<style>`, `<object>`, `<embed>`, and `<svg>` tags as well as `style=""`
+  and `onXXX=""` (e.g., `onclick`) attributes. It is unsafe to permit untrusted
+  input inside a scriptable context.
 
 #### AngularJS
-//TODO: Write NodeJS/AngularJS app to create code examples.
+Angular already has some built-in protections to help developers deal with
+output encoding and XSS prevention.
+
+By default Angular treats all values as untrusted. This means that whenever a
+value is inserted into the DOM from a `template`, `property`, `attribute`,
+`style`, `class binding` or `interpolation` Angular sanitizes and escapes
+untrusted values.
+
+An important note about Angular is:
+__Angular templates are the same as executable code.__
+
+This means you should __never__ generate template source code by concatenating user
+input and templates.  
+Instead use the [offline template generator](https://angular.io/guide/security#offline-template-compiler).
+
+Sanitization example as per the documentation:
+
+```javascript
+export class InnerHtmlBindingComponent {
+  // For example, a user/attacker-controlled value from a URL.
+  htmlSnippet = 'Template <script>alert("0wned")</script> <b>Syntax</b>';
+}
+```
+
+```html
+<h3>Binding innerHTML</h3>
+
+<p>Bound value:</p>
+<p class="e2e-inner-html-interpolated">{{htmlSnippet}}</p>
+
+<p>Result of binding to innerHTML:</p>
+<p class="e2e-inner-html-bound" [innerHTML]="htmlSnippet"></p>
+```
+Note that in the presented code snippet there are two types of content:
+   - Interpolated content.
+   - HTML property binding.
+
+Interpolated content is always escaped which means the HTML isn't interpreted
+and the browser displays angle brackets as text.
+
+On the other hand when using property binding such as `innerHTML`, but
+__be careful__ when binding a value that an attacker might control into `innerHTML`
+since this normally causes an XSS vulnerability.
+
+An interesting note is that Angular recognizes the `<script>` tag and it's
+content as unsafe and automatically sanitizes it.
+This means that the result of the previous snippets is the following:
+
+![angularResult](images/angular_xss.png)  
+
+An __important note__ about the DOM API is to avoid it's direct usage since they
+don't automatically protect you from security vulnerabilities.
+So remember to __always use Angular templates__ where possible. In case you need
+to dynamically construct forms in a safe way, see the [Dynamic Forms](https://angular.io/guide/dynamic-form) guide
+page.
+
+Another type of vulnerability that developers should be aware of is the
+`Cross-site script inclusion (XSSI)` which is also known as JSON vulnerability.  
+To prevent this use the `HttpClient` library in order to strip the string
+`")]}',\n"` from all responses before further parsing.
+
+For more information see the XSSI section [here](https://security.googleblog.com/2011/05/website-security-for-webmasters.html).
+
+Finally there are also legitimate cases where applications need to include
+executable code.
+
+To inject executable code we need to inject `DomSanitizer` and call one
+of the following methods:
+
+  - `bypassSecurityTrustHtml`
+  - `bypassSecurityTrustScript`
+  - `bypassSecurityTrustStyle`
+  - `bypassSecurityTrustUrl`
+  - `bypassSecurityTrustResourceUrl`  
+
+But __be very careful__ using these. If you trust a value that might be
+malicious, your are introducing a security vulnerability.
 
 #### React.js
-//TODO: Write NodeJS/ReactsJS app to create code examples.
+In Reacts.JS we create React "elements" by using `JSX`.  
+`JSX` is a syntax extension to Javascript.
 
+By default React DOM escapes any values embedded in JSX before rendering them.
+This means that you can never inject anything that isn't explicitly written in
+your application.
+This is a big help preventing XSS attacks.
+
+But there are security risks associated with some functions and HTML tags.
+
+The first is the use of `dangerouslySetInnerHTML`.
+As the name suggests, it will render the content as HTML.
+
+This means that where previously a XSS vector would fail due to being treated
+as plaintext, now it's being rendered as HTML. Now, as usual, if you're taking
+user input and passing it to `dangerouslySetInnerHTML` then you have a possible
+XSS on your application.
+
+So __be very careful__ using this!
+
+Snippet to demonstrate the possible XSS:
+```javascript
+function possibleXSS() {
+  return { __html: '<img src="images/logo.png" onload="alert(1)"></img>' };
+};
+
+const App = () => (
+  <div dangerouslySetInnerHTML={possibleXSS()} />
+);
+
+render(<App />, document.getElementById('root'));
+```
+The result of this is:  
+![react_xss](images/react_xss.png)
+
+The second security risk developers must be aware of, is the usage of user input
+as the value of an `href` attribute. This will allow an attacker to inject
+Javascript directly to the `href` and bypass the security measures set by React.
+
+Which means __don't do this__ :
+```html
+<div id="root">
+</div>
+```
+
+```javascript
+
+[...]
+
+//Get user input from URI
+var query = getQueryParams(document.location.search);
+
+ReactDOM.render(
+  <a href={query.page}>Click me!</a>,
+  document.getElementById('root')
+);
+```
+Because if you do, and an attacker submits the following request:  
+`http://example.com?page=javascript:prompt(1)`
+
+The result will be:  
+![reactHref](images/react_href.png)
+
+//TODO: Eval() and babel.run? Does it make sense to talk about this here? Or do
+//we assume that the eval() is part of javascript security not react specific?
 //TODO - Check references and links.
 
 [1]: https://www.owasp.org/index.php/Top_10_2017-Top_10

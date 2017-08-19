@@ -13,6 +13,7 @@ Summary
   * [Sanitization](input-validation/sanitization.md)
 * [Output Encoding](output-encoding/README.md)
   * [Cross-Site Scripting](output-encoding/cross-site-scripting.md)
+  * [SQL Injection](output-encoding/sql-injection.md)
   * [NoSQL Injection](output-encoding/nosql-injection.md)
 * [Authentication and Password Management](authentication-password-management/README.md)
 * [Session Management](session-management/README.md)

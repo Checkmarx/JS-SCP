@@ -27,6 +27,10 @@ In this section we will look at the security risks involving `MongoDB`.
 For more information regarding other aspects of MongoDB see the
 [MongoDB documentation][1]
 
+As is usual if the application accepts user input as query parameters, then
+malicious content can be injected into the database unless some steps are taken
+to prevent it.
+
 There are several aspects of security to keep in mind if using MongoDB. In this
 section of the document we will focus on NoSQL injection.
 
@@ -35,7 +39,7 @@ databases are vulnerable to injection attacks just like any other database.
 This misconception stems from the lack of support for traditional SQL
 syntax.
 
-__Remeber__: NoSQL databases are also susceptible to injection attacks.
+__Remember__: NoSQL databases are also susceptible to injection attacks.
 
 Another important aspect to keep in mind is that since there is no common
 language between NoSQL databases, the injection code presented here is database
@@ -55,7 +59,8 @@ These operations are:
 `mapReduce` - https://docs.mongodb.com/manual/reference/command/mapReduce/#dbcmd.mapReduce
 
 `group` - https://docs.mongodb.com/manual/reference/command/group/#dbcmd.group
-(Note that `group` has been deprecated since MongoDB 3.4)
+
+(_Note: `group` has been deprecated since MongoDB 3.4_)
 
 Let's have a look at each.
 
@@ -145,10 +150,10 @@ afterwards "reduce" our total count of all country related keyword occurrences,
 to a single value with the total number of occurrences. Using `MapReduce`
 would be a good way to achieve it.
 
-Generally `mapReduce` is not suited to be used a regular interface, but rather
+Generally `mapReduce` is not suited to be used as a regular interface, but rather
 to generate things in the backgrounds, such as reports or data caching.
 
-This a simple explanation of `mapReduce`. Futher information regarding this can
+This a very simple explanation of `mapReduce`. Further information regarding this can
 be found on the following [page][5].
 
 Let's have a look at an example:
