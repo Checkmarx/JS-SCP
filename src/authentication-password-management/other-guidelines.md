@@ -8,7 +8,7 @@ authentication system more resilient:
 * "_Re-authenticate users prior to performing critical operations_"
 
 * "_Use Multi-Factor Authentication for highly sensitive or high value
-  transactional accounts_". In nodeJS there are packages that allows to easily
+  transactional accounts_". In Node.js there are packages that allows to easily
   implement two factor authentication. One of the most popular is called
   `speakeasy`.
 
@@ -46,7 +46,7 @@ authentication system more resilient:
 * "_Implement monitoring to identify attacks against multiple user accounts,
   utilizing the same password. This attack pattern is used to bypass standard
   lockouts, when user IDs can be harvested or guessed_". As is characteristic of
-  nodeJS, there are packages available to allow rate limiting if a bruteforce 
+  Node.js, there are packages available to allow rate limiting if a bruteforce 
   attack pattern is detected. An example of this is the `express-brute` package
   for `express`. It allows request slowdown (after 5 failed logins), as well as
   setting a daily maximum login attempt number (1000).

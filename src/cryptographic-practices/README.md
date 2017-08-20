@@ -21,7 +21,7 @@ input (collisions may still happen). A good hashing algorithm won't allow to
 turn a hash into its original source[^1]. MD5 is the most popular hashing
 algorithm but security wise BLAKE2 is considered the strongest and most
 flexible.
-However, BLAKE2 has very little support in nodeJS, but for demonstration
+However, BLAKE2 has very little support in Node.js, but for demonstration
 purposes we will se the `blakejs` package. If for any reason we cannot use it,
 then we fallback to SHA-256.
 
@@ -39,7 +39,7 @@ console.log(blake.blake2sHex('JS - Secure Coding Practices'));
 
 The [blakejs package and it's documentation is available here][4].
 
-Example of `SHA256` hashing using nodeJS's `crypto` library:
+Example of `SHA256` hashing using Node.js's `crypto` library:
 
 ```javascript
 const crypto = require('crypto');
@@ -226,7 +226,7 @@ encryption algorithms which also provide authentication, such as
 Another interesting package in Node.js is `sodium`. This is a reference to
 Dr. Daniel J. Bernstein's NaCl library, which is a very popular modern
 cryptography library.
-It's essentially a port of the Libsodium encryption library to nodeJS.
+It's essentially a port of the Libsodium encryption library to Node.js.
 The `sodium` package is comprised of implementations of NaCl's
 abstractions for sending encrypted messages for the two most common use-cases:
 

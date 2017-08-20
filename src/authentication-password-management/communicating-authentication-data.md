@@ -66,7 +66,7 @@ With a generic message you do not disclose:
 As a rule of thumb, avoid implementing your own authentication controls.
 Instead, use services that comply with standards and have been properly tested.
 
-A very used package in nodeJS that deals with authentication is `passport`
+A very used package in Node.js that deals with authentication is `passport`
 `passport` supports over 300 authentication _strategies_. These _strategies_
 include third party services like `passport-facebook`, `passport-oauth`,
 `passport-twitter`, etc. As well as local _strategies_ such
