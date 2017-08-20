@@ -151,7 +151,7 @@ res.SetHeader("Strict-Transport-Security", "max-age=63072000; includeSubDomains"
 ```
 
 The [helmet package][12] can be also used to add not only the
-`Strinct-Transport-Security` header but also other security HTTP headers
+`Strict-Transport-Security` header but also other security HTTP headers
 
 ```javascript
 const express = require('express');
