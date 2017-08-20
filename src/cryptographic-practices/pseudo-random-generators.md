@@ -9,7 +9,7 @@ let's talk about "random numbers".
 
 Cryptography relies on some randomness, but for the sake of correctness what
 most programming languages provide out-of-the-box is a pseudo-random number
-generator: [Javascript's Math.random()][1] is not an exception.
+generator: [JavaScript's Math.random()][1] is not an exception.
 
 An example of pseudo-random number generation using `Math.random()`:
 
