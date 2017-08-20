@@ -6,9 +6,9 @@ Shared resources bring concurrency problems such as [deadlocks][1] and
 known and documented: [semaphores][3] and [mutexes][4] are two of them.
 
 This is an important topic which deserves to be covered here, because JavaScript
-is known to be single threaded which takes advantage of its Event Loop for
+is known to be single threaded which takes advantage of its `Event Loop` for
 performance. The point is that JavaScript concurrency model is exactly based on
-its Event Loop.
+its `Event Loop`.
 
 You can read about JavaScript concurrency model in detail on [Mozilla Developer
 NetworK "Concurrency model and Event Loop"][5].

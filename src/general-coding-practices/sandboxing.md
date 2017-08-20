@@ -6,8 +6,8 @@ told that user input should be always handled as untrusted and unsafe data.
 Moreover user input data should never be subject of string concatenation to
 computed, for examples, database queries.
 
-You'll find to more General Coding Practices on [OWASP SCP - Quick Reference
-Guide][3] which we will address together
+You'll find more to General Coding Practices on [OWASP SCP - Quick Reference
+Guide][3] which we will address together:
 
 * "_Do not pass user supplied data to any dynamic execution function_"
 * "_Restrict users from generating new code or altering existing code_"
@@ -45,11 +45,11 @@ rejecting the invalid input.
 If after all you really need to execute untrusted data, please use a sandbox.
 
 On the client-side the best you can do is loading the insecure content in a
-`<iframe>` HTML element with the attribute `sandbox` set. You can [find the spec
+`<iframe>` HTML element with the attribute `sandbox` set. You can [find the specification
 here][8]. Whenever possible, provide a [Content Security Policy][9].
 
 Server-side you have a few more options.
-Have a look at this projects
+Have a look at these projects:
 
 * [gf3/sanbox][10]
 * [patriksimek/vm2][11]
