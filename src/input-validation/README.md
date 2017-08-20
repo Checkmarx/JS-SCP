@@ -2,7 +2,7 @@ Input Validation
 ================
 
 In web application security, user input and its associated data are a security
-risk if left unchecked.
+risk if unchecked.
 We address these problems by using "Input Validation" and "Input Sanitization"
 techniques.
 These validations should be performed in every tier of the application, as per
@@ -30,5 +30,5 @@ In this section an overview of each technique is provided, along with a sample
 in JavaScript to illustrate the issues.
 
 [1]: https://www.owasp.org/images/0/08/OWASP_SCP_Quick_Reference_Guide_v2.pdf
-[2]: https://www.owasp.org/index.php/Top_10_2017-A1-Injection
-[3]: https://www.owasp.org/index.php/Top_10_2017-Top_10
+[2]: https://www.owasp.org/index.php/Top_10_2013-A1-Injection
+[3]: https://www.owasp.org/index.php/Top_10_2013-Top_10
