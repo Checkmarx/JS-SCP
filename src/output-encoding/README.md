@@ -20,9 +20,9 @@ them?
 
 In this section we will cover
 
-* [Cross-Site Scripting (XSS)](./cross-site-scripting.md)
-* [SQL Injection (SQLi)](./sql-injection.md)
-* [NoSQL Injection](./nosql-injection.md)
+* [Cross-Site Scripting (XSS)](./cross-site-scripting/README.md)
+* [SQL Injection (SQLi)](./database/sql-injection.md)
+* [NoSQL Injection](./databse/nosql-injection.md)
 
 [1]: https://www.owasp.org/images/0/08/OWASP_SCP_Quick_Reference_Guide_v2.pdf
 [2]: https://www.owasp.org/index.php/Top_10_2013-A1-Injection
