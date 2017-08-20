@@ -64,7 +64,9 @@ After receiving and parsing server's HTTP response, you will see written on the
 page `No results found for` and a modal window like the one below: your payload
 was successfully executed.
 
-![XSS payload execution](./images/xss-alert.png)
+<div style="text-align: center">
+<img alt="XSS payload execution" src="./images/xss-alert.png" />
+</div>
 
 It may look not so bad as "we know" that our searches are not persisted
 server-side (and so this is also known as Non-Persistent XSS). This way it won't

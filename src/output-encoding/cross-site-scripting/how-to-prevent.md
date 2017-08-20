@@ -132,7 +132,7 @@ be automatically sanitized. As so the result of the previous snippets will look
 like
 
 <div style="text-align: center">
-<img alt="Angular.JS &lt;script&gt; tag sanitize" src="images/angular_xss.png" />
+<img alt="Angular.JS &lt;script&gt; tag sanitize" src="images/angular-xss.png" />
 </div>
 
 While developing with AngularJS developers should avoid the native DOM API as it
@@ -190,7 +190,7 @@ render(<App />, document.getElementById('root'));
 resulting into
 
 <div style="text-align: center">
-<img alt="XSS via 'dangerouslySetInnerHTML' call" src="images/react_xss.png" />
+<img alt="XSS via 'dangerouslySetInnerHTML' call" src="images/react-xss.png" />
 </div>
 
 Another React related security issue that developers must be aware of, is the
@@ -218,7 +218,7 @@ The URL `http://example.com?page=JavaScript:prompt(1)` will trigger the
 following prompt dialog
 
 <div style="text-align: center">
-<img alt=XSS via 'href' attribute" src="images/react_href.png" />
+<img alt="XSS via 'href' attribute" src="images/react-href.png" />
 </div>
 
 [^1]: The Node.js version of both `encodeURI` and `encodeURIComponent` functions does escape the single quote character `'`
