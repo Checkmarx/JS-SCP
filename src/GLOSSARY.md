@@ -54,7 +54,17 @@ cross-site scripting (XSS), clickjacking and other code injection attacks
 resulting from execution of malicious content in the trusted web page context.
 ([source][csp])
 
+## Sandbox
+
+Sandbox is a security mechanism for separating running programs, usually in an
+effort to mitigate system failures or software vulnerabilities from spreading.
+It is often used to execute untested or untrusted programs or code, possibly
+from unverified or untrusted third parties, suppliers, users or websites,
+without risking harm to the host machine or operating system.
+([source][sandbox])
+
 [1]: http://www.regular-expressions.info/
 [cdn]: https://en.wikipedia.org/wiki/Content_delivery_network
 [sri]: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
 [csp]: https://en.wikipedia.org/wiki/Content_Security_Policy
+[sandbox]: https://en.wikipedia.org/wiki/Sandbox_(computer_security)
