@@ -277,7 +277,7 @@ last "Safe Integer" is exactly `MIN - 1` which you can get from
 `MIN` and we're doing an _integer_ operation, JavaScript won't throw any error.
 
 You may expect that `Number.MAX_SAFE_INTEGER` is the highest number that
-JavaScript can handle, but no, `Number.MAX_VALUE` is the highest one and
+JavaScript can handle, but no, `Number.MAX_VALUE` is the highest one:
 
 ```javascript
 Number.MAX_VALUE > Number.MAX_SAFE_INTEGER; // true

@@ -43,11 +43,11 @@ The control sequence `\r\n` is used as headers delimiter on some textual
 protocols like HTTP and mail.
 
 If you're setting headers from input value, you have to remove all these
-characters to avoid, for example, [HTTP Spliting][6].
+characters to avoid, for example, [HTTP Splitting][6].
 
 [validator.js `stripLow(input \[, keep_new_lines\])`][3] does exactly this:
 
-> remove characters with a numerical value < 32 and 127, mostly control
+> remove characters with a numerical value less than 32 and higher than 127, mostly control
 > characters. If keep_new_lines is true, newline characters are preserved (\n
 > and \r, hex 0xA and 0xD). Unicode-safe in JavaScript.
 
