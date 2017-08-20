@@ -32,6 +32,7 @@ Summary
 * [General Coding Practices](general-coding-practices/README.md)
   * [Dependencies](general-coding-practices/dependencies.md)
   * [Interpreted Code Integrity](general-coding-practices/interpreted-code-integrity.md)
-  * [Content-Security-Policy](general-coding-practices/content-security-policy.md)
+  * [Content Security Policy](general-coding-practices/content-security-policy.md)
+  * [Concurrency](general-coding-practices/concurrency.md)
 * [How to Contribute](howto-contribute.md)
 * [Glossary](GLOSSARY.md)
