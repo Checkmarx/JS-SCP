@@ -14,7 +14,8 @@ characters may be used to:
 
 ## Regular Expression
 
-A regular expression (regex or regexp for short) is a special text string for describing a search pattern. ([source][regex])
+A regular expression (regex or regexp for short) is a special text string for
+describing a search pattern. ([source][regex])
 
 ## ReDoS
 
@@ -35,6 +36,36 @@ ensure that it is valid and safe.
 ## Canonicalize
 
 To reduce various encodings and representations of data to a single simple form.
+
+## CDN
+
+Content Delivery Network or Content Distribution Network is a geographically
+distributed network of proxy servers and their data centers. The goal is to
+distribute service spatially relative to end-users to provide high availability
+and high performance. ([source][cdn])
+
+## SRI
+
+Subresource Integrity (SRI) is a security feature that enables browsers to
+verify that files they fetch (for example, from a CDN) are delivered without
+unexpected manipulation. It works by allowing you to provide a cryptographic
+hash that a fetched file must match. ([source][sri])
+
+## CSP 
+
+Content Security Policy is a computer security standard introduced to prevent
+cross-site scripting (XSS), _clickjacking_ and other code injection attacks
+resulting from execution of malicious content in the trusted web page context.
+([source][csp])
+
+## Sandbox
+
+Sandbox is a security mechanism for separating running programs, usually in an
+effort to mitigate system failures or software vulnerabilities from spreading.
+It is often used to execute untested or untrusted programs or code, possibly
+from unverified or untrusted third parties, suppliers, users or websites,
+without risking harm to the host machine or operating system.
+([source][sandbox])
 
 ## XSS 
 
@@ -112,3 +143,7 @@ in TLS 1.0. ([source][beast])
 [beast]: https://en.wikipedia.org/wiki/Transport_Layer_Security#BEAST_attack
 [dom]: https://en.wikipedia.org/wiki/Document_Object_Model
 [json]: http://www.json.org/
+[cdn]: https://en.wikipedia.org/wiki/Content_delivery_network
+[sri]: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
+[csp]: https://en.wikipedia.org/wiki/Content_Security_Policy
+[sandbox]: https://en.wikipedia.org/wiki/Sandbox_(computer_security)
