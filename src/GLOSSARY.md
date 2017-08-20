@@ -47,6 +47,14 @@ and high performance. ([source][cdn])
 
 Subresource Integrity (SRI) is a security feature that enables browsers to verify that files they fetch (for example, from a CDN) are delivered without unexpected manipulation. It works by allowing you to provide a cryptographic hash that a fetched file must match. ([source][sri])
 
+## CSP 
+
+Content Security Policy is a computer security standard introduced to prevent
+cross-site scripting (XSS), clickjacking and other code injection attacks
+resulting from execution of malicious content in the trusted web page context.
+([source][csp])
+
 [1]: http://www.regular-expressions.info/
 [cdn]: https://en.wikipedia.org/wiki/Content_delivery_network
 [sri]: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
+[csp]: https://en.wikipedia.org/wiki/Content_Security_Policy
