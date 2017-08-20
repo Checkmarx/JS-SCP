@@ -36,11 +36,18 @@ ensure that it is valid and safe.
 
 To reduce various encodings and representations of data to a single simple form.
 
-
 ## State Data
 
-When data or parameters are used, by the application or server, to emulate a persistent 
-connection or track a client's status across a multi-request process or transaction.
+When data or parameters are used, by the application or server, to emulate a
+persistent connection or track a client's status across a multi-request process
+or transaction.
 
+## DoS
+
+Denial of Service is a cyber-attack where the perpetrator seeks to make a
+machine or network resource unavailable to its intended users by temporarily or
+indefinitely disrupting services of a host connected to the Internet.
+([source][dos])
 
 [1]: http://www.regular-expressions.info/
+[dos]: https://en.wikipedia.org/wiki/Denial-of-service_attack
