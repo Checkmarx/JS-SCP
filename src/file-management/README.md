@@ -7,43 +7,33 @@ of such functions.
 
 File uploads should only be restricted to authenticated users.
 After guaranteeing that file uploads are only made by authenticated users,
-another important aspect of security is to make sure that only accepted filetypes
-can be uploaded to the server (_whitelisting_).
-This check can be made using the following Go function that detects MIME types:
-`func DetectContentType(data []byte) string`
+another important aspect of security is to make sure that only accepted file
+types can be uploaded to the server (_whitelisting_).
+This check can be made using, for example, the [mmmagic package][1] - _An async
+libmagic binding for node.js for detecting content types by data inspection_.
 
-A simple program that reads a file and identifies its MIME type is attached.
-The most relevant parts are the following:
+```javascript
+const mmm = require('mmmagic');
+const Magic = mmm.Magic;
 
-```go
-{...}
-// Write our file to a buffer
-// Why 512 bytes? See http://golang.org/pkg/net/http/#DetectContentType
-buff := make([]byte, 512)
+const magic = new Magic(mmm.MAGIC_MIME_TYPE);
+magic.detectFile('node_modules/mmmagic/build/Release/magic.node', (err, result) => {
+  if (err) throw err;
 
-_, err = file.Read(buff)
-{...}
-//Result - Our detected filetype
-filetype := http.DetectContentType(buff)
+  console.log(result);
+  // output on Windows with 32-bit node: application/x-dosexec
+});
 ```
 
-After identifying the filetype, an additional step is required to validate the
-filetype against a whitelist of allowed filetypes. In the example, this is
-achieved in the following section:
+After identifying the file type, an additional step is required to validate the
+file type against a whitelist of allowed file types
 
-```go
-{...}
-switch filetype {
-case "image/jpeg", "image/jpg":
-  fmt.Println(filetype)
-case "image/gif":
-  fmt.Println(filetype)
-case "image/png":
-  fmt.Println(filetype)
-default:
-  fmt.Println("unknown file type uploaded")
+```javascript
+const allowedMimeTypes = [ 'image/png', 'image/jped' ];
+
+if (allowedMimeTypes.indexOf(result) === -1) {
+    throw new TypeError('file type not allowed');
 }
-{...}
 ```
 
 Files uploaded by users should not be stored in the web context of the
@@ -54,10 +44,6 @@ have execution privileges.
 If the file server that hosts user uploads is \*NIX based, make sure to
 implement safety mechanisms like chrooted environment or mounting the target
 file directory as a logical drive.
-
-Again, since Go is a compiled language, the usual risk of uploading files that
-contain malicious code that can be interpreted on the server-side is
-non-existent.
 
 In the case of dynamic redirects, user data should not be passed. If it is
 required by your application, additional steps must be taken to keep the
@@ -73,6 +59,4 @@ Never send the absolute file path to the user, always use relative paths.
 Set the server permissions regarding the application files and resources to
 `read-only`, and when a file is uploaded, scan the file for viruses and malware.
 
-[^1]:  Go 1.8 does allow dynamic loading now, via [the new plugin mechanism]( https://golang.org/pkg/plugin/).
-       If your application uses this mechanism, you should take precautions
-       against user-supplied input.
+[1]: https://github.com/mscdex/mmmagic
