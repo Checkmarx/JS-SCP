@@ -3,8 +3,8 @@ NoSQL
 
 In the past years, NoSQL databases have become prevalent in some use cases.
 
-Explaining the differences between SQL and NoSQL is beyond the scope of this
-document, but one of the main differences between the two is that NoSQL
+Explaining the differences between SQL and NoSQL databases are beyond the scope of this
+document, but one of the main differences between both are that NoSQL
 compromises data consistency in favor of availability, partition tolerance,
 and speed.
 
@@ -24,13 +24,13 @@ According to [DB-Engines.com][4] the most popular NoSQL databases in use is
 `MongoDB`.  
 
 In this section we will look at the security risks involving `MongoDB`.
-For more information regarding other aspects of MongoDB see the
+For more information regarding other aspects of MongoDB take a look at the
 [MongoDB documentation][1]
 
 There are several aspects of security to keep in mind if using MongoDB. In this
-section of the document we will focus on NoSQL injection.
+section of the document we will focus on NoSQL injections.
 
-Before diving into injection, it's important to clarify that that NoSQL
+Before diving into NoSQL injection, it's important to clarify that that NoSQL
 databases are vulnerable to injection attacks just like any other database.
 This misconception stems from the lack of support for traditional SQL
 syntax.
@@ -41,9 +41,9 @@ Another important aspect to keep in mind is that since there is no common
 language between NoSQL databases, the injection code presented here is database
 specific and assumes the middleware to be Javascript.
 
-### BSON:
+### BSON
 
-### Javascript:
+### Javascript
 
 According to the MongoDB documentation, there are three operations that allow
 arbitrary Javascript expressions to run directly on the server.
@@ -145,7 +145,7 @@ afterwards "reduce" our total count of all country related keyword occurrences,
 to a single value with the total number of occurrences. Using `MapReduce`
 would be a good way to achieve it.
 
-Generally `mapReduce` is not suited to be used a regular interface, but rather
+Generally `mapReduce` is not suited to be used as a regular interface, but rather
 to generate things in the backgrounds, such as reports or data caching.
 
 This a simple explanation of `mapReduce`. Futher information regarding this can

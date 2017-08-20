@@ -1,13 +1,14 @@
 Database Security
 =================
 
-This section on OWASP SCP will cover all of the database security issues and
-actions developers and DBAs need to take when using databases in their web
-applications.
+This section on [OWASP Secure Coding Practices - Quick Reference guide][5]
+covers database security issues and actions developers and database
+administrators need to take when using databases in their web applications.
 
 ## The best practise
-Before implementing your database in JavaScript, you should take care of some
-configurations that we'll cover next:
+
+Before using a database with your JavaScript application, you should take care
+of some configurations that we'll cover next:
 
 * Secure database server installation[^1]
     * Change/set a password for `root` account(s);
@@ -20,7 +21,7 @@ configurations that we'll cover next:
   work with JavaScript.
 * Disable any default accounts that are not required on your web application to
   connect to the database.
-  
+
 Also, because it's __important__ to validate input and encode output on the
 database, be sure to take a look into the [Input Validation][1] and
 [Output Encoding][2] sections of this guide.
@@ -33,3 +34,4 @@ database, be sure to take a look into the [Input Validation][1] and
 [2]: /output-encoding/README.md
 [3]: https://dev.mysql.com/doc/refman/5.7/en/mysql-secure-installation.html
 [4]: https://mariadb.com/kb/en/mariadb/mysql_secure_installation/
+[5]: https://www.owasp.org/index.php/OWASP_Secure_Coding_Practices_-_Quick_Reference_Guide
