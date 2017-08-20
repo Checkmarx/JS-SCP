@@ -27,6 +27,7 @@ Summary
 * [Session Management](session-management/README.md)
 * [Access Control](access-control/README.md)
 * [Cryptographic Practices](cryptographic-practices/README.md)
+  * [Pseudo-Random Generators](cryptographic-practices/pseudo-random-generators.md)
 * [Error Handling and Logging](error-handling-logging/README.md)
 * [Data Protection](data-protection/README.md)
 * [Communication Security](communication-security/README.md)
