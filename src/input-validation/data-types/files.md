@@ -52,7 +52,7 @@ Below you find an incomplete list: you should see which best fits your needs
 
 * [jailed][7] - Jailed is a small JavaScript library for running untrusted code
   in a sandbox. The library is written in vanilla-js and has no dependencies.
-* [sandbox][8] - A nifty JavaScript sandbox for node.js.
+* [sandbox][8] - A nifty JavaScript sandbox for Node.js.
 
 Other guidelines and recommendations about file manipulation and management on
 [File Management section][9].
