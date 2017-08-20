@@ -30,5 +30,6 @@ Summary
 * [File Management](file-management/README.md)
 * [Memory Management](memory-management/README.md)
 * [General Coding Practices](general-coding-practices/README.md)
+  * [Dependencies](general-coding-practices/dependencies.md)
 * [How to Contribute](howto-contribute.md)
 * [Glossary](GLOSSARY.md)
