@@ -231,7 +231,7 @@ must not store any part of the request or response.
 
 The `Pragma` header is there to support HTTP/1.0 requests.
 
-[1]: https://developer.mozilla.org/en-US/docs/Web/Security/Securing_your_site/Turning_off_form_autocompletion
+[1]: ./access-control/README.md
 [2]: http://LINK
 [3]: /cryptographic-practices/README.md
 [4]: /database-security/README.md
