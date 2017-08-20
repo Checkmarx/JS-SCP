@@ -78,16 +78,16 @@ rejected and in this case, the query wouldn't be executed.
 
 If instead of a numerical parameter the query expects a string, the input
 validation may not be enough, nevertheless it should be done (e.g. against a
-white list of allowed characters, etc...). 
+whitelist of allowed characters, etc.). 
 
 Then, to secure this and any other database query we will need a simple and
-single step: use Prepared Statements also known as Parameterized Queries in all
+single step: use Prepared Statements or Parameterized Queries in all
 database queries which accepts parameters (as replacement of queries build via
 string concatenation). You can read about [Parameterized Queries on Database
 Security][4].
 
 For completeness this is how our router would look like using a parameterized
-query
+query in Postgres:
 
 ```javascript
 const express = require('express');
@@ -96,7 +96,7 @@ const db = require('./db');
 const router = express.Router();
 
 router.get('/email', (req, res) => {
-  db.query('SELECT email FROM users WHERE id = ?', req.query.id);
+  db.query('SELECT email FROM users WHERE id = $1', req.query.id);
     .then(record => {
       // do stuff
       res.send(record[0]);

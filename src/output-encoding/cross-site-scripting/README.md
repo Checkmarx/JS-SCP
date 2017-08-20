@@ -1,14 +1,15 @@
 Cross-Site Scripting
 ====================
 
-Cross-Site Scripting are one of the most prevalent attacks involving web
-applications and JavaScripti, ranking as the number 1 in the [2017's OWASP
-Top 10][1].
-The attack consists in injecting malicious JavaScript code in the website.
+Cross-Site Scripting (XSS) vulnerabilities are one of the most prevalent 
+attacks involving web applications and JavaScript, ranking as the number 1 
+in the [2017's OWASP Top 10][1].
+The attack consists in executing malicious JavaScript code in the browser's 
+context of a user.
 
-For years XSS attacks were grouped in three groups `Reflected`, `Persistent` and
-`DOM` based - what led people to think of them as three different types. In fact
-we can have both Stored and Reflected DOM based XSS. To solve this
+For years, XSS attacks were grouped in three differente categories `Reflected`, 
+`Persistent` and `DOM` based - what led people to think of them as three different 
+types. In fact we can have both `Stored` and `Reflected DOM` based XSS. To solve this
 misunderstanding, two new terms are now generally accepted:
 
 * **Server XSS**: when untrusted data is included in an HTML response generated

@@ -41,4 +41,3 @@ What you will get? The same red car but without wheels.
 
 This is exactly how a database injection performs whether the database engine
 is SQL or NoSQL.
-own syntax.

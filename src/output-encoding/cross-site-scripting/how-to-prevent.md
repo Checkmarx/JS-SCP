@@ -4,7 +4,7 @@ How to prevent
 As we saw before, XSS can be grouped into Server and Client XSS and so
 mitigation should be done on both sides.
 
-In this section we will cover how to prevent XSS using Vanilla JavaScript,
+In this section, we will cover how to prevent XSS using Vanilla JavaScript,
 introduce the [xss-filters Node.js package][1] and also how to do it client-side
 with React and AngularJS.
 
@@ -17,7 +17,7 @@ As of JavaScript 1.5 (ECMAScript v3) there are two built-in functions that
 encode special characters, preventing the payload to be executed as part of
 server's HTTP response.
 
-Considering the following input
+Considering the following input:
 
 ```
 http://example.com/news/1?comment=<script>alert(XSS1)</script>
@@ -31,7 +31,7 @@ http://example.com/news/1?comment=<script>alert(XSS1)</script>
   ```
 
 * `encodeURI`  function encodes all special characters except `,/?:@&=+$#'`.
-  Unlike the `encodeURIComponent`, this function is aimed for URIs 
+  Unlike the `encodeURIComponent`, this function is aimed for URIs.
 
   ```
   http://example.com/news/1?comment=%3Cscript%3Ealert(XSS1)%3C/script%3E
@@ -55,7 +55,7 @@ global scope[^1], but more specialized packages like the [xss-filters][1] are
 available in [npm][2].
 
 The following sample source code demonstrates how to use [xss-filters
-package][1] withing an [Express][2] web application
+package][1] withing an [Express][2] web application:
 
 ```javascript
 const express = require('express');
@@ -88,10 +88,10 @@ There are a few warnings that accompany this package, namely:
 
 ## AngularJS
 
-Angular already has some built-in protections to help developers deal with
+Angular already has some built-in protections to help developers dealing with
 output encoding and XSS mitigation.
 
-By default all values are considered untrusted/unsafe. This means that whenever
+By default, all values are considered untrusted/unsafe. This means that whenever
 a value is inserted into the DOM from a `template`, `property`, `attribute`,
 `style`, `class binding` or `interpolation` Angular sanitizes and escapes it.
 

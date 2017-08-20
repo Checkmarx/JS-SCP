@@ -3,7 +3,7 @@ NoSQL
 
 In the past years, NoSQL databases have become prevalent in some use cases.
 
-Explaining the differences between SQL and NoSQL is beyond the scope of this
+Explaining the differences between SQL and NoSQL databases are beyond the scope of this
 document, but one of the main differences between the two is that NoSQL
 compromises data consistency in favor of availability, partition tolerance,
 and speed.
@@ -69,7 +69,7 @@ This query returns the document whose `UserID` is equal to the `req.query.id`
 value.
 
 Making `req.query.id` equals to `0; return true` will lead to the expression
-`this.UserID = 0; return true` which is the NoSQL equivalent to
+`this.UserID = 0; return true` which is the NoSQL equivalent to:
 
 ```sql
 SELECT * FROM Users WHERE UserID = 0 OR 1 = 1
