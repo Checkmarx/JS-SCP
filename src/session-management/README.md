@@ -1,8 +1,8 @@
 Session Management
 ==================
 
-In this section we will cover the most important aspects of session management
-according to OWASP's Secure Coding Practices. An example is provided along with
+In this section, we will cover the most important aspects of session management
+according to [OWASP Secure Coding Practices] [16]. An example is provided along with
 an overview of the rationale behind these practices.
 
 Although in-depth knowledge about how Session Management works is provided,
@@ -16,13 +16,13 @@ Instead, it refers to an applicational layer mechanism to workaround the
 **stateless** property of protocols like HTTP: each request is independent and
 no relationship exists between any previous or future requests.
 
-In this chapter we will cover the session flow shown by the picture below,
+In this chapter, we will cover the session flow shown by the picture below,
 which illustrates how web applications implement User Sessions to persist
 user's identity across multiple HTTP requests.
 
 ![Session Flow][2]
 
-From a macro perspective establishing a user session is quite straightforward.
+From a macro perspective establishing a user session is quite straightforward:
 
 1. The client makes a request;
 2. The server creates an identifier and sends it back along with the response;
@@ -34,7 +34,7 @@ From a macro perspective establishing a user session is quite straightforward.
 
 From the workflow described above, it is clear that it is server's
 responsibility to create the identifier. Why? Because this identifier is one of
-the most critical parts on all this mechanism and so
+the most critical parts on all this mechanism and so:
 
 * **it should always be created on a trusted system** and
 * **the application should only recognize as valid session identifier created
@@ -65,14 +65,14 @@ Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>; Secure; HttpOnl
 Unlike other cookies, Session Cookies do not have an expiration date (this is
 how web browsers distinguish them from other cookies) and they exist only
 _in-memory_ while the user navigates the website. When browser is closed all
-session cookies are deleted
+session cookies are deleted.
 
-To properly set a Session Cookie the server should define the following cookie
+To properly set a `Session Cookie`, the server should define the following cookie
 attributes:
 
 1. `Domain`: hosts to which the cookie will be sent;
-2. `Path`: Indicates a URL path that must exist in the requested resource
-   before sending the Cookie header
+2. `Path`: indicates a URL path that must exist in the requested resource
+   before sending the Cookie header;
 3. `Secure`: prevents cookies transmitted over an encrypted connections to be
    transmitted over unencrypted connections);
 4. `HttpOnly`: prevents access to the cookie using the JavaScript API
@@ -105,13 +105,13 @@ application should follow regarding User Sessions:
    identifier;
 3. Logout functionality should be available from all pages protected by
    authorization and it should fully terminate the associated session or
-   connection;
+   connection.
 
 A final note about **server-side session data which should be protected from
 unauthorized access by other users of the server, by implementing appropriate
 access controls on the server**.
 
-The example below uses [Express - Node.js web application frameword][9] and the
+The example below uses [Express - Node.js web application framework][9] and the
 [express-session middleware][10] which supports multiple store types. The
 example uses the [connect-sqlite3 module][11] to store session data on a
 [SQLite][12] database, nevertheless this may not be suitable for a production
@@ -159,11 +159,11 @@ app.listen(3000, () => {
   console.log('Example app listening on port 3000');
 });
 ```
-The image below shows the `Set-Cookie` HTTP response header
+The image below shows the `Set-Cookie` HTTP response header:
 
 ![`Set-Cookie HTTP response header][13]
 
-and the next one, the database entry on `sessions` tables
+and the next one, the database entry on `sessions` tables:
 
 ![entry on database `sessions` table][14]
 
@@ -190,3 +190,5 @@ forgotten (or course you can set it conditionally base on, for example,
 [13]: images/browser-set-cookie.png
 [14]: images/database-session-entry.png
 [15]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives
+[16]: https://www.owasp.org/index.php/OWASP_Secure_Coding_Practices_Checklist
+
