@@ -36,6 +36,33 @@ ensure that it is valid and safe.
 
 To reduce various encodings and representations of data to a single simple form.
 
+## XSS 
+
+Cross-Site Scripting is an attack that consists in injecting malicious
+JavaScript code in the website.
+
+## DOM
+
+Document Object Model (DOM) is a cross-platform and language-independent
+application programming interface that treats an HTML, XHTML, or XML document as
+a tree structure wherein each node is an object representing a part of the
+document. ([source][dom])
+
+## URI
+
+Unified Resource Identifier
+
+## JSON
+
+JavaScript Object Notation is a lightweight data-interchange format. It is
+easy for humans to read and write. It is easy for machines to parse and
+generate. It is based on a subset of the JavaScript Programming Language,
+Standard ECMA-262 3rd Edition - December 1999. JSON is a text format that is
+completely language independent but uses conventions that are familiar to
+programmers of the C-family of languages, including C, C++, C#, Java,
+JavaScript, Perl, Python, and many others. These properties make JSON an ideal
+data-interchange language. ([source][json])
+
 ## CSRF
 
 Cross-Site Request Forgery (CSRF) "_is an attack that forces an end user to
@@ -83,3 +110,5 @@ in TLS 1.0. ([source][beast])
 [csrf]: https://www.owasp.org/index.php/Cross-Site_Request_Forgery_
 [mitm]: https://www.owasp.org/index.php/Man-in-the-middle_attack
 [beast]: https://en.wikipedia.org/wiki/Transport_Layer_Security#BEAST_attack
+[dom]: https://en.wikipedia.org/wiki/Document_Object_Model
+[json]: http://www.json.org/
