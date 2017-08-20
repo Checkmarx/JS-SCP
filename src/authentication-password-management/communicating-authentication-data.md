@@ -76,7 +76,7 @@ In the following example taken from the documentation, we are using
 `passport-hash` as the strategy for authentication.
 
 ```javascript
-var passport = require('passport')
+const passport = require('passport')
 
 [...]
 
@@ -85,18 +85,27 @@ var passport = require('passport')
 // this would query a database; however, in this example we are using
 // a baked-in set of users.
 passport.use(new HashStrategy(
-  function(hash, done) {
+ (hash, done) => {
     // asynchronous verification, for effect...
-    process.nextTick(function () {
+    process.nextTick(() => {
 
       // Find the user by hash.  If there is no user with the given
       // hash, or the status is not unconfirmed, set the user to `false` to
       // indicate failure and set a flash message.  Otherwise, return the
       // authenticated `user`.
-      findByUserHash(hash, function(err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-        if (user.status != 'unconfirmed') { return done(null, false, { message: 'This user already confirmed' }); }
+      findByUserHash(hash, (err, user) => {
+        if (err) {
+          return done(err);
+        }
+
+        if (!user) {
+          return done(null, false, { message: 'Unknown user ' + username });
+        }
+
+        if (user.status != 'unconfirmed') {
+          return done(null, false,
+            { message: 'This user already confirmed' });
+        }
         return done(null, user);
       })
     });
@@ -111,12 +120,12 @@ passport.use(new HashStrategy(
 // which, in this example, will redirect the user to the home page.
 app.get('/confirm/:hash', passport.authenticate('hash', {
   failureRedirect: 'login', failureFlash: true
-}), function(req, res) {
+}), (req, res) => {
   res.redirect('/account');
 });
 ```
 
-For additional information and the full supported strategies list see [here][5].
+You can search available Passport strategies at [passportjs.org website][5].
 
 After a successful login, the user should be informed about the last successful
 or unsuccessful access date/time so that he can detect and report suspicious
@@ -133,4 +142,4 @@ activity. Further information regarding logging can be found in the
 [2]: https://httpd.apache.org/docs/1.3/logs.html#accesslog
 [3]: http://nginx.org/en/docs/http/ngx_http_log_module.html#log_format
 [4]: ../error-handling-logging/logging.md
-[5]: ../LINK
+[5]: http://passportjs.org/
