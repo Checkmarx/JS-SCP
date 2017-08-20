@@ -1,11 +1,11 @@
 Interpreted code integrity
 ==========================
 
-[OWAS SCP - Quick Reference Guide][1] recommends to "_use checksums or hashes to
+[OWASP SCP - Quick Reference Guide][1] recommends to "_use checksums or hashes to
 verify the integrity of interpreted code, libraries, executables, and
 configuration files_".
 
-Let's focus on third party resources such as JavaScript libraries or Stylesheets
+Let's focus on third-party resources such as JavaScript libraries or Stylesheets
 downloaded on the client-side from third-party remote hosts.
 
 Maybe you're thinking about Content Delivery Networks (CDN). They are everywhere

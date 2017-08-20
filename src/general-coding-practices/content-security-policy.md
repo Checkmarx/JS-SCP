@@ -1,7 +1,7 @@
 Content Security Policy
 =======================
 
-[Content Security Policy][1] (CSP) is W3C Candidate Recommendation introduces to
+[Content Security Policy][1] (CSP) is W3C Candidate Recommendation introduced to
 prevent [Cross-Site Scripting attacks][2], click jacking and other code
 injection attacks.
 
@@ -16,10 +16,10 @@ run and live most of the execution time. How do they know what is running there?
 
 Let's assume that you do not have SRI in place (if so, please read the
 [Interpreted Code Integrity][4] section) and you're loading JavaScript resources
-from a CDN. How to you know that these JavaScript resources do only download
+from a CDN. How do you know that these JavaScript resources do only download
 known dependencies and nothing else? What if the CDN gets compromised and one of
 the JavaScript resources your application downloads, is added a malicious
-payload. Something like the one below in the middle of a huge library.
+payload. Something like the one below in the middle of a huge library:
 
 ```javascript
 var s = document.createElement(s);

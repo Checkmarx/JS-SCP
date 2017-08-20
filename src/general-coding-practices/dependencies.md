@@ -14,14 +14,14 @@ This is the perfect match with OWASP SCP recommendation "_use tested and
 approved managed code rather than creating new unmanaged code for common tasks".
 
 Nevertheless, while writing their own applications developers should handle
-third-party dependencies carefully as they will be part of their applications
+third-party dependencies carefully as they will be part of their applications.
 
 We will focus on [npm][2] as it is still the most used package manager. In
 general [yarn][3] is full compatible with [npm][2] what doesn't mean that
 discussed issues do also apply to it. In fact [yarn][3] came to solve some of
 them.
 
-To install a dependency using [npm][2] we do
+To install a dependency using [npm][2] we do:
 
 ```shell
 $ npm install [PACKAGE-NAME] --save
@@ -31,12 +31,12 @@ Then `PACKAGE-NAME` is downloaded and stored locally at `node_modules` folder
 and the `package.json` file is updated to track the new dependency.
 
 By default, issuing the [npm install command][7] as we did above, downloads the
-most recent `PAKACE-NAME` version and `package.json` is updated with an entry
+most recent `PACKAGE-NAME` version and `package.json` is updated with an entry
 like `"package-name": "^1.2.4"` in the `dependencies` section.
 
 Assuming you're using a version control system like [Git][8], `node_modules` is
 something you exclude. So, whenever you checkout your application from Git, you
-have to install its dependencies, what you running
+have to install its dependencies, what you running:
 
 ```shell
 $ npm install
@@ -82,14 +82,14 @@ Time to answer the first question: "_What if these changes done to
 Well [npm shrinkwrap][14] answers the question "_locking down dependency
 versions for publication_".
 
-After running all your tests and security assessment it is time to run 
+After running all your tests and security assessment it is time to run:
 
 ```shell
 $ npm shrinkwrap
 ```
 
-If don't have one a `npm-shrinkwrap.json` file will be created from the
-`package.json` one with something like
+If you don't have one, a `npm-shrinkwrap.json` file will be created from the
+`package.json` one with something like:
 
 ```json
 {
