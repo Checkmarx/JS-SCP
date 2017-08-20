@@ -31,5 +31,6 @@ Summary
 * [Memory Management](memory-management/README.md)
 * [General Coding Practices](general-coding-practices/README.md)
   * [Dependencies](general-coding-practices/dependencies.md)
+  * [Interpreted Code Integrity](general-coding-practices/interpreted-code-integrity.md)
 * [How to Contribute](howto-contribute.md)
 * [Glossary](GLOSSARY.md)

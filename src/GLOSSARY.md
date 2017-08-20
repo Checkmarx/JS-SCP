@@ -36,4 +36,17 @@ ensure that it is valid and safe.
 
 To reduce various encodings and representations of data to a single simple form.
 
+## CDN
+
+Content Delivery Network or Content Distribution Network is a geographically
+distributed network of proxy servers and their data centers. The goal is to
+distribute service spatially relative to end-users to provide high availability
+and high performance. ([source][cdn])
+
+## SRI
+
+Subresource Integrity (SRI) is a security feature that enables browsers to verify that files they fetch (for example, from a CDN) are delivered without unexpected manipulation. It works by allowing you to provide a cryptographic hash that a fetched file must match. ([source][sri])
+
 [1]: http://www.regular-expressions.info/
+[cdn]: https://en.wikipedia.org/wiki/Content_delivery_network
+[sri]: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
