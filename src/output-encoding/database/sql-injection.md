@@ -108,7 +108,7 @@ Note that no input validation was added to the above code sample. Although it
 should be performed it was omitted on purpose to demonstrate that parameterized
 queries would suffice to prevent the SQLi.
 
-Some DBMS do not support parameterized queries but in most cases modules offer
+Some DBMS do not support parameterized queries but in most cases packages offer
 "_placeholders_" as alternative. This is the case of [npm mysql package][5] as
 explained on [Parameterized Queries section][4] of Database Security chapter.
 

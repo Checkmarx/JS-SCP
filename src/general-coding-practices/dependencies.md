@@ -57,7 +57,7 @@ Let's answer these questions, starting from the second one.
 You should always audit your dependencies. As they will be part of your
 application it is your responsibility to do it. More, it is your duty.
 
-Some developers rely on Github stars to assess module's "quality", but if you
+Some developers rely on Github stars to assess package's "quality", but if you
 think about Github stars as Facebook like, probably we agree that they don't
 say much.
 

@@ -147,11 +147,11 @@ console.log(result);
 // decrypted: JS - Secure Coding Practices
 ```
 
-There are also modules for this purpose. One of the most popular is `node-forge`
-and for completeness we will also show how an example using it. Note that
-`node-forge` consists of a native implementation of the TLS protocol, a set of
-cryptographic utilities, and a set of tools for developing web apps that require
-many network resources.
+There are also packages for this purpose. One of the most popular is
+`node-forge` and for completeness we will also show how an example using it.
+Note that `node-forge` consists of a native implementation of the TLS protocol,
+a set of cryptographic utilities, and a set of tools for developing web apps
+that require many network resources.
 
 Let's see how the `aes-256-cbc` encryption/decryption can be achieved using
 `node-forge`:

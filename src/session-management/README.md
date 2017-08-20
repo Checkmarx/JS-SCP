@@ -113,7 +113,7 @@ access controls on the server**.
 
 The example below uses [Express - Node.js web application framework][9] and the
 [express-session middleware][10] which supports multiple store types. The
-example uses the [connect-sqlite3 module][11] to store session data on a
+example uses the [connect-sqlite3 package][11] to store session data on a
 [SQLite][12] database, nevertheless this may not be suitable for a production
 ready application.
 

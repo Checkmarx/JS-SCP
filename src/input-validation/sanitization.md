@@ -5,7 +5,7 @@ Sanitization refers to the process of removing or replacing submitted data.
 When dealing with data, after the proper validation checks have been made, an
 additional step that is usually taken to strengthen data safety is sanitization.
 
-The [validator.js module][1] introduced for [Strings validation][2] also 
+The [validator.js package][1] introduced for [Strings validation][2] also 
 [offers a sanitizer API][3] which will be used in this section.
 
 The most common uses of sanitization are as follows:

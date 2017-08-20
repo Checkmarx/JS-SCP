@@ -12,7 +12,7 @@ Always adjust the database user according to your web applications needs.
 
 When creating your database access, choose a strong password. [OWASP Guidelines
 for enforcing secure passwords][2] well defines what a strong password is.
-You can use the [npm OWASP Password Strength Test module][3] to test your
+You can use the [npm OWASP Password Strength Test package][3] to test your
 password according these rules.
 
 Some password managers do generate strong passwords as well as some online web

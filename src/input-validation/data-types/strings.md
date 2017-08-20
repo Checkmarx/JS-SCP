@@ -132,7 +132,7 @@ Expressions like the ones present in the
 [OWASP Validation Regex Repository][18].
 
 If there's no other chance and you have to write your own Regular Expression,
-make use of [Safe Regex module][19] to validate it.
+make use of [Safe Regex package][19] to validate it.
 
 ## Validate data length
 

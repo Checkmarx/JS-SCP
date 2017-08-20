@@ -52,7 +52,7 @@ ways we can approach this problem, each more suited for a specific purpose.
 First, using the UUID version 4. UUID stands for `Universally unique
 identifiers` and consists of a 128 bit number.
 
-In Node.js there are several modules that can be used to generate a UUID. The
+In Node.js there are several packages that can be used to generate a UUID. The
 most popular is `uuid` and can be found [here][3].
 
 The package is very easy to use, as shown in the sample below:

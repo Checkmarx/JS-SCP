@@ -28,12 +28,12 @@ information or modify the database.
 When performing SQL queries, using String concatenation is the worst thing to
 do!
 
-Let's have a look to [Postgres][3] and [MySQL][4] modules in order to avoid
+Let's have a look to [Postgres][3] and [MySQL][4] packages in order to avoid
 this situation.
 
 ## Postgres
 
-The [postgres module][5] supports parameterized queries. It is really easy
+The [postgres package][5] supports parameterized queries. It is really easy
 to use.
 Looking at the previous vulnerable code, we just need to do the following:
 
@@ -50,7 +50,7 @@ client.query(sql, evilUserData, function (error, results, fields) {
 
 ## MySQL
 
-Although [mysql module][6] doesn't support parameterized queries, it offers
+Although [mysql package][6] doesn't support parameterized queries, it offers
 placeholder `?`
 
 ```javascript
