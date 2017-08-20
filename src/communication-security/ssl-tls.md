@@ -12,7 +12,7 @@ communication channel:
 * Authentication
 * Data integrity
 
-SSL/TLS protocols are available through Node.js' [tls package][4].
+SSL/TLS protocols are available through Node.js' [tls module][4].
 
 In this section we will focus on the Node.js implementation and its usage.
 Although the theoretical part of the protocol design and it's cryptographic
@@ -28,13 +28,13 @@ and forth between HTTP and HTTPS.
 
 ## TLS or HTTPS
 
-In Node.js, you have two distinct packages to create a server using `SSL/TLS`:
+In Node.js, you have two distinct modules to create a server using `SSL/TLS`:
 
 * [`tls`][4]
 * [`https`][5]
 
-In fact, [https package][5] literally implements "HTTP over TLS" as it depends
-on both the `http` and `tls` packages to provide an HTTP server capable of
+In fact, [https module][5] literally implements "HTTP over TLS" as it depends
+on both the `http` and `tls` modules to provide an HTTP server capable of
 handling secure connections[^1].
 
 The following is a simple example of an HTTP server using the `tls` module,
@@ -62,7 +62,7 @@ server.listen(443, () => {
 ```
 
 If you're looking to serve your application over HTTPS you're better to go with
-the [https package][5]. Bellow there's a sample using the [Express - Node.js
+the [https module][5]. Bellow there's a sample using the [Express - Node.js
 web application framework][9].
 
 ```javascript
@@ -109,11 +109,11 @@ disable some protocols on the server side.
 By default, the `tls` and `https` modules negotiate a protocol from the highest
 level down to whatever the client supports. Nowadays, current browsers are not
 allowing SSLv2, however, it is important to disable SSLv3 to protect against
-POODLE and TLSv1.0 to protect againt BEAST.
+POODLE and TLSv1.0 to protect against BEAST.
 
 The `secureOptions` parameter on the `createServer` function from `tls` and
-`https` packages allows to specify the allowed SSL/TLS protocols as
-demonstrated below
+`https` modules allows to specify the allowed SSL/TLS protocols as demonstrated
+below
 
 ```javascript
 const https = require('https');
@@ -189,7 +189,7 @@ HTTP referer does not contain any sensitive information when accessing external
 sites. Since the connection could be insecure, the HTTP referer may leak
 information.
 
-[^1]: Actualy you can see it on source code: lines 26 and 28 of [https package source code][8].
+[^1]: Actualy you can see it on source code: lines 26 and 28 of [https module source code][8].
 
 [1]: ../cryptography-practices/README.md
 [2]: https://nodejs.org/api/tls.html#tls_modifying_the_default_tls_cipher_suite

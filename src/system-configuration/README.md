@@ -19,7 +19,7 @@ through directories.
 By default, in Node.js or Express framework, there is no directory listing
 enabled.
 
-Using Node.js, you need to use the `fs` package to simulate a directory listing.
+Using Node.js, you need to use the `fs` module to simulate a directory listing.
 However, for the Express framework, there is a module called `serve-index`.
 
 It is recommended to check your code in order to avoid directory listing:

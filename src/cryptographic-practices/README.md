@@ -246,7 +246,7 @@ cryptographic keys will be managed_", protecting "_master secrets from
 unauthorized access_". That being said: your cryptographic keys shouldn't be
 hardcoded in the source code (as it is on this example).
 
-[Node.js's crypto package][1] collects common cryptographic constants, and
+[Node.js's crypto module][1] collects common cryptographic constants, and
 supports all cipher suits that are part of `OpenSSL` as stated in the
 documentation:  
 
