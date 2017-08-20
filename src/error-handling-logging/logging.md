@@ -5,9 +5,9 @@ Logging should always be handled by the application and should not rely on
 server configuration.
 
 All logging should be implemented by a master routine on a trusted system, and
-the developers should also ensure no sensitive data is included in the logs
-(e.g. passwords, session information, system details, etc.), nor is there
-any debugging or stack trace information.
+developers should also ensure no sensitive data is included in the logs (e.g.
+passwords, session information, system details, etc.), nor is there any
+debugging or stack trace information.
 
 Additionally, logging should cover both successful and unsuccessful security
 events, with an emphasis on important log event data.
@@ -24,197 +24,127 @@ Important event data most commonly refers to:
   settings.
 * All backend TLS connection failures and cryptographic module failures.
 
-To demonstrate this, a simple Node.js application is presented. In our example
-we will be using a third-party logging library called `winston`.  
+Below a brief source code sample using the popular [winston package][4].
 
 ```javascript
-  var winston = require('winston');
+const winston = require('winston');
+winston.add(winston.transports.File, {filename: 'myLog.log'});
 
-  [...]
-
-  winston.add(winston.transports.File, {filename: 'myLog.log'});
-
-  //Check user level
-  switch (RoleLevel) {
-    case 1:
-      //Login successfull - Log
-      winston.log('info', 'User logged in!');
-      //Using winston.info()
-      winston.info('User logged in!')
-      break;
-    case 2:
-      //Login unsuccessful - Log
-      winston.warn("Unsuccessful login.")
-      break;
-    default:
-      //Unspecified error
-      winston.error("Login error.")
-  }
-
-  [...]
-
-```
-
-Our example is using the `winston` package for error logging and saving the
-log to the filename `myLog.log`.
-
-Another important aspect of logging is log rotation. To exemplify we will add
-log rotation to our previous example by using the package
-`winston-daily-rotate-file`.  
-
-Using log rotation:
-```javascript
-var winston = require('winston');
-require('winston-daily-rotate-file');
-
-[...]
-
-var transport = new (winston.transports.DailyRotateFile)({
-  filename: './log',
-  datePattern: 'yyyy-MM-dd',
-  prepend: true,
-  level: process.env.ENV === 'development' ? 'debug' : 'info'
-})
-
-var logger = new (winston.logger)({
-  transports: [
-    transport
-  ]
-})
-
-//Check user level
+// Check user level
 switch (RoleLevel) {
   case 1:
-    //Login successfull - Log
-    logger.info('User logged in!');
+    // Login successfull - Log
+    winston.log('info', 'User logged in!');
+
+    // Using winston.info()
+    winston.info('User logged in!')
     break;
   case 2:
-    //Login unsuccessful - Log
-    logger.warn('Unsuccessful login.')
+    // Login unsuccessful - Log
+    winston.warn("Unsuccessful login.")
     break;
   default:
-    //Unspecified error
-    logger.error('Login error.')
-}
-
-[...]
+    // Unspecified error
+    winston.error("Login error.")
+  }
 ```
 
-When using server-side JavaScript(`node.js`) it's not recommended to implement
-you own logging routines. Instead, the best option is to use a third-party
-library like the one used in the previous examples (`winston`).
+Another important aspect of logging is log rotation. This can be added to the
+above sample, using the [winston-daily-rotate-file package][5].
 
-More information about `winston` can be
-found [here](https://github.com/winstonjs/winston).
+As alternative packages for logging you may want to have a look at
 
-As an alternative package for logging the following are also very popular among
-node.js developers:
 * [log4js][1]
 * [bunyan][2]
 
-Of these libraries one of the most popular is `winston`, hence our usage in the
-examples.
 
-In case of HTTP request logging, the most popular package is `morgan`.
-It's usage is very simple, as demonstrated below:
-Note that this example is built upon `express`.
+In case of HTTP request logging, [morgan][3] is the most popular package.
+It's usage is very simple, as demonstrated below using Express Node.js framework
 
-```JavaScript
-var express = require('express')
-var morgan = require('morgan')
+```javascript
+const express = require('express');
+const morgan = require('morgan');
 
-var app = express()
+const app = express();
 
-app.use(morgan('combined'))
+app.use(morgan('combined'));
 
-app.get('/', function (req, res) {
-  res.send('hello, world!')
-})
+app.get('/', (req, res) => {
+  res.send('hello, world!');
+});
 ```
 
-For the full documentation please consult the npm package page [here][3].
+To access morgan's documentation please [visit its page on npm][3].
 
-From the log access perspective, only authorized individuals should have
-access to the logs.
+From the log access perspective, only authorized individuals should have access
+to the logs.
 
 Developers should also make sure that a mechanism that allows for log
 analysis is set in place, as well as guarantee that no untrusted data will
 be executed as code in the intended log viewing software or interface.
 
-One of the most popular open source mechanisms for this is called `ELK stack`,
-which consists of `Elasticsearch`, `Logstash` and `Kibana`. More information
-regarding this can be
-found [here](https://www.elastic.co/webinars/introduction-elk-stack)
+One of the most popular open source tool for this the ELK stack: Elasticsearch,
+Logstash and Kibana. More information regarding this can be found [here][6].
 
-Regarding allocated memory cleanup, Node.js has an built-in Garbage Collector and
-the V8 uses two different collection algorithms.
-Several resources are available online for more in-depth information regarding
-memory cleanup.  
-A great example of this is the article written by Gergely Nemeth
-[here](https://blog.risingstack.com/node-js-at-scale-node-js-garbage-collection/).
-
-As a final step to guarantee log validity and integrity, a cryptographic
-hash function should be used as an additional step to ensure no log
-tampering has taken place.
+As a final step to guarantee log validity and integrity, a cryptographic hash
+function should be used as an additional step to ensure no log tampering has
+taken place.
 
 The following example shows a working example of log file signing and validating,
 using `SHA256` and the `crypto` package.
 
-//TODO: A MODIFICAR - ATENCAO  
-Credits to Fissure King @ stackoverflow.com.
-
 There are three parts to this algorithm.
-  - Computing the digest.
-  - Signing the digest.
-  - Verifying the signature.
 
-In the first part of our program we'll make use of the `crypto` module to compute
-the digest:
-```JavaScript
-'use strict'
+* Computing the digest.
+* Signing the digest.
+* Verifying the signature.
 
-const crypto = require('crypto')
-const fs = requre('fs')
-const path = require('path')
+In the first part of our program we'll make use of the `crypto` module to
+compute the digest:
 
-const hasher = crypto.createHash('sha256')
+```javascript
+const crypto = require('crypto');
+const fs = requre('fs');
+const path = require('path');
 
-const pathname = path.resolve(__dirname, 'logs', 'logfile.log')
-const rs = fs.createReadStream(pathname)
+const hasher = crypto.createHash('sha256');
 
-rs.on('data', data => hasher.update(data))
+const pathname = path.resolve(__dirname, 'logs', 'logfile.log');
+const rs = fs.createReadStream(pathname);
+
+rs.on('data', data => hasher.update(data));
 
 rs.on('end', () => {
   //Part 2 - See below
-})
+});
 ```
 
 In the second part we'll make use of the `crypto` module to compute the digest
 and sign.
 
-```JavaScript
-  [...]
-  const digest = hasher.digest('hex')
-  const privKey = fs.readFileSync('private_key.pem')
-  const signer = crypto.createSign('RSA-SHA256')
+```javascript
+const digest = hasher.digest('hex');
+const privKey = fs.readFileSync('private_key.pem');
+const signer = crypto.createSign('RSA-SHA256');
 
-  signer.update(digest)
+signer.update(digest);
 
-  const signature = signer.sign(privKey, 'base64')
-  [...]
+const signature = signer.sign(privKey, 'base64');
 ```
 
 And finally when we need to verify our signature, we can decrypt the signature
-and compare the result to the digest of the file.  
-As shown below:
-```JavaScript
-  const pubKey = fs.readFileSync('public_key.pem')
-  const verifier = crypto.createVerify('RSA-SHA256')
-  const testSig = verifier.verify(pubKey, signature, 'base64')
-  const verified = testSig === digest
-```
+and compare the result to the digest of the file as shown below:
 
+```javascript
+const pubKey = fs.readFileSync('public_key.pem');
+const verifier = crypto.createVerify('RSA-SHA256');
+const testSig = verifier.verify(pubKey, signature, 'base64');
+const verified = testSig === digest;
+```
 
 [1]: https://www.npmjs.com/package/log4js
 [2]: https://www.npmjs.com/package/bunyan
 [3]: https://www.npmjs.com/package/morgan
+[4]: https://www.npmjs.com/package/winston
+[5]: https://www.npmjs.com/package/winston-daily-rotate-file
+[6]: https://www.elastic.co/webinars/introduction-elk-stack
