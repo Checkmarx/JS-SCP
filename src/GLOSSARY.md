@@ -137,6 +137,19 @@ Duong and Juliano Rizzo back in 2011, which violates browsers'  same origin
 policy constraints, for a long-known cipher block chaining (CBC) vulnerability
 in TLS 1.0. ([source][beast])
 
+## State Data
+
+When data or parameters are used, by the application or server, to emulate a
+persistent connection or track a client's status across a multi-request process
+or transaction.
+
+## DoS
+
+Denial of Service is a cyber-attack where the perpetrator seeks to make a
+machine or network resource unavailable to its intended users by temporarily or
+indefinitely disrupting services of a host connected to the Internet.
+([source][dos])
+
 [regex]: http://www.regular-expressions.info/
 [csrf]: https://www.owasp.org/index.php/Cross-Site_Request_Forgery_
 [mitm]: https://www.owasp.org/index.php/Man-in-the-middle_attack
@@ -147,3 +160,4 @@ in TLS 1.0. ([source][beast])
 [sri]: https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity
 [csp]: https://en.wikipedia.org/wiki/Content_Security_Policy
 [sandbox]: https://en.wikipedia.org/wiki/Sandbox_(computer_security)
+[dos]: https://en.wikipedia.org/wiki/Denial-of-service_attack
