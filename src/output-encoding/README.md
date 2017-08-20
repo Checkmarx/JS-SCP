@@ -3,9 +3,8 @@ Output Encoding
 
 Although it is a six bullets only section on [OWASP SCP Quick Reference
 Guide][1], bad practices on Output Encoding are pretty prevalent on Web
-Application development, es of Output Encoding are
-pretty prevalent on Web Application development, thus leading to the number 1
-vulnerability of the [OWASP Top Ten] [3]: [Injection][2].
+Application development, thus leading to the number 1 vulnerability of the
+[OWASP Top Ten] [3]: [Injection][2].
 
 As complex and rich as Web Applications become, the more data sources they
 have: users, databases, thirty party services, etc. At some point in time
