@@ -1,4 +1,4 @@
-# File Manipulation
+    # File Manipulation
 
 User input data can also take the form of uploaded files which should be
 subject of strict validation.
@@ -52,7 +52,7 @@ Below you find an incomplete list: you should see which best fits your needs
 
 * [jailed][7] - Jailed is a small JavaScript library for running untrusted code
   in a sandbox. The library is written in vanilla-js and has no dependencies.
-* [sandbox][8] - A nifty javascript sandbox for node.js.
+* [sandbox][8] - A nifty JavaScript sandbox for node.js.
 
 Other guidelines and recommendations about file manipulation and management on
 [File Management section][9].
