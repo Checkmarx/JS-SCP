@@ -38,7 +38,7 @@ How `String`s are handled internally is well documented on the [ECMAScript
 > ECMAScript does not place any restrictions or requirements on the values
 > except that they must be 16-bit unsigned integers.
 
-Prior to the introduction of [TypedArray][8] in ECMAScript 2015 (ES6) Node.JS
+Prior to the introduction of [TypedArray][8] in ECMAScript 2015 (ES6) Node.js
 introduced the [Buffer class][9], allowing you to handle and convert strings
 encoding easily
 

@@ -133,7 +133,7 @@ client side.
 
 This includes embedding in insecure formats (e.g. Adobe flash or compiled code).
 
-A small example of `aes-256-cbc` encryption in Node.JS using the
+A small example of `aes-256-cbc` encryption in Node.js using the
 `crypto` package:
 
 

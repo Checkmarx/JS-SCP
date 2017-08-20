@@ -29,7 +29,7 @@ of validation e.g. headers should only contain ASCII characters**. Some
 security problems like [HTTP response spliting][3] are caused by failure on
 proper input validation/sanitization. Remember that HTTP headers are also
 untrusted data sources e.g. Cookies.
-If you're curious about how Node.JS validates HTTP headers
+If you're curious about how Node.js validates HTTP headers
 [have a look at the source code][4].
 
 Also remember to **validate data from redirects as "_an attacker may submit
