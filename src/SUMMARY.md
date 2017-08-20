@@ -34,5 +34,6 @@ Summary
   * [Interpreted Code Integrity](general-coding-practices/interpreted-code-integrity.md)
   * [Content Security Policy](general-coding-practices/content-security-policy.md)
   * [Concurrency](general-coding-practices/concurrency.md)
+  * [Sandboxing](general-coding-practices/sandboxing.md)
 * [How to Contribute](howto-contribute.md)
 * [Glossary](GLOSSARY.md)
