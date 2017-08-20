@@ -2,26 +2,27 @@ Error Handling
 ==============
 
 In this section of the document we cover the best practices for error handling
-in javascript. Like any robust application, error handling is essential.
+in JavaScript. Like any robust application, error handling is essential.
 
-In the first part consists of an overview of how javascript handles errors.
+In the first part consists of an overview of how JavaScript handles errors.
 In the second part we will provide example code for different types of error
-handling in javascript.
+handling in JavaScript.
 
 ## Overview:
 
 Javascript has an `Error` constructor that creates an error object. As usual,
 when a runtime exception occurs an error is thrown. The syntax is the following:
-```javascript
+```JavaScript
 new Error([message[, filename[, lineNumber]]])
 ```
 The resulting error object can also be used for user-defined exception.
 
 An important distinction to keep in mind is related to the nature of the error.
 Errors can be the result of `Operational Errors` or `Programmer errors`.
+
 `Operational errors` are errors related to operations that _might_ fail.
 This means that the application logic is correct, but some unexpected error occurred.
-Examples of this - I/O errors, network problems, out of memory, etc.
+Examples of this - Input/Output (I/O) errors, network problems, out of memory, etc.
 
 The other type of errors are called `Programmer errors`, and these are related
 to logic bugs in the application code. These errors are a result of a problem in
@@ -32,31 +33,31 @@ Examples of this - accessing properties of an "undefined" variable, type confusi
 (passing to a function an unexpected data type), etc.  
 
 In Node.js there are three main ways to deliver errors:
-  - `throw` the error (exception).
-  - Passing the error to a `callback()`, a function used to handle errors and the
-    results of asynchronous operations.
-  - Using an `EventEmitter` to emit an `error` event.
+  - `throw` the error (exception);
+  - passing the error to a `callback()`, a function used to handle errors and the
+    results of asynchronous operations;
+  - using an `EventEmitter` to emit an `error` event.
 
-Also important to understand is the difference between `error` and `exception`.  
+Also it is important to understand the difference between `error` and `exception`.  
 Errors can be constructed and then passed directly to another function or _thrown_.
 If an `error` is _thrown_ then it becomes an exception.
 
-In plain synchronous javascript the syntax of an exception is usually the
+In plain synchronous JavaScript the syntax of an exception is usually the
 following:
 
 `throw new Error('Some error.');`
 
-But in node.js the following pattern is more common:
+But in Node.js the following pattern is more common:
 `callback(new Error('Some error'));`
 
-The usage of `callback()` is due to the asynchronous nature of node.js and the
-associated errors that can occur. In synchronous operations like I/O all
-exceptions should be caught, not only due to good practices, but also to
+The usage of `callback()` is due to the asynchronous nature of Node.js and the
+associated errors that can occur. In synchronous operations like I/O errors, 
+all exceptions should be caught, not only due to good practices, but also to
 ensure that if the application fails, it fails on a controlled fashion.
 
 As an example, consider this __incorrect__ way to read a file:
 
-```javascript
+```JavaScript
 const fs = require('fs');
 
 let content = fs.readFileSynx('/tmp/missing-file.txt');
@@ -70,7 +71,7 @@ So be careful to always catch exceptions in synchronous operations.
 
 The correct way to write the previous code in order to catch exceptions is:
 
-```javascript
+```JavaScript
 const fs = require('fs');
 
 try {
@@ -100,7 +101,7 @@ to `new Promise`, will be silently disposed unless handled manually.
 
 Consider the following code:
 
-```javascript
+```JavaScript
  [...]
  function validateUser() {
    return new Promise (function (resolve, reject) {
@@ -115,9 +116,10 @@ Consider the following code:
  }
  [...]
 ```
+
 By using promises we can re-write our previous code in the following manner, but note that we are still not handling errors:
 
-```javascript
+```JavaScript
 [...]
 function validateUser() {
 
@@ -141,7 +143,7 @@ function validateUser() {
 
 Now the same code but using promises and handling errors:
 
-```javascript
+```JavaScript
 [...]
 function validateUser() {
 
@@ -167,7 +169,7 @@ Using `generators` allows developers to write asynchronous code in a synchronous
 manner.  
 This means that by using `generators` code that would look like this:
 
-```javascript
+```JavaScript
 [...]
 app.use(function login(req, res, next){
   var user = req.body.user
@@ -192,8 +194,8 @@ app.use(function login(req, res, next){
 
 Can now be written as:
 
-```javascript
-app.use(function *login(req, res, next){
+```JavaScript
+app.use(function login(req, res, next){
   var user = req.body.user
   var password = req.body.password
 
@@ -211,13 +213,13 @@ app.use(function *login(req, res, next){
 });
 ```
 
-It's also good practice to implement custom error messages or custom error
+It is also good practice to implement custom error messages or custom error
 pages as a way to make sure that no information is leaked when an error
 occurs.
 
-Example using `express.js` and implementing a custom error page.
+Example using `express.js` and implementing a custom error page:
 
-```javascript
+```JavaScript
   var express = require('express')
   var app = express();
 
@@ -254,7 +256,7 @@ If you're using evented code or code that deals with streams, then an error
 handler should be present. `EventEmitters` fire an error event that can be
 captured. The following is an example of `EventEmitter` using `promises`:
 
-```javascript
+```JavaScript
 const EventEmitter = require('events')
 
 class Emitter extends EventEmitter {}
@@ -277,8 +279,8 @@ process.on('uncaughtException', function (error, promise) {
 ```
 
 Another important detail to keep in mind is to guarantee that no sensitive
-information is error responses. This means no system details, session identifiers,
+information is in error responses. This means no system details, session identifiers,
 account information, stack traces or debug information.
 
-Also important, is to assure that in case of an error associated with the
-security controls it's access is denied by default.
+Finally, it is necessary to ensure that in case of an error associated with the
+security controls, by default, access is denied.

@@ -8,6 +8,7 @@ All logging should be implemented by a master routine on a trusted system, and
 the developers should also ensure no sensitive data is included in the logs
 (e.g. passwords, session information, system details, etc.), nor is there
 any debugging or stack trace information.
+
 Additionally, logging should cover both successful and unsuccessful security
 events, with an emphasis on important log event data.
 
@@ -23,7 +24,7 @@ Important event data most commonly refers to:
   settings.
 * All backend TLS connection failures and cryptographic module failures.
 
-To demonstrate this, a simple node.js application is presented. In our example
+To demonstrate this, a simple Node.js application is presented. In our example
 we will be using a third-party logging library called `winston`.  
 
 ```javascript
@@ -99,7 +100,7 @@ switch (RoleLevel) {
 [...]
 ```
 
-When using server-side javascript(`node.js`) it's not recommended to implement
+When using server-side JavaScript(`node.js`) it's not recommended to implement
 you own logging routines. Instead, the best option is to use a third-party
 library like the one used in the previous examples (`winston`).
 
@@ -108,8 +109,8 @@ found [here](https://github.com/winstonjs/winston).
 
 As an alternative package for logging the following are also very popular among
 node.js developers:
-* [log4js][1] - https://www.npmjs.com/package/log4js
-* [bunyan][2] - https://www.npmjs.com/package/bunyan
+* [log4js][1]
+* [bunyan][2]
 
 Of these libraries one of the most popular is `winston`, hence our usage in the
 examples.
@@ -118,7 +119,7 @@ In case of HTTP request logging, the most popular package is `morgan`.
 It's usage is very simple, as demonstrated below:
 Note that this example is built upon `express`.
 
-```javascript
+```JavaScript
 var express = require('express')
 var morgan = require('morgan')
 
@@ -169,7 +170,7 @@ There are three parts to this algorithm.
 
 In the first part of our program we'll make use of the `crypto` module to compute
 the digest:
-```javascript
+```JavaScript
 'use strict'
 
 const crypto = require('crypto')
@@ -191,7 +192,7 @@ rs.on('end', () => {
 In the second part we'll make use of the `crypto` module to compute the digest
 and sign.
 
-```javascript
+```JavaScript
   [...]
   const digest = hasher.digest('hex')
   const privKey = fs.readFileSync('private_key.pem')
@@ -206,7 +207,7 @@ and sign.
 And finally when we need to verify our signature, we can decrypt the signature
 and compare the result to the digest of the file.  
 As shown below:
-```javascript
+```JavaScript
   const pubKey = fs.readFileSync('public_key.pem')
   const verifier = crypto.createVerify('RSA-SHA256')
   const testSig = verifier.verify(pubKey, signature, 'base64')
@@ -214,6 +215,6 @@ As shown below:
 ```
 
 
-[1]:http://
-[2]:http://
-[3]:https://www.npmjs.com/package/morgan
+[1]: https://www.npmjs.com/package/log4js
+[2]: https://www.npmjs.com/package/bunyan
+[3]: https://www.npmjs.com/package/morgan
