@@ -36,4 +36,11 @@ ensure that it is valid and safe.
 
 To reduce various encodings and representations of data to a single simple form.
 
+
+## State Data
+
+When data or parameters are used, by the application or server, to emulate a persistent 
+connection or track a client's status across a multi-request process or transaction.
+
+
 [1]: http://www.regular-expressions.info/
