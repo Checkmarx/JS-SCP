@@ -1,4 +1,5 @@
-# Strings
+Strings
+=======
 
 The user input data transmitted over HTTP reaches the server and it is handled
 as `String` thus the protocol itself is textual[^1].
@@ -20,7 +21,7 @@ input rejection**.
 This section covers `String` validation and manipulation in general. How to
 convert `String` to `Number` is covered on [Numbers section][4].
 
-**Important** you should always avoid to right your own validation routine. A
+**Important**: you should always avoid to right your own validation routine. A
 a well tested and actively maintained one like [Validator.js][5] should be used
 instead.
 
@@ -141,7 +142,7 @@ issues. Although _overflows_ are not a common problem in JavaScript (still they
 can happen[^5]) some database fields may have fixed length.
 
 So, after converting input strings to the system default character encoding,
-validate it length
+validate its length:
 
 ```javascript
 'use strict';
@@ -153,7 +154,7 @@ validator.isLength(string, {min: 3, max: 255}); // true
 ## Check for _special characters_
 
 If the standard validation routine can not address the following inputs, then
-you should check them specifically
+you should check them specifically:
 
 * null bytes (`%00`)
 * new line (`%0d`, `%0a`, `\r`, `\n`)

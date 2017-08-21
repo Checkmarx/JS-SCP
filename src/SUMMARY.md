@@ -29,6 +29,8 @@ Summary
 * [Cryptographic Practices](cryptographic-practices/README.md)
   * [Pseudo-Random Generators](cryptographic-practices/pseudo-random-generators.md)
 * [Error Handling and Logging](error-handling-logging/README.md)
+  * [Error Handling](error-handling-logging/error-handling.md)
+  * [Logging](error-handling-logging/logging.md)
 * [Data Protection](data-protection/README.md)
 * [Communication Security](communication-security/README.md)
   * [SSL/TLS](communication-security/ssl-tls.md)

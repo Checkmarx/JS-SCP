@@ -150,6 +150,15 @@ machine or network resource unavailable to its intended users by temporarily or
 indefinitely disrupting services of a host connected to the Internet.
 ([source][dos])
 
+## ES6
+
+ECMAScript 6th Edition.
+
+ECMAScript (or ES) is a trademarked scripting-language specification
+standardized by Ecma International in ECMA-262 and ISO/IEC 16262. It was created
+to standardize JavaScript, so as to foster multiple independent implementations.
+([source][ecma])
+
 [regex]: http://www.regular-expressions.info/
 [csrf]: https://www.owasp.org/index.php/Cross-Site_Request_Forgery_
 [mitm]: https://www.owasp.org/index.php/Man-in-the-middle_attack
@@ -161,3 +170,4 @@ indefinitely disrupting services of a host connected to the Internet.
 [csp]: https://en.wikipedia.org/wiki/Content_Security_Policy
 [sandbox]: https://en.wikipedia.org/wiki/Sandbox_(computer_security)
 [dos]: https://en.wikipedia.org/wiki/Denial-of-service_attack
+[ecma]: https://en.wikipedia.org/wiki/ECMAScript

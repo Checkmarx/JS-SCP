@@ -1,14 +1,14 @@
 Validation
 ==========
 
-"Input Validation" section on [OWASP Secure Coding Practices guide][1] is a
+"Input Validation" section on [OWASP Secure Coding Practices Guide][1] is a
 sixteen items checklist, which along with the "Output Encoding" section, is one
 of the most important not only regarding application security but also data
 consistency and integrity since data is usually used across a variety of
 systems and applications.
 
 **A single and centralized Input Validation routine should be used by the
-application, running on a trusted system**, most often the Server but in
+application, running on a trusted system**, most often the server but in
 general any non-exploitable system which should be out-of-control from
 unauthorized people (performing client-side validations are in general a bad
 idea, since who's providing the input is also in control of the system).
@@ -20,13 +20,13 @@ along all application workflow.
 To avoid problems caused by unhandled characters or unsupported character
 encodings, **the validation routine should use a single and proper character
 set, such as UTF-8, to all sources of input**. So as soon as data reaches the
-trusted system where Input Validation is performed and even before validation,
+trusted system where `Input Validation` is performed and even before validation,
 data should be encoded. How to perform this task is demonstrated on
 [Data Types String section][2].
 
-For Web Applications **HTTP request and response headers should also be subject
+For Web Applications, **HTTP request and response headers should also be subject
 of validation e.g. headers should only contain ASCII characters**. Some
-security problems like [HTTP response spliting][3] are caused by failure on
+security problems like [HTTP response splitting][3] are caused by failure on
 proper input validation/sanitization. Remember that HTTP headers are also
 untrusted data sources e.g. Cookies.
 If you're curious about how Node.js validates HTTP headers

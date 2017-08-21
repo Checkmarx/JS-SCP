@@ -12,7 +12,7 @@ three separate categories:
   application and data.
 
   * inform the user that submitted data has failed to comply with the
-    requirements and therefor the data should be modified in order to comply
+    requirements and therefore the data should be modified in order to comply
     with the required conditions.
 
   * modify user submitted data on the server side without notifying the user of
