@@ -1,4 +1,5 @@
-# Numbers
+Numbers
+=======
 
 [JavaScript specification][1] makes a clear differentiation between three
 `Number` related terms/concepts:

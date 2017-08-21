@@ -1,4 +1,5 @@
-# Strings
+Strings
+=======
 
 The user input data transmitted over HTTP reaches the server and it is handled
 as `String` thus the protocol itself is textual[^1].

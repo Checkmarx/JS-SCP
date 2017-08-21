@@ -1,4 +1,5 @@
-    # File Manipulation
+Files
+=====
 
 User input data can also take the form of uploaded files which should be
 subject of strict validation.
