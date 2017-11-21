@@ -2,22 +2,22 @@ Concurrency
 ===========
 
 Shared resources bring concurrency problems such as [deadlocks][1] and
-[resources starvation][2]. Techniques to solve these problems are already well-
-known and documented: [semaphores][3] and [mutexes][4] are two of them.
+[resources starvation][2]. Techniques for solving these problems are already
+well-known and documented - [semaphores][3] and [mutexes][4] are two of them.
 
 This is an important topic which deserves to be covered here, because JavaScript
-is known to be single threaded which takes advantage of its `Event Loop` for
-performance. The point is that JavaScript concurrency model is exactly based on
-its `Event Loop`.
+is known to be single threaded and takes advantage of its `Event Loop` for
+performance. The point is that JavaScript concurrency model is precisely based
+on its `Event Loop`.
 
 You can read about JavaScript concurrency model in detail on [Mozilla Developer
 NetworK "Concurrency model and Event Loop"][5].
 
-The following few lines are meant just to remember you that your database is a
-shared resource subject of concurrent connections and operations. Thankfully you
-don't have to handle database concurrency, nevertheless when your application
-performs read/write operations on the file system or even a single file you may
-be subject of concurrency problems.
+The following few lines are meant just to remind you that your database is a
+shared resource subject of concurrent connections and operations. Thankfully,
+you don't have to handle database concurrency. Nevertheless, when your
+application performs read/write operations on the file system or even a single
+file, you may be subject to concurrency problems.
 
 Let's walk through a common and simple example.
 You have written a _middleware_ for [Express Node.js web application
@@ -49,12 +49,12 @@ const counterMiddleware = (req, res, next) => {
 
 On every single request, the `counter.txt` file is read and written.
 
-As you may know but certainly expect, the Express server answers multiple
+As you may know and certainly expect, the Express server answers multiple
 requests at the same time and, for a busy web site, two different requests may
 try to access the file at the same time[^1] or write operations do not happen in
 the expected order messing with the counter.
 
-This is where synchronization mechanisms and concurrency controls comes in.
+This is where synchronization mechanisms and concurrency controls come in.
 
 You may want to have a look at one of these npm packages or other with the same
 purpose, according to your needs:
@@ -63,8 +63,8 @@ purpose, according to your needs:
 * [semaphore][8]
 * [mutexify][9]
 
-Rule of thumbs, concurrency is something you should always care about because
-when it comes to scalability the first approach will be to increase the number
+Rule of thumb: concurrency is something you should always care about because
+when it comes to scalability, the first approach will be to increase the number
 of processes to handle a specific task.
 
 [^1]: is is gonna happen more frequently if you have multiple processes attending HTTP requests

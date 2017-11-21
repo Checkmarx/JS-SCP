@@ -1,20 +1,20 @@
 Pseudo-Random Generators
 ========================
 
-In OWASP Secure Coding Practices you'll find what seems to be a really complex
+In OWASP Secure Coding Practices, you'll find what seems to be a really complex
 guideline: "_All random numbers, random file names, random GUIDs, and random
 strings should be generated using the cryptographic module’s approved random
 number generator when these random values are intended to be un-guessable_", so
-let's talk about "random numbers".
+let's talk about those "random numbers".
 
-Cryptography relies on some randomness, but for the sake of correctness what
+Cryptography relies on some randomness, but for the sake of correctness, what
 most programming languages provide out-of-the-box is a pseudo-random number
-generator: [JavaScript's Math.random()][1] is not an exception.
+generator. [JavaScript's Math.random()][1] is not an exception.
 
 An example of pseudo-random number generation using `Math.random()`:
 
 ```javascript
-getRandomArbitrary (min, max) => {
+function getRandomArbitrary (min, max) {
   const _min = Math.ceil(min);
   const _max = Math.floor(max);
   return Math.floor(Math.random() * (_max - _min) + _min);
@@ -38,21 +38,21 @@ You should carefully read the documentation when it states that:
 > not use them for anything related to security. Use the `Web Crypto API`
 > instead, and more precisely the `window.crypto.getRandomValues()` method.
 
-In Node.js we can use the `crypto.randomBytes` to generate pseudo-random
+In Node.js, we can use the `crypto.randomBytes` to generate pseudo-random
 numbers. But this requires some precautions, namely, the direct usage of it.
 
-So why does the direct usage can lead to problems? Due to a possible "bias" in
+So, why does the direct usage lead to problems? Due to a possible "bias" in
 random value generation.
-A great article with additional information has been written by user joepie91
-on github.com and can be found [here][2].
+A great article with additional information written by user joepie91 on
+github.com can be found [here][2].
 
-So how can we generate a cryptographically secure random values? There are two
+So, how can we generate a cryptographically secure random values? There are two
 ways we can approach this problem, each more suited for a specific purpose.
 
 First, using the UUID version 4. UUID stands for `Universally unique
 identifiers` and consists of a 128 bit number.
 
-In Node.js there are several packages that can be used to generate a UUID. The
+In Node.js, there are several packages that can be used to generate a UUID. The
 most popular is `uuid` and can be found [here][3].
 
 The package is very easy to use, as shown in the sample below:
@@ -65,9 +65,9 @@ console.log(uuid1);
 // Result: a61903ff-bb29-4846-849d-0da018892da4
 ```
 
-Another option is to generate cryptographically secure value using the `crypto`
-module. In this module there's a method called `randomBytes` that returns a
-buffer with randomly generated values.
+Another option is to generate a cryptographically secure value using the
+`crypto` module. In this module, there's a method called `randomBytes` that
+returns a buffer with randomly generated values.
 
 Looking at the documentation we can see we need some parameters being passed
 along to generate our random value: 
@@ -93,18 +93,17 @@ Note that although in the example we chose the encoding to be `hex` it could
 also be `base64`, `ascii`, `utf-8`, `utf16le`/`ucs2` or `binary`.
 
 You may notice that running [crypto.randomBytes][4] is slower than
-[Math.random][1] but this is expected: the fastest algorithm isn't always the
-safest. Crypto's `randomBytes` is also safer to implement; an example of
-this, is the fact that you *CANNOT* seed crypto/rand, the library uses
-OS-randomness for this, preventing developer misuse.
+[Math.random][1] but this is expected - the fastest algorithm isn't always the
+safest. Crypto's `randomBytes` is also safer to implement; an example of this,
+is the fact that you *CANNOT* seed crypto/rand, the library uses OS-randomness
+for this, preventing developer misuse.
 
 If you're curious about how using `Math.random` can lead to problems, a great
-article has been written about a problem in Chrome's V8 Engine related to it's
+article has been written about a problem in Chrome's V8 Engine related to its
 use. You can read it [here][5].
 
 So remember, if randomness is crucial (like in cryptography or token
-generation), then don't use `Math.random()`. Instead, use
-`crypto.randomBytes()`.
+generation), don't use `Math.random()`. Instead, use `crypto.randomBytes()`.
 
 Finally, it's important to establish and use a policy and process for
 cryptographic key management. For example, a specialist is in charge of the key

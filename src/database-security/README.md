@@ -5,22 +5,22 @@ This section on [OWASP Secure Coding Practices - Quick Reference guide][5]
 covers database security issues and actions developers and database
 administrators need to take when using databases in their web applications.
 
-## The best practise
+## The Best Practise
 
 Before using a database with your JavaScript application, you should take care
-of some configurations that we'll cover next:
+of the following configurations:
 
 * Secure database server installation[^1]
-    * Change/set a password for `root` account(s);
-    * Remove the `root` accounts that are accessible from outside the localhost;
-    * Remove any anonymous-user accounts;
-    * Remove any existing test database;
+    * Change/set a password for `root` account(s)
+    * Remove the `root` accounts that are accessible from outside the localhost
+    * Remove any anonymous-user accounts
+    * Remove any existing test database
 * Remove any unnecessary stored procedures, utility packages,
-  unnecessary services, vendor content (e.g. sample schemas).
+  unnecessary services, vendor content (e.g. sample schemas)
 * Install the minimum set of features and options required for your database to
-  work with JavaScript.
-* Disable any default accounts that are not required on your web application to
-  connect to the database.
+  work with JavaScript
+* Disable any default accounts which are not required to connect to the database
+  of your web application
 
 Also, because it's __important__ to validate input and encode output on the
 database, be sure to take a look into the [Input Validation][1] and

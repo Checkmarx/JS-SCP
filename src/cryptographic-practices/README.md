@@ -1,7 +1,7 @@
 Cryptographic Practices
 =======================
 
-Let's make the first statement as strong as your cryptography should be:
+Let's make the first statement as strong as your cryptography should be -
 **hashing and encrypting are two different things**.
 
 There's a general misconception and most of the time hashing and encrypting are
@@ -17,13 +17,13 @@ hash = F(data)
 ```
 
 The hash has fixed length and its value vary widely with small variations in
-input (collisions may still happen). A good hashing algorithm won't allow to
-turn a hash into its original source[^1]. MD5 is the most popular hashing
-algorithm but security wise BLAKE2 is considered the strongest and most
+input (collisions may still happen). A good hashing algorithm won't allow a hash
+to turn into its original source[^1]. MD5 is the most popular hashing algorithm,
+however security-wise BLAKE2 is considered the strongest and most
 flexible.
-However, BLAKE2 has very little support in Node.js, but for demonstration
-purposes we will se the `blakejs` package. If for any reason we cannot use it,
-then we fallback to SHA-256.
+That being said, BLAKE2 has very little support in Node.js, but for
+demonstration purposes we will use the `blakejs` package. If for any reason we
+cannot use it, we fallback to SHA-256.
 
 Example using `blakejs`
 
@@ -37,7 +37,7 @@ console.log(blake.blake2sHex('JS - Secure Coding Practices'));
 // prints bd3eb89e82ccfb45677b507aec93b5262768c879a60d2f158bf25a11d7fab07f
 ```
 
-The [blakejs package and it's documentation is available here][4].
+The [blakejs package and its documentation is available here][4].
 
 Example of `SHA256` hashing using Node.js's `crypto` library:
 
@@ -51,8 +51,8 @@ console.log(hash);
 //Result: 1LyW5Lkjdw11Aeifiajm5Nh7th8dKnk53ncqd6IhpNs=
 ```
 
-So remeber, when you have something that you don't need to know what it is, only
-if it is what it is supposed to be (like checking file integrity after
+So remeber, when you have something that you don't need to know its content,
+only if it's what it is supposed to be (such as checking file integrity after
 download), you should use hashing[^2]
 
 ## Encryption
@@ -71,8 +71,8 @@ data = F⁻¹(encrypted_data, key)
 ```
 
 Encryption should be used whenever you need to communicate or store sensitive
-data, which you or someone else needs to access later on for further processing.
-A "simple" encryption use case is the HTTPS - Hyper Text Transfer Protocol
+data, which you or someone else needs to access later for further processing.
+A 'simple' encryption use case is the HTTPS - Hyper Text Transfer Protocol
 Secure.  
 
 AES is the _de facto_ standard when it comes to symmetric key encryption. This
@@ -102,7 +102,7 @@ const salt = crypto.randomBytes(64);
 // The masterkey - Example only!
 const masterkey = "09Kssa22daVsF2jSV5brIHu1545Kjs82";
 
-encrypt (text) => {
+function encrypt (text) {
   // Create the cipher
   const cipher = crypto.createCipheriv('aes-256-gcm', masterkey, iv);
 
@@ -121,7 +121,7 @@ encrypt (text) => {
   };
 }
 
-decrypt (encrypted) => {
+function decrypt (encrypted) {
   // Initialize deciphering
   const decipher = crypto.createDecipheriv('aes-256-gcm', masterkey, iv);
 
@@ -212,38 +212,38 @@ if(pass) {
 }
 ```
 
-On the other hand, you have Public key cryptography or asymmetric cryptography
-which makes use of pairs of keys: public and private. Public key cryptography
-is less _performant_ than symmetric key cryptography for most cases, so its most
-common use-case is sharing a symmetric key between two parties using asymmetric
-cryptography, so they can then use the symmetric key to exchange messages
-encrypted with symmetric cryptography.
+On the other hand, you have public key cryptography or asymmetric cryptography
+which makes use of the following pairs of keys - public and private. Public key
+cryptography is less _performant_ than symmetric key cryptography for most
+cases, so its most common use-case is sharing a symmetric key between two
+parties using asymmetric cryptography, so they can then use the symmetric key to
+exchange messages encrypted with symmetric cryptography.
 
-Aside from `AES`, which is 90's technology, supports more modern symmetric
+Aside from `AES`, which is 90's technology, it supports more modern symmetric
 encryption algorithms which also provide authentication, such as
 `chacha20poly1305`.
 
-Another interesting package in Node.js is `sodium`. This is a reference to
-Dr. Daniel J. Bernstein's NaCl library, which is a very popular modern
-cryptography library.
+Another interesting package in Node.js is `sodium`. This is a reference to Dr.
+Daniel J. Bernstein's NaCl library, which is a very popular modern cryptography
+library.
 It's essentially a port of the Libsodium encryption library to Node.js.
-The `sodium` package is comprised of implementations of NaCl's
-abstractions for sending encrypted messages for the two most common use-cases:
+The `sodium` package is comprised of implementations of NaCl's abstractions for
+sending encrypted messages for the two most common use-cases:
 
 * Sending authenticated, encrypted messages between two parties using public key
-  cryptography.
+  cryptography
 * Sending authenticated, encrypted messages between two parties using symmetric
-  (_aka_ secret-key) cryptography.
+  (_aka_ secret-key) cryptography
 
 It is very advisable to use one of these abstractions instead of direct use of
 AES, if they fit your use-case.
 
-It's also important to node that at the time of writing, the `sodium` library
-has no implementation of memory allocation functions.
+It's also important to note that as of writing this, the `sodium` library has no
+implementation of memory allocation functions.
 
 Please note you should "_establish and utilize a policy and process for how
 cryptographic keys will be managed_", protecting "_master secrets from
-unauthorized access_". That being said: your cryptographic keys shouldn't be
+unauthorized access_". That being said, your cryptographic keys shouldn't be
 hardcoded in the source code (as it is on this example).
 
 [Node.js's crypto module][1] collects common cryptographic constants, and

@@ -2,18 +2,18 @@ Stored Procedures
 =================
 
 Developers can use Stored Procedures to create specific views on queries to
-prevent sensitive information from being archived rather than using normal
+prevent sensitive information from being archived, rather than using normal
 queries.
 
 By creating and limiting access to stored procedures, the developer is adding
 an interface that differentiates who can use a particular stored procedure from
-what type of information he can access. Using this, the developer makes the
-process even easier to manage, especially when taking control over tables and
-columns in a security perspective, which is handy.
+the type of information he/she can access. Using this, the developer makes the
+process easier to manage, especially when taking control over tables and
+columns from a security perspective, which comes in handy.
 
 Let's take a look at an example...
 
-Imagine you have a table with information regarding users passport IDs.
+Imagine you have a table with information regarding user passport IDs.
 
 Using a query like:
 
@@ -21,7 +21,7 @@ Using a query like:
 SELECT * FROM tblUsers WHERE userId = $user_input
 ```
 
-Besides the problems of [Input validation][1], the database user (for the
+The problems of [Input validation][1] aside, the database user (for the
 example's sake, the user is called John) could access __ALL__ information from
 the user ID.
 
@@ -40,7 +40,7 @@ Which you can run just by using:
 EXEC db.getName @userId = 14
 ```
 
-This way you know for sure that user John only sees `name` and `lastname` from
+This way, you know for sure that user John only sees `name` and `lastname` from
 the users he requests.
 
 Stored procedures are not _bulletproof_, but they create a new layer of
