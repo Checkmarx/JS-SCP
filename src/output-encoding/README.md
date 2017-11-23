@@ -1,19 +1,19 @@
 Output Encoding
 ===============
 
-Although it is a six bullets only section on [OWASP SCP Quick Reference
-Guide][1], bad practices on Output Encoding are pretty prevalent on Web
-Application development, thus leading to the number 1 vulnerability of the
-[OWASP Top Ten] [3]: [Injection][2].
+Although it is only six-point section in the [OWASP SCP Quick Reference
+Guide][1], bad practices on Output Encoding are pretty prevalent in web
+application development, thus leading to the number 1 vulnerability of the
+[OWASP Top Ten] [3] - [Injection][2].
 
-As complex and rich as Web Applications become, the more data sources they
-have: users, databases, thirty party services, etc. At some point in time
-collected data is outputted to some media (e.g. web browser) which has a
+As complex and rich as web applications have become, the more data sources they
+tend to have - users, databases, third-party services, etc. At some point in
+time, collected data is outputted to some media (e.g. web browser) which has a
 specific context.
 This is exactly when injections happen if you do not have a strong Output
 Encoding policy.
 
-Certainly you have already heard about all the security issues we will approach
+Certainly, you have already heard about all the security issues we will approach
 in this section, but do you really know how do they happen and/or how to avoid
 them?
 

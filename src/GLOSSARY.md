@@ -1,6 +1,6 @@
 ## Hazardous Characters
 
-Any character or encoded representation of a character that can effect the
+Any character or encoded representation of a character that can affect the
 intended operation of the application or associated system by being interpreted
 to have a special meaning, outside the intended use of the character. These
 characters may be used to:
@@ -19,10 +19,10 @@ describing a search pattern. ([source][regex])
 
 ## ReDoS
 
-Regular expression Denial of Service (ReDoS) is a Denial of Service attack,
-that exploits the fact that most Regular Expression implementations may reach
-extreme situations that cause them to work very slowly (exponentially related
-to input size).
+Regular expression Denial of Service (ReDoS) is a Denial of Service attack that
+exploits the fact that most Regular Expression implementations may reach
+extreme situations that cause them to work very slowly (exponentially related to
+input size).
 
 ## dot-dot-slash
 
@@ -69,7 +69,7 @@ without risking harm to the host machine or operating system.
 
 ## XSS 
 
-Cross-Site Scripting is an attack that consists in injecting malicious
+Cross-Site Scripting is an attack that consists of injecting malicious
 JavaScript code in the website.
 
 ## DOM
@@ -103,16 +103,16 @@ authenticated._" ([source][csrf]).
 ## MitM
 
 The Man-in-the-Middle attack intercepts a communication between two systems.
-Using different techniques, the attacker splits the original TCP connection
-into 2 new connections, one between the client and the attacker and the other
-between the attacker and the server. Once the TCP connection is intercepted,
-the attacker acts as a proxy, being able to read, insert and modify the data in
-the intercepted communication. ([source][mitm])
+Using different techniques, the attacker splits the original TCP connection into
+2 new connections, one between the client and the attacker and the other between
+the attacker and the server. Once the TCP connection is intercepted, the
+attacker acts as a proxy, being able to read, insert and modify the data in the
+intercepted communication. ([source][mitm])
 
 ## TLS
 
-Transport Layer Security is a cryptographic protocol that provides
-communication security over a computer network.
+Transport Layer Security is a cryptographic protocol that provides communication
+security over a computer network.
 
 [SSL](#ssl) is the TLS predecessor. 
 
@@ -132,14 +132,14 @@ average after 256 requests, 1 byte of unencrypted messages will be revealed).
 
 ## BEAST
 
-Browser Exploit Against SSL/TLS is a proof-of-concept demonstrated by Thai
-Duong and Juliano Rizzo back in 2011, which violates browsers'  same origin
-policy constraints, for a long-known cipher block chaining (CBC) vulnerability
-in TLS 1.0. ([source][beast])
+Browser Exploit Against SSL/TLS is a proof-of-concept demonstrated by Thai Duong
+and Juliano Rizzo back in 2011, which violates browsers'  same origin policy
+constraints, for a long-known cipher block chaining (CBC) vulnerability in TLS
+1.0. ([source][beast])
 
 ## State Data
 
-When data or parameters are used, by the application or server, to emulate a
+When data or parameters are used by the application or server to emulate a
 persistent connection or track a client's status across a multi-request process
 or transaction.
 

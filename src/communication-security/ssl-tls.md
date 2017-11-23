@@ -1,30 +1,30 @@
 SSL/TLS
 =======
 
-`SSL/TLS` are two cryptographic protocols (TLS is SSL's successor) that allows
+`SSL/TLS` are two cryptographic protocols (TLS is SSL's successor) that allow
 encryption over otherwise unsecure communication channels. The most common
 usage of `SSL/TLS` is for sure `HTTPS`: Hyper Text Transfer Protocol Secure.
 
-Such cryptographic protocols ensure that the folowing properties apply to the
+These cryptographic protocols ensure that the following properties apply to the
 communication channel:
 
 * Privacy
 * Authentication
-* Data integrity
+* Data Integrity
 
 SSL/TLS protocols are available through Node.js' [tls module][4].
 
-In this section we will focus on the Node.js implementation and its usage.
-Although the theoretical part of the protocol design and it's cryptographic
+In this section, we will focus on the Node.js implementation and its usage.
+Although the theoretical part of the protocol design and its cryptographic
 practices are beyond the scope of this article, additional information is
-available on the [Cryptography Practices][1] section of this document.
+available in the [Cryptography Practices][1] section of this document.
 
 As a reminder, TLS protocol should be used to protect sensitive information
-manipulated by your application such as credentials, Personally Indetifiable
+manipulated by your application such as credentials, Personally Identifiable
 Information (PII) and credit card numbers.
 
-In general, it is strongly recommended to use only HTTPS instead of switch back
-and forth between HTTP and HTTPS.
+In general, it is strongly recommended to use only HTTPS instead of switching
+back and forth between HTTP and HTTPS.
 
 ## TLS or HTTPS
 
@@ -37,7 +37,7 @@ In fact, [https module][5] literally implements "HTTP over TLS" as it depends
 on both the `http` and `tls` modules to provide an HTTP server capable of
 handling secure connections[^1].
 
-The following is a simple example of an HTTP server using the `tls` module,
+The following is a simple example of an HTTP server using the `tls` module
 capable of handling secure connections
 
 ```javascript
@@ -49,8 +49,9 @@ const options = {
   cert: fs.readFileSync('/my/certs/safe/location/cert.pem'),
 };
 
-const server = tls.createServer(options, function(res) => {
+const server = tls.createServer(options, (res) => {
   console.log('server connected');
+
   res.write('Hello JS-SCP!\n');
   res.setEncoding('utf8');
   res.pipe(res);
@@ -62,8 +63,8 @@ server.listen(443, () => {
 ```
 
 If you're looking to serve your application over HTTPS you're better to go with
-the [https module][5]. Bellow there's a sample using the [Express - Node.js
-web application framework][9].
+the [https module][5]. Bellow, you will find a sample using the [Express -
+Node.js web application framework][9].
 
 ```javascript
 const express = require('express');
@@ -76,17 +77,17 @@ const certOptions = {
   cert: fs.readFileSync('/my/certs/safe/location/cert.pem')
 };
 
-app.get('/', function (req, res) {
+app.get('/', (req, res) => {
   res.send('Hello World!')
 });
 
 https.createServer(certOptions, app)
-    .listen(443);
+  .listen(443);
 ```
 
 ## SSL/TLS ciphers
 
-It is important to highlight that Node.js, by default, accepts only a subset of
+It is important to highlight that Node.js by default accepts only a subset of
 strong ciphers.
 
 Quoting the Node.js documentation about the [Default TLS Cipher Suite][2]:
@@ -96,9 +97,9 @@ Quoting the Node.js documentation about the [Default TLS Cipher Suite][2]:
 > Changing the default cipher suite can have a significant impact on the
 > security of an application.
 
-If, for a very strong reason, the default configuration has to be changed, it
-is recommended to follow the [best practices given by Mozilla on its Server
-Side TLS Guide][3].
+If, for a very strong reason, the default configuration has to be changed, it is
+recommended to follow the [best practices given by Mozilla on its Server Side
+TLS Guide][3].
 
 ## SSL/TLS Protocols
 
@@ -118,25 +119,23 @@ below
 ```javascript
 const https = require('https');
 
-https.createServer({
-  //
+const httpsServerOptions = {
   // This is the default secureProtocol used by Node.js, but it might be
   // sane to specify this by default as it's required if you want to
   // remove supported protocols from the list. This protocol supports:
   //
   // - SSLv2, SSLv3, TLSv1, TLSv1.1 and TLSv1.2
-  //
   secureProtocol: 'SSLv23_method',
 
-  //
   // Supply `SSL_OP_NO_SSLv3` constant as secureOption to disable SSLv3
   // from the list of supported protocols that SSLv23_method supports.
-  //
   secureOptions: constants.SSL_OP_NO_SSLv3,
 
   cert: fs.readFileSync('/my/certs/safe/location/cert.pem')),
-  key: fs.readFileSync('/my/certs/safe/location/key.pem')),
-}, function (req, res) {
+  key: fs.readFileSync('/my/certs/safe/location/key.pem'))
+};
+
+https.createServer(httpsServerOptions, (req, res) => {
   res.end('works');
 }).listen(443);
 ```

