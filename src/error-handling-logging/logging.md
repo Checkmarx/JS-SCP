@@ -28,24 +28,23 @@ Below is a brief source code sample using the popular [winston package][4].
 
 ```javascript
 const winston = require('winston');
-winston.add(winston.transports.File, {filename: 'myLog.log'});
+winston.add(winston.transports.File, {filename: 'my-log.log'});
 
-// Check user level
-switch (RoleLevel) {
-  case 1:
-    // Login successfull - Log
+// check login attempt status
+switch (loginAttemptStatus) {
+  case LOGIN_SUCCESS:
+    // log successful login
     winston.log('info', 'User logged in!');
 
-    // Using winston.info()
-    winston.info('User logged in!')
+    // using winston.info()
+    winston.info('User logged in!');
     break;
-  case 2:
-    // Login unsuccessful - Log
-    winston.warn("Unsuccessful login.")
+  case LOGIN_FAILURE:
+    // log failed login attempt
+    winston.warn("Unsuccessful login.");
     break;
   default:
-    // Unspecified error
-    winston.error("Login error.")
+    winston.error("Unknown login status");
   }
 ```
 
@@ -115,7 +114,7 @@ const rs = fs.createReadStream(pathname);
 rs.on('data', data => hasher.update(data));
 
 rs.on('end', () => {
-  //Part 2 - See below
+  // Part 2 - See below
 });
 ```
 

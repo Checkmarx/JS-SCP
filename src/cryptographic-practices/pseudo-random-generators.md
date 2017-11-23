@@ -17,6 +17,7 @@ An example of pseudo-random number generation using `Math.random()`:
 function getRandomArbitrary (min, max) {
   const _min = Math.ceil(min);
   const _max = Math.floor(max);
+
   return Math.floor(Math.random() * (_max - _min) + _min);
 }
 
@@ -62,7 +63,7 @@ const uuid = require('uuid/v4');
 const uuid1 = uuid();
 
 console.log(uuid1);
-// Result: a61903ff-bb29-4846-849d-0da018892da4
+// a61903ff-bb29-4846-849d-0da018892da4
 ```
 
 Another option is to generate a cryptographically secure value using the
@@ -83,10 +84,13 @@ const crypto = require('crypto');
 
 // Generate a 256 byte random value
 crypto.randomBytes(64, (err, buf) => {
-  if (err) throw err;
+  if (err) {
+    throw err;
+  }
+
   console.log(buf.toString('hex'));
-  // result: 87273bd2e76021481ddb3a0aa562c182149015d91edff850b41a98b67ba77b49c87c6c32bc756fe24865d7398629fc52358e2b871163b217d8bddee5707a6043
-})
+  // 87273bd2e76021481ddb3a0aa562c182149015d91edff850b41a98b67ba77b49c87c6c32bc756fe24865d7398629fc52358e2b871163b217d8bddee5707a6043
+});
 ```
 
 Note that although in the example we chose the encoding to be `hex` it could

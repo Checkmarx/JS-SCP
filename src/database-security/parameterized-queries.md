@@ -17,8 +17,11 @@ Before we start, a gentle reminder of code vulnerable to an SQL injection.
 // evilUserData parameter is an input given by a user
 // For the example it could be someting like that: or 1=1
 const sql = 'SELECT * FROM users WHERE id = ' + evilUserData;
-client.query(sql, function (error, results, fields) {
-  if (error) throw error;
+client.query(sql, (error, results, fields) => {
+  if (error) {
+    throw error;
+  }
+
   // ...
 });
 ```
@@ -42,8 +45,11 @@ Looking at the vulnerable code above, we just need to do the following:
 // For the example it could be someting like that: or 1=1
 const sql = 'SELECT * FROM users WHERE id = $1';
 
-client.query(sql, evilUserData, function (error, results, fields) {
-  if (error) throw error;
+client.query(sql, evilUserData, (error, results, fields) => {
+  if (error) {
+    throw error;
+  }
+
   // ...
 });
 ```
@@ -58,8 +64,11 @@ placeholder `?`
 // For the example it could be someting like that: or 1=1
 const sql = 'SELECT * FROM users WHERE id = ?';
 
-connection.query(sql, [evilUserData], function (error, results, fields) {
-  if (error) throw error;
+connection.query(sql, [evilUserData], (error, results, fields) => {
+  if (error) {
+    throw error;
+  }
+
   // ...
 });
 ```
@@ -73,8 +82,11 @@ advantage - you will never forget to escape it.
 // For the example it could be someting like that: or 1=1
 const sql = 'SELECT * FROM users WHERE id = ' + connection.escape(evilUserData);
 
-connection.query(sql, function (error, results, fields) {
-  if (error) throw error;
+connection.query(sql, (error, results, fields) => {
+  if (error) {
+    throw error;
+  }
+
   // ...
 });
 ```

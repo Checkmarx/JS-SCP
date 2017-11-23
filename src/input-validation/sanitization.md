@@ -24,9 +24,7 @@ and `/` by their correspondent [HTML entities][4], making it safe for output
 section][5])
 
 ```javascript
-'use strict';
-
-var sanitizer = require('validator');
+const sanitizer = require('validator');
 
 const sampleSourceCode = '<script>alert("Hello World");</script>';
 const sanitizedSampleSourceCode = sanitizer.escape(sampleSourceCode);
@@ -57,9 +55,7 @@ interest to remove leading and trailing characters (JavaScript native `trim()`
 function only handles characters that represent white spaces).
 
 ```javascript
-'use strict';
-
-var sanitizer = require('validator');
+const sanitizer = require('validator');
 
 const string = '\tHello\r\nWorld.\n\nThis  is a test!';
 const safe = sanitizer.stripLow(string);

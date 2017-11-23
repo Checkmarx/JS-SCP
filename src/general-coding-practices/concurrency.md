@@ -32,18 +32,18 @@ const app = express();
 const file = path.resolve('./counter.txt');
 
 const counterMiddleware = (req, res, next) => {
-    fs.readFile(file, (err, data) => {
-        if (!err) {
-            let counter = +data.toString();
-            counter++;
+  fs.readFile(file, (err, data) => {
+    if (!err) {
+      let counter = +data.toString();
+      counter++;
 
-            fs.writeFile(file, counter, (err) => {
-                next();
-            })
-        }
-
+      fs.writeFile(file, counter, (err) => {
         next();
-    });
+      });
+    }
+
+    next();
+  });
 };
 ```
 

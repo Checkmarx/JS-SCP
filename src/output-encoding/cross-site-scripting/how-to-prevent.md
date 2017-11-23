@@ -203,10 +203,10 @@ to inject JavaScript, bypassing React security mechanisms.
 </div>
 ```
 
-```JavaScript
+```javascript
 // ...
 
-// Get user input from URI
+// get user input from URI
 const query = getQueryParams(document.location.search);
 
 ReactDOM.render(

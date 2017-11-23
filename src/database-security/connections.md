@@ -24,10 +24,7 @@ Then you can load your `config.json` file on your JavaScript application:
 
 ```javascript
 const fs = require('fs');
-
-const configFilePath = '/some/private/path/config.json';
-const configContent = fs.readFileSync(configFilePath).toString();
-const config = JSON.parse(configContent);
+const config = require('/some/private/path/config.json');
 
 console.log('Configuration loaded');
 ```
@@ -35,9 +32,9 @@ console.log('Configuration loaded');
 Of course, if the attacker has root access, he/she could see the file which
 brings us to the most secure thing you can do - encrypt the file.
 
-Reminder that instead of `require`ing the configuration file, it was loaded as a
-regular text file and then parsed as JSON. This may prevent code execution in
-case a configuration file gets compromised.
+Note that required file path includes the `.json` suffix: this tells Node.js to
+load and parse the content as JSON and not as a regular JavaScript file,
+preventing code execution.
 
 ## Database Credentials
 

@@ -65,19 +65,19 @@ The following code-sample shows a basic example of how a `SHA256` hash with a
 fixed salt value is generated:
 
 ```javascript
-var crypto = require('crypto');
+const crypto = require('crypto');
 
-var inputString = "Sample to text to be hashed"
-var salt = "YourSaltHere"
+const inputString = "Sample to text to be hashed"
+const salt = "YourSaltHere"
 
-var hash = crypto.createHash('sha256')
+const hash = crypto.createHash('sha256')
 hash.update(inputString + salt)
 
-var result = hash.digest('hex');
+const result = hash.digest('hex');
 
 console.log(result)
-//result:
-//dd893b455e9a31bd84d015de60c3a62c85fbe393792c31aa40e0df1f2a4f9286
+// result:
+// dd893b455e9a31bd84d015de60c3a62c85fbe393792c31aa40e0df1f2a4f9286
 ```
 
 This approach has several flaws and should not be used. It is given here only to
@@ -113,10 +113,10 @@ thus less error-prone.
 ### Encryption:
 
 ```javascript
-var bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
-var saltRounds = 12;
-var passPlain = "SecretPasswordToHash"
+const saltRounds = 12;
+const passPlain = "SecretPasswordToHash"
 
 bcrypt.hash(myPlaintextPassword, saltRounds, (err, hash) => {
   // Store hash in your password DB.

@@ -94,7 +94,7 @@ const userInputAge = 'thrity 2';
 const userAge = Number.parseInt(userInputAge);
 
 if (typeof userAge !== 'number') {
-    throw new Error('invalid age');
+  throw new Error('invalid age');
 }
 
 console.log('User is %d years old', userAge);
@@ -109,7 +109,7 @@ const userIntputAge = 'thirty 2';
 const userAge = Number.parseInt(userInputAge);
 
 if (!Number.isInteger(userAge) || userAge <= 0) {
-    throw new Error('invalid age');
+  throw new Error('invalid age');
 }
 
 console.log('User is %d years old');
@@ -127,7 +127,7 @@ const userInputAge = '0x20';
 const userAge = Number.parseInt(userInputAge);
 
 if (!Number.isInteger(userAge) || userAge <= 0) {
-    throw new Error('invalid age');
+  throw new Error('invalid age');
 }
 
 console.log('You are %d years old', userAge);
@@ -148,7 +148,7 @@ const userInputAge = '0x20';
 const userAge = Number.parseInt(userInputAge, 10);
 
 if (!Number.isInteger(userAge) || userAge <= 0) {
-    throw new Error('invalid age');
+  throw new Error('invalid age');
 }
 
 console.log('You are %d years old', userAge);
@@ -164,7 +164,7 @@ const userInputAge = '32,5';
 const userAge = Number.parseInt(userInputAge, 10);
 
 if (!Number.isInteger(userAge) || userAge <= 0) {
-    throw new Error('invalid age');
+  throw new Error('invalid age');
 }
 
 console.log('You are %d years old', userAge);
@@ -268,7 +268,7 @@ const MIN = 9007199254740992;
 const MAX = 9007199254740994;
 
 for (let i = MIN; i < MAX; i++) {
-    console.log(i);
+  console.log(i);
 }
 ```
 
@@ -330,9 +330,9 @@ The conversion can be done using double logical - NOT operator `!`
 const number = -1;
 
 if (!!number === true) {
-    console.log('true');
+  console.log('true');
 } else {
-    console.log('false');
+  console.log('false');
 }
 ```
 

@@ -33,7 +33,7 @@ Here is a small example of how to restrict some application routes to
 authenticated users, using [Express Node.js web application framework][3]
 
 ```javascript
-function isAuthenticated (req, res, next) => {
+function isAuthenticated (req, res, next) {
   if (req.session && req.session.auth === true) {
     return next();
   }

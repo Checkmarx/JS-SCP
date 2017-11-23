@@ -48,7 +48,7 @@ const pass = "SecretPassword";
 const hash = crypto.createHash('sha256').update(pass).digest('base64');
 
 console.log(hash);
-//Result: 1LyW5Lkjdw11Aeifiajm5Nh7th8dKnk53ncqd6IhpNs=
+// Result: 1LyW5Lkjdw11Aeifiajm5Nh7th8dKnk53ncqd6IhpNs=
 ```
 
 So remeber, when you have something that you don't need to know its content,
@@ -96,23 +96,23 @@ const crypto = require('crypto');
 // generate a new IV for each encryption
 const iv = crypto.randomBytes(12)M
 
-// Generate salt
+// generate salt
 const salt = crypto.randomBytes(64);
 
-// The masterkey - Example only!
+// the masterkey - Example only!
 const masterkey = "09Kssa22daVsF2jSV5brIHu1545Kjs82";
 
 function encrypt (text) {
-  // Create the cipher
+  // create the cipher
   const cipher = crypto.createCipheriv('aes-256-gcm', masterkey, iv);
 
-  // Encrypt the plaintext
-  const encrypted = cipher.update(text, 'utf8', 'hex');
+  // encrypt the plaintext
+  let encrypted = cipher.update(text, 'utf8', 'hex');
 
-  // We are done writing data
+  // we are done writing data
   encrypted += cipher.final('hex');
 
-  // Get authentication tag (GCM)
+  // get authentication tag (GCM)
   const tag = cipher.getAuthTag();
 
   return {
@@ -122,29 +122,29 @@ function encrypt (text) {
 }
 
 function decrypt (encrypted) {
-  // Initialize deciphering
+  // initialize deciphering
   const decipher = crypto.createDecipheriv('aes-256-gcm', masterkey, iv);
 
-  // Set our authentication tag
+  // set our authentication tag
   decipher.setAuthTag(encrypted.tag);
 
-  // Update ciphertext content
+  // update ciphertext content
   let dec = decipher.update(encrypted.content, 'hex', 'utf8');
 
-  // Finalize writing of data and set encoding
+  // finalize writing of data and set encoding
   dec += decipher.final('utf8');
 
-  // Return plaintext
+  // return plaintext
   return dec;
 }
 
 let result = encrypt("JS - Secure Coding Practices");
 console.log(result);
-// encrypted: b08fc897face59992f901acf0dc21c745640fe9989bf988318d15145
+// b08fc897face59992f901acf0dc21c745640fe9989bf988318d15145
 
 result = decrypt(result);
 console.log(result);
-// decrypted: JS - Secure Coding Practices
+// JS - Secure Coding Practices
 ```
 
 There are also packages for this purpose. One of the most popular is
@@ -185,28 +185,28 @@ console.log(encrypted.toHex());
 // outputs authentication tag
 console.log(tag.toHex());
 
-// Continues below
+// continues below
 ```
 
 ## Decryption
 
 ```javascript
-// Continuation of the previous snippet
+// continuation of the previous snippet
 
 // decrypt some bytes using GCM mode
 const decipher = forge.cipher.createDecipher('AES-GCM', key);
 decipher.start({
   iv: iv,
-  additionalData: 'binary-encoded string', // optional
-  tagLength: 128, // optional, defaults to 128 bits
-  tag: tag // authentication tag from encryption
+  additionalData: 'binary-encoded string',  // optional
+  tagLength: 128,                           // optional, defaults to 128 bits
+  tag: tag                                  // authentication tag from encryption
 });
 decipher.update(encrypted);
 
 const pass = decipher.finish();
 
-// pass is false if there was a failure (eg: authentication tag didn't match)
-if(pass) {
+// pass is false if there was a failure (e.g. authentication tag didn't match)
+if (pass) {
   // outputs decrypted hex
   console.log(decipher.output.toHex());
 }

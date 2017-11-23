@@ -19,7 +19,9 @@ const Magic = mmm.Magic;
 
 const magic = new Magic(mmm.MAGIC_MIME_TYPE);
 magic.detectFile('node_modules/mmmagic/build/Release/magic.node', (err, result) => {
-  if (err) throw err;
+  if (err) {
+    throw err;
+  }
 
   console.log(result);
   // output on Windows with 32-bit node: application/x-dosexec
@@ -33,7 +35,7 @@ file type against a whitelist of allowed file types:
 const allowedMimeTypes = [ 'image/png', 'image/jpeg' ];
 
 if (allowedMimeTypes.indexOf(result) === -1) {
-    throw new TypeError('file type not allowed');
+  throw new TypeError('file type not allowed');
 }
 ```
 

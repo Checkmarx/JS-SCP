@@ -80,49 +80,48 @@ In the following example taken from the documentation, we are using
 ```javascript
 const passport = require('passport')
 
-[...]
+// ...
 
 // Strategies in passport require a `verify` function, which accept
 // hash , and invoke a callback with a user object. In the real world,
 // this would query a database; however, in this example we are using
 // a baked-in set of users.
-passport.use(new HashStrategy(
- (hash, done) => {
-    // asynchronous verification, for effect...
-    process.nextTick(() => {
+passport.use(new HashStrategy((hash, done) => {
+  // asynchronous verification, for effect...
+  process.nextTick(() => {
+    // Find the user by hash.  If there is no user with the given
+    // hash, or the status is not unconfirmed, set the user to `false` to
+    // indicate failure and set a flash message.  Otherwise, return the
+    // authenticated `user`.
+    findByUserHash(hash, (err, user) => {
+      if (err) {
+        return done(err);
+      }
 
-      // Find the user by hash.  If there is no user with the given
-      // hash, or the status is not unconfirmed, set the user to `false` to
-      // indicate failure and set a flash message.  Otherwise, return the
-      // authenticated `user`.
-      findByUserHash(hash, (err, user) => {
-        if (err) {
-          return done(err);
-        }
+      if (!user) {
+        return done(null, false, { message: 'Unknown user ' + username });
+      }
 
-        if (!user) {
-          return done(null, false, { message: 'Unknown user ' + username });
-        }
+      if (user.status != 'unconfirmed') {
+        return done(null, false, { message: 'This user already confirmed' });
+      }
 
-        if (user.status != 'unconfirmed') {
-          return done(null, false,
-            { message: 'This user already confirmed' });
-        }
-        return done(null, user);
-      })
-    });
-  }
-));
+      return done(null, user);
+    })
+  });
+}));
 
-[...]
+// ...
 
 // Use passport.authenticate() as route middleware to authenticate the
 // request.  If authentication fails, the user will be redirected back to the
 // login page.  Otherwise, the primary route function function will be called,
 // which, in this example, will redirect the user to the home page.
-app.get('/confirm/:hash', passport.authenticate('hash', {
+const passportAuthentication = passport.authenticate('hash', {
   failureRedirect: 'login', failureFlash: true
-}), (req, res) => {
+});
+
+app.get('/confirm/:hash', passportAuthentication, (req, res) => {
   res.redirect('/account');
 });
 ```

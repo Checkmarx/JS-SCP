@@ -71,19 +71,19 @@ const helmet = require('helmet');
 
 const app = express();
 
-// Add the HSTS header
+// add the HSTS header
 app.use(helmet.hsts({maxage: 63072000, includeSubDomains: true}));
 
-// Add the X-Frame-Options and allowing only iframe from the same origin
+// add the X-Frame-Options and allowing only iframe from the same origin
 app.use(helmet.frameguard({action: 'sameorigin'}));
 
-// Add the X-XSS-Protection header
+// add the X-XSS-Protection header
 app.use(helmet.xssFilter());
 
-// Add the X-Content-Type-Options header
+// add the X-Content-Type-Options header
 app.use(helmet.noSniff());
 
-// Add the CSP header
+// add the CSP header
 app.use(helmet.csp({
   directives:{
 	defaultSrc: ["'self'", 'https://ajax.checkmarx.com'],

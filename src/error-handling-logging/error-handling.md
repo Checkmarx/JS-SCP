@@ -74,7 +74,7 @@ As an example, consider this __incorrect__ way to read a file:
 ```javascript
 const fs = require('fs');
 
-let content = fs.readFileSync('/tmp/missing-file.txt');
+const content = fs.readFileSync('/tmp/missing-file.txt');
 ```
 
 Notice that there is no error catching. By ignoring errors, if the application
@@ -89,7 +89,7 @@ The correct way to write the previous code in order to catch exceptions is:
 const fs = require('fs');
 
 try {
-  let content = fs.readFileSync('/tmp/missing-file.txt');
+  const content = fs.readFileSync('/tmp/missing-file.txt');
 } catch (e) {
   console.error('ups... something went wrong');
 }
@@ -116,7 +116,7 @@ to `new Promise`, will be silently disposed unless handled manually.
 Consider the following code:
 
 ```javascript
-validateUser () => {
+function validateUser () {
   return new Promise ((resolve, reject) => {
     getUser().then(user => {
       getUserPassword(user).then(userpassword => {
@@ -133,34 +133,31 @@ By using promises, we can re-write our previous code in the following manner.
 Please note that we are still not handling errors:
 
 ```javascript
-validateUser () => {
+function validateUser () {
   return getUser()
     .then(getUserPassword)
     .then(checkPassword)
 }
 ```
 
-Now the same code but using promises and handling errors:
+Now the same code, using promises and handling errors:
 
 ```javascript
-validateUser () => {
+function validateUser () {
   return getUser()
     .then(getUserPassword)
     .then(checkPassword)
-    .catch(fallbackForRequestFail); //Error handler
+    .catch(fallbackForRequestFail); // error handling
 }
-[...]
 ```
 
-With the release of ES6, another new feature called `generators` was introduced.
-Using `generators` allows developers to write asynchronous code in a synchronous
-manner.
-This means that by using `generators` code that would look like this:
+With the release of ES6, `async`/`await` allows developers to write asynchronous
+code in a synchronous fashion
 
 ```javascript
 app.post('/login', (req, res, next) => {
-  let user = req.body.user;
-  let password = req.body.password;
+  const user = req.body.user;
+  const password = req.body.password;
 
   // input validation omitted for brevity
 
@@ -192,15 +189,15 @@ app.post('/login', (req, res, next) => {
 Can now be written as:
 
 ```javascript
-app.post('/login', (req, res, next) => {
-  let user = req.body.user;
-  let password = req.body.password;
+app.post('/login', async (req, res, next) => {
+  const user = req.body.user;
+  const password = req.body.password;
 
   try {
-    const user_acc = yield db.Users.find({user: user, password: password});
-    const user_acc.details = yield user_acc.getUserDetails(user_acc);
+    const user_acc = await db.Users.find({user: user, password: password});
+    const user_acc.details = await user_acc.getUserDetails(user_acc);
 
-    yield user_acc.userLoginLog(user_acc);
+    await user_acc.userLoginLog(user_acc);
 
     res.send(user_acc);
   } catch (err) {

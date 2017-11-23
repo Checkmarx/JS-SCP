@@ -40,8 +40,6 @@ introduced the [Buffer class][9], allowing you to handle and convert strings
 encoding easily:
 
 ```javascript
-'use strict';
-
 // read user input into a Buffer
 const userInputName = Buffer.from(req.body.name);
 
@@ -57,10 +55,8 @@ is backed by Typed Arrays. In fact, these are the modules used by
 module directly:
 
 ```javascript
-'use strict';
-
 // Note the trailling slash
-var Buffer = require('buffer/').Buffer;
+const Buffer = require('buffer/').Buffer;
 
 // read user input into a Buffer
 const userInputName = Buffer.from(req.body.name);
@@ -96,9 +92,7 @@ should always be actively maintained validation modules** like
 [validator.js][17].
 
 ```javascript
-'use strict';
-
-var validator = require('validator');
+const validator = require('validator');
 
 const number1 = '10.5';
 const number2 = '10,5';
@@ -111,9 +105,7 @@ validator.isDecimal(number2):   // false
 can be used to perform a this validation:
 
 ```javascript
-'use strict';
-
-var validator = require('validator');
+const validator = require('validator');
 
 const allowedChars = '0123456789.';
 const decimal1 = '10.5';
@@ -138,8 +130,6 @@ After converting input strings to the system default character encoding,
 you should validate its length:
 
 ```javascript
-'use strict';
-
 const addressInput = '123 Main St Anytown, USA';
 validator.isLength(string, {min: 3, max: 255}); // true
 ```

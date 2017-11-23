@@ -14,20 +14,20 @@ authentication system more resilient:
 
   The following usage example is taken from the package's documentation:
   ```javascript
-  var speakeasy = require('speakeasy')
+  const speakeasy = require('speakeasy')
 
-  [...]
+  // ...
 
-  // Token generation
+  // token generation
   const secret = speakeasy.generateSecret()
 
-  // The token the user entered - for demo purposes
+  // the token the user entered - for demo purposes
   const userToken = "123123"
 
-  // Save the generated secret in base32 encoding.
+  // save the generated secret in base32 encoding.
   const base32secret = secret.base32;
 
-  // Use verify() to check the token against the secret
+  // use verify() to check the token against the secret
   const verified = speakeasy.totp.verify({
     secret: base32secret,
     encoding: 'base32',
@@ -35,7 +35,7 @@ authentication system more resilient:
   });
 
   if (verified == true) {
-    // Token matches
+    // token matches
   }
   ```
 
@@ -46,7 +46,7 @@ authentication system more resilient:
 * "_Implement monitoring to identify attacks against multiple user accounts,
   utilizing the same password. This attack pattern is used to bypass standard
   lockouts, when user IDs can be harvested or guessed_". As is characteristic of
-  Node.js, there are packages available to allow rate limiting if a bruteforce 
+  Node.js, there are packages available to allow rate limiting if a brute-force 
   attack pattern is detected. An example of this is the `express-brute` package
   for `express`. It allows request slowdown (after 5 failed logins), as well as
   setting a daily maximum login attempt number (1000).

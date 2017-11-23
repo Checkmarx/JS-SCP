@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.get('/email', (req, res) => {
   db.query('SELECT email FROM users WHERE id = ' + req.query.id);
-    .then(record => {
+    .then((record) => {
       // do stuff
       res.send(record[0]);
     })
@@ -97,7 +97,7 @@ const router = express.Router();
 
 router.get('/email', (req, res) => {
   db.query('SELECT email FROM users WHERE id = $1', req.query.id);
-    .then(record => {
+    .then((record) => {
       // do stuff
       res.send(record[0]);
     })
