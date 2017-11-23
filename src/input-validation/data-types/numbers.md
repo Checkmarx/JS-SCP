@@ -2,23 +2,23 @@ Numbers
 =======
 
 [JavaScript specification][1] makes a clear differentiation between three
-`Number` related terms/concepts:
+Number related terms/concepts:
 
-* [Number value][2]: the number representation "_corresponding to a
-  double-precision 64-bit binary format [IEEE 754-2008][3] value_";
-* [Number type][4]: "_set of all possible `Number` values including the special
-  "Not-a-Number (NaN) value, positive infinity and negative infinity_";
-* [Number object][5]: "_member of the Object type that is an instance of the
-  standard built-in Number constructor_".
+* [Number value][2] - the number representation "corresponding to a
+  double-precision 64-bit binary format [IEEE 754-2008][3] value"
+* [Number type][4] - "set of all possible Number values including the special
+  Not-a-Number (NaN) value, positive infinity and negative infinity"
+* [Number object][5] - "member of the Object type that is an instance of the
+  standard built-in Number constructor"
 
-We will use `Number` interchangeably to refer either the representation, value
-and the `Number` constructor.
+We will use Number interchangeably to refer either the representation, value or
+the Number constructor.
 
-An introductory note regarding JavaScript internals related to `Number`s:
+An introductory note regarding JavaScript internals related to Numbers:
 
 * All numbers are internally handled and stored as double-precision 64-bit
   binary format, following the IEEE 754-2008 specification (yes, in JavaScript
-  every number is a floating numbers);
+  every number is a floating number)
 * `NaN`, `+Infinity` (the same than `Infinity`) and `-Infinity` are all
   `Number`s
   ```javascript
@@ -32,27 +32,26 @@ An introductory note regarding JavaScript internals related to `Number`s:
   0 === -0  // true
   ```
 
-## From `String` to `Number`
+## From String to Number
 
-Although user input that reaches the server over HTTP is handled as `String`,
+Although the user input that reaches the server over HTTP is handled as String,
 internally, applications may expect numeric values (e.g. user's age).
 
-Looking at [`Number` constructor properties][8] we find the
-[`Number.parseInt`][9] and [`Number.parseFloat`][10][^1] methods: both expect a
-`String` argument, returning respectively an _integer_ and _float_ numbers.
+Looking at Number constructor properties, we find the Number.parseInt and
+Number.parseFloat 1 methods - both expect a String argument, returning
+respectively an integer and float numbers.
 
-`Number.parseInt` also accepts a _radix_ which when not specified or
-_undefined_ defaults to 10 (decimal base) except when the `String` argument
-begins with `0x` or `0X` in which case a _radix_ of 16 (hexadecimal base) is
-assumed.
+Number.parseInt also accepts a radix, which when not specified or undefined,
+defaults to 10 (decimal base), except for when the String argument begins with
+0x or 0X in, which case a radix of 16 (hexadecimal base) is assumed.
 
-How the expected `String` argument is parsed is fully detailed in the
-specification but issues may arise here. Let's see how it works!
+How the expected String argument is parsed is fully detailed in the
+specification. However, issues may arise. Here’s how it works:
 
-### Requesting user's age
+### Requesting the User's Age
 
-We're expecting an _integer_, but over HTTP the value will arrive as `String`.
-Let's parse it
+We're expecting an integer. But over HTTP, the value will arrive as a String.
+Let us parse it.
 
 ```javascript
 const userInputAge = '32';
@@ -62,7 +61,7 @@ console.log('User is %d years old', userAge);
 // User is 32 years old
 ```
 
-That's OK, but what if user's input looks like `32 years old`
+No problem - but what if user's input looks like '32 years old'?
 
 ```javascript
 const userInputAge = '32 years old';
@@ -72,11 +71,11 @@ console.log('User is %d years old', userAge);
 // User is 32 years old
 ```
 
-Despite of the fact that input string is alphanumeric, `Number.parseInt`
-returns its "integer part" (leading white spaces are removed), but if the first
-character after removing any leading white spaces is other than `-`
-(HYPHEN-MINUS), `+` (PLUS SIGN) or a digit, we will get `NaN` -
-**N**ot-**a**-**N**umber
+Despite the fact that the input String is alphanumeric, Number.parseInt
+returns its 'integer part' (as leading white spaces are removed). However, if
+the first character after removing any leading white spaces is other than -
+(HYPHEN-MINUS), + (PLUS SIGN) or a digit, we will get NaN -
+**N**ot-**a**-**N**umber.
 
 ```javascript
 const userInputAge = 'thirty 2';
@@ -95,39 +94,40 @@ const userInputAge = 'thrity 2';
 const userAge = Number.parseInt(userInputAge);
 
 if (typeof userAge !== 'number') {
-    throw new Error('invalid age');
+  throw new Error('invalid age');
 }
 
 console.log('User is %d years old', userAge);
 // User is NaN years old
 ```
 
-Let's enforce that parsed user's age is in fact an _integer_ bigger than zero
+Let's enforce that the parsed user's age is in fact an _integer_ bigger than
+zero
 
 ```javascript
 const userIntputAge = 'thirty 2';
 const userAge = Number.parseInt(userInputAge);
 
 if (!Number.isInteger(userAge) || userAge <= 0) {
-    throw new Error('invalid age');
+  throw new Error('invalid age');
 }
 
 console.log('User is %d years old');
 ```
 
 **Note**: [`Number.isInteger`][11] returns `false` for `Infinity`/`-Infinity`.
-User's age upper limit was omitted for code sample briefness.
+The user's age upper limit was omitted for code sample briefness.
 
-Now that we've received a validation error it may look safe but...
-What if user provides his age using hexadecimal base (at least he will look
-younger)?
+Now that we've received a validation error, it may look safe but...
+What if user provides his age using hexadecimal base (well, at least he will
+look younger)?
 
 ```javascript
 const userInputAge = '0x20';
 const userAge = Number.parseInt(userInputAge);
 
 if (!Number.isInteger(userAge) || userAge <= 0) {
-    throw new Error('invalid age');
+  throw new Error('invalid age');
 }
 
 console.log('You are %d years old', userAge);
@@ -137,41 +137,41 @@ console.log('You are %d years old', userAge);
 Surprisingly or not, `0x20` did validate as integer. Why?
 In fact, `Number.parseInt('0x20');` returns the _integer_ number `32`:
 although the '0x20' string is parsed as hexadecimal due to the '0x' prefix
-(`0X` is also valid), internally all numbers are stored as decimal.
+(`0X` is also valid). Internally, all numbers are stored as decimals.
 
-As said before `Number.parseInt` accepts a _radix_ as second argument. So, to
-enforce `userInputAge` to be given as a decimal number, we just have to provide
-a _radix_ equal to `10`
+As we said before, `Number.parseInt` accepts a _radix_ as second argument. So,
+to enforce `userInputAge` to be given as a decimal number, we just have to
+provide a _radix_ equal to `10`
 
 ```javascript
 const userInputAge = '0x20';
 const userAge = Number.parseInt(userInputAge, 10);
 
 if (!Number.isInteger(userAge) || userAge <= 0) {
-    throw new Error('invalid age');
+  throw new Error('invalid age');
 }
 
 console.log('You are %d years old', userAge);
 ```
 
-And as expected we have the validation error.
+And as expected, we have the validation error.
 
-Even at this point we can't be sure that what was entered was a decimal integer
-number: providing `32,5` will end up being parsed as `32`
+Even at this point, we can't be sure that what was entered was a decimal integer
+number, providing `32,5` will end up being parsed as `32`
 
 ```javascript
 const userInputAge = '32,5';
 const userAge = Number.parseInt(userInputAge, 10);
 
 if (!Number.isInteger(userAge) || userAge <= 0) {
-    throw new Error('invalid age');
+  throw new Error('invalid age');
 }
 
 console.log('You are %d years old', userAge);
 // You are 32 years old
 ```
 
-### Requesting weight
+### Requesting Weight
 
 Weight is a good example of a _float_ number, so let's ask users to input
 theirs.
@@ -185,7 +185,7 @@ console.log('User\'s weight is %d Kg', userWeight);
 // User's weight is 80.5 Kg
 ```
 
-Depending on user's locale[^2], one should use `,` (comma) as a decimal
+Depending on user's location[^2], one should use `,` (comma) as a decimal
 separator. What difference does it make?
 
 ```javascript
@@ -201,7 +201,7 @@ Exactly `0.5` Kg (`Number.parseFloat` returns `80`): per the specification,
 
 ## Type Coercion
 
-Quite often `String` to `Number` conversion is done using the
+Quite often, `String` to `Number` conversion is done using the
 [Unary `+` Operator][12], forcing _type coercion_
 
 ```javascript
@@ -214,7 +214,7 @@ Quite often `String` to `Number` conversion is done using the
 +'0.1'; // 0.1
 ```
 
-but this may not lead to the expected results
+However this may not lead to the expected results
 
 * type coercion and `Number.parseFloat` inconsistency
   ```javascript
@@ -241,7 +241,7 @@ but this may not lead to the expected results
 
 ## Safe Integer
 
-ECMAScript 2015 (6th Edition) introduces the concept of "Safe Integer": an
+ECMAScript 2015 (6th Edition) introduces the concept of "Safe Integer" - an
 integer that "_can be exactly represented as an IEEE-754 double precision
 number and whose IEEE-754 representation cannot be the result of rounding any
 other integer to fit the IEEE-754 representation_" ([source][6]).
@@ -268,14 +268,14 @@ const MIN = 9007199254740992;
 const MAX = 9007199254740994;
 
 for (let i = MIN; i < MAX; i++) {
-    console.log(i);
+  console.log(i);
 }
 ```
 
-Yes, this is an infinite loop. `MIN` is not a "Safe Integer", in fact the
+Yes, this is an infinite loop. `MIN` is not a "Safe Integer". In fact, the
 last "Safe Integer" is exactly `MIN - 1` which you can get from
-`Number.MAX_SAFE_INTEGER` (2⁵³-1): although there's no representation for
-`MIN` and we're doing an _integer_ operation, JavaScript won't throw any error.
+`Number.MAX_SAFE_INTEGER` (2⁵³-1), although there's no representation for
+`MIN` and we're doing an _integer_ operation, JavaScript won't show any error.
 
 You may expect that `Number.MAX_SAFE_INTEGER` is the highest number that
 JavaScript can handle, but no, `Number.MAX_VALUE` is the highest one:
@@ -297,10 +297,10 @@ will get... _infinity_ as per the [IEEE 754-2008 standard][3]
 
 ## Precision
 
-This is not a JavaScript only problem. In fact this is an issue you will find
+This is not a JavaScript-only problem. In fact, this is an issue you will find
 in most programming languages as it is a limitation of the already mentioned
 [IEEE 754 specification][3]. It is better to be aware of this as rounding
-errors may lead rockets to miss theirs targets[^3]
+errors may lead to rockets missing theirs targets[^3]
 
 ```javascript
 0.1+0.2;    // 0.30000000000000004
@@ -308,10 +308,10 @@ errors may lead rockets to miss theirs targets[^3]
 
 ## Converting
 
-### to `boolean`
+### To `boolean`
 
 JavaScript has a native Boolean type, consisting of primitive `true` and
-`false` values, nevertheless some `Number`s evaluate to `false` and others to
+`false` values. Nevertheless, some `Number`s evaluate to `false` and others to
 `true`
 
 ```javascript
@@ -324,19 +324,19 @@ Infinity? true : false;     // true
 NaN? true : false;          // false
 ```
 
-The conversion can be done using double logical NOT operator `!`
+The conversion can be done using double logical - NOT operator `!`
 
 ```javascript
 const number = -1;
 
 if (!!number === true) {
-    console.log('true');
+  console.log('true');
 } else {
-    console.log('false');
+  console.log('false');
 }
 ```
 
-### to `String`
+### To `String`
 
 Type coercion is commonly used to convert a number into string and it does the
 trick when you're using a decimal base
@@ -347,9 +347,9 @@ trick when you're using a decimal base
 ''+Math.pow(4,3); // '64'
   ```
 
-but if you're using a non-decimal base like Octal or Hexadecimal, the result
+But if you're using a non-decimal base like Octal or Hexadecimal, the result
 may not be what you're expecting as you will get a string representation of
-number's decimal representation
+number's decimal representation;
 
 ```javascript
 ''+012;   // '10'
@@ -357,7 +357,7 @@ number's decimal representation
 ```
 
 To avoid mistakes, use always the same pattern when getting a textual
-representation of a `Number`: use the [Number.toString()][10] method,
+representation of a `Number` - use the [Number.toString()][10] method,
 specifying the _radix_ (if not present or _undefined_, the `Number` 10 is used
 by default)
 
@@ -373,8 +373,8 @@ n2.toString(8);         // '12';
 n3.toString(16);        // 'a';
 ```
 
-This is also the closer you have to decimal bases conversion as you can get an
-octal representation from a decimal _integer_ or from an hexadecimal value
+This is also the close you have to a decimal bases conversion, as you can get an
+octal representation from a decimal _integer_ or from an hexadecimal value;
 
 ```javascript
 const decimalInt = 10;
@@ -386,13 +386,13 @@ console.log(hexValue.toString(8));      // '12';
 
 ## Conclusion
 
-As said before, over HTTP what you get server-side is always a String.
+As we said before, over HTTP, what you get on server-side is always a String.
 Because of that, before converting `String` to `Number`
 
 1. _always validate the input against a "white" list of allowed characters_
-  (e.g. for decimal integers `^(0|[1-9][0-9]*)$`;
-2. then _validate for expected data types_ (e.g. parsing `String` to `Number`);
-3. and last, _validate data range_;
+  (e.g. for decimal integers `^(0|[1-9][0-9]*)$`
+2. Then, _validate for expected data types_ (e.g. parsing `String` to `Number`)
+3. Finally, _validate data range_
 
 You can read more about [How numbers are encoded in JavaScript][14] by
 Dr. Axel Rauschmayer at 2ality.com.

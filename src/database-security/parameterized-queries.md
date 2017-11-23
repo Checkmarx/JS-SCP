@@ -4,46 +4,52 @@ Parameterized Queries
 Prepared Statements (with Parameterized Queries) are the best and most secure
 way to protect against SQL Injections.
 
-In some reported situations, prepared statements could harm performance of the
-web application. Therefore, if for any reason you need to stop using this type
-of database queries, we strongly suggest to read [Input Validation][1] and
-[Output Encoding][2] sections.
+In some reported situations, prepared statements could harm the performance of
+the web application. Therefore, if for any reason you need to stop using this
+type of database query, we strongly suggest to read the [Input Validation][1]
+and [Output Encoding][2] sections.
 
-## Vulnerable code
+## Vulnerable Code
 
-Before to start, a gentle reminder of a code vulnerable to SQL injection.
+Before we start, a gentle reminder of code vulnerable to an SQL injection.
 
 ```javascript
 // evilUserData parameter is an input given by a user
 // For the example it could be someting like that: or 1=1
 const sql = 'SELECT * FROM users WHERE id = ' + evilUserData;
-client.query(sql, function (error, results, fields) {
-  if (error) throw error;
+client.query(sql, (error, results, fields) => {
+  if (error) {
+    throw error;
+  }
+
   // ...
 });
 ```
 
 An attacker is able to modify the SQL request in order to exfiltrate
 information or modify the database.
-When performing SQL queries, using String concatenation is the worst thing to
+When performing SQL queries, using a String concatenation is the worst thing to
 do!
 
-Let's have a look to [Postgres][3] and [MySQL][4] packages in order to avoid
+Let's have a look at [Postgres][3] and [MySQL][4] packages in order to avoid
 this situation.
 
 ## Postgres
 
-The [postgres package][5] supports parameterized queries. It is really easy
-to use.
-Looking at the previous vulnerable code, we just need to do the following:
+The [postgres package][5] supports parameterized queries. It is really easy to
+use.
+Looking at the vulnerable code above, we just need to do the following:
 
 ```javascript
 // evilUserData parameter is an input given by a user
 // For the example it could be someting like that: or 1=1
 const sql = 'SELECT * FROM users WHERE id = $1';
 
-client.query(sql, evilUserData, function (error, results, fields) {
-  if (error) throw error;
+client.query(sql, evilUserData, (error, results, fields) => {
+  if (error) {
+    throw error;
+  }
+
   // ...
 });
 ```
@@ -58,14 +64,17 @@ placeholder `?`
 // For the example it could be someting like that: or 1=1
 const sql = 'SELECT * FROM users WHERE id = ?';
 
-connection.query(sql, [evilUserData], function (error, results, fields) {
-  if (error) throw error;
+connection.query(sql, [evilUserData], (error, results, fields) => {
+  if (error) {
+    throw error;
+  }
+
   // ...
 });
 ```
 
-This is almost the same than escaping `evilUserData` yourself with a great
-advantage: you will never forget to escape it.
+This is almost the same as escaping `evilUserData` yourself with a great
+advantage - you will never forget to escape it.
 
 
 ```javascript
@@ -73,8 +82,11 @@ advantage: you will never forget to escape it.
 // For the example it could be someting like that: or 1=1
 const sql = 'SELECT * FROM users WHERE id = ' + connection.escape(evilUserData);
 
-connection.query(sql, function (error, results, fields) {
-  if (error) throw error;
+connection.query(sql, (error, results, fields) => {
+  if (error) {
+    throw error;
+  }
+
   // ...
 });
 ```

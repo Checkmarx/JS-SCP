@@ -1,20 +1,20 @@
 Session Management
 ==================
 
-In this section, we will cover the most important aspects of session management
-according to [OWASP Secure Coding Practices] [16]. An example is provided along with
-an overview of the rationale behind these practices.
+In this section we will cover the most important aspects of session management
+according to [OWASP Secure Coding Practices] [16]. An example is provided along
+with an overview of the rationale behind these practices.
 
 Although in-depth knowledge about how Session Management works is provided,
 **readers are encouraged to use well known, deeply tested and actively
-maintained session management mechanisms like the ones provided by all major
+maintained session management mechanisms such as the ones provided by all major
 frameworks**.
 
 As an introductory note, let's make clear that Session Management has nothing
-to do with HTTP session, fully described on [A typical HTTP session on MDN][1].
+to do with HTTP sessions, fully described on [A Typical HTTP Session on MDN][1].
 Instead, it refers to an applicational layer mechanism to workaround the
-**stateless** property of protocols like HTTP: each request is independent and
-no relationship exists between any previous or future requests.
+**stateless** property of protocols such as HTTP - each request is independent
+and no relationship exists between any previous or future requests.
 
 In this chapter, we will cover the session flow shown by the picture below,
 which illustrates how web applications implement User Sessions to persist
@@ -22,37 +22,37 @@ user's identity across multiple HTTP requests.
 
 ![Session Flow][2]
 
-From a macro perspective establishing a user session is quite straightforward:
+From a macro perspective, establishing a user session is quite straightforward:
 
-1. The client makes a request;
-2. The server creates an identifier and sends it back along with the response;
-3. The client reads and persists the identifier sent unchanged;
+1. The client makes a request
+2. The server creates an identifier and sends it back along with the response
+3. The client reads and persists the identifier sent unchanged
 4. The client makes a request, sending the identifier read and persisted on
-   _step 3_;
+   _step 3_
 5. The server reads and validates the identifier. Then the workflow continues
-   from _step 2_.
+   from _step 2_
 
-From the workflow described above, it is clear that it is server's
+From the workflow described above, it is clear that it's server's
 responsibility to create the identifier. Why? Because this identifier is one of
-the most critical parts on all this mechanism and so:
+the most critical parts on all this mechanism, therefore:
 
-* **it should always be created on a trusted system** and
-* **the application should only recognize as valid session identifier created
+* **It should always be created on a trusted system**
+* **The application should only recognize a valid session identifier created
   by/on this trusted system**.
 
 Regarding the identifier itself, **it is important that session management
 controls use well vetted algorithms that ensure sufficient randomness** so that
 identifiers can not be predicted by other systems.
 
-As soon as the server creates the identifier it should then send it back to the
-client along with the response (_step 2_). Of course the client should know
+As soon as the server creates the identifier, it should then send it back to the
+client along with the response (_step 2_). Of course, the client should know
 where to read this information as it will have to store it locally until the
 next request.
 
-Back in 1994 Netscape introduced [HTTP Cookie][3] support on its navigator,
-based on the concept of "_magic cookie_": "_a token or short packet of data
+Back in 1994, Netscape introduced [HTTP Cookie][3] support on its navigator,
+based on the concept of "_magic cookie_" - "_a token or short packet of data
 passed between communicating programs, where the data is typically not
-meaningful to the recipient program_" ([source][4]). Then it was added to the
+meaningful to the recipient program_" ([source][4]). Then, it was added to the
 HTTP specification as [HTTP State Managament Mechanims][5].
 
 To send the identifier along with the response, the server has to add a
@@ -64,48 +64,48 @@ Set-Cookie: <cookie-name>=<cookie-value>; Domain=<domain-value>; Secure; HttpOnl
 
 Unlike other cookies, Session Cookies do not have an expiration date (this is
 how web browsers distinguish them from other cookies) and they exist only
-_in-memory_ while the user navigates the website. When browser is closed all
-session cookies are deleted.
+_in-memory_ while the user navigates the website. When the browser is closed,
+all session cookies are deleted.
 
-To properly set a `Session Cookie`, the server should define the following cookie
-attributes:
+To properly set a `Session Cookie`, the server should define the following
+cookie attributes:
 
-1. `Domain`: hosts to which the cookie will be sent;
-2. `Path`: indicates a URL path that must exist in the requested resource
-   before sending the Cookie header;
-3. `Secure`: prevents cookies transmitted over an encrypted connections to be
-   transmitted over unencrypted connections);
-4. `HttpOnly`: prevents access to the cookie using the JavaScript API
-   `document.cookie` (this should be done unless JavaScript access to the
-   cookie is strictly required);
+1. `Domain` - hosts to which the cookie will be sent
+2. `Path` - indicates a URL path that must exist in the requested resource
+   before sending the Cookie header
+3. `Secure` - prevents cookies transmitted over an encrypted connections to be
+   transmitted over unencrypted connections)
+4. `HttpOnly` - prevents access to the cookie using the JavaScript API
+   `document.cookie` (this should be done unless JavaScript has access to the
+   cookie is strictly required)
 
-**Note 1**: Chrome recently introduced the `SameSite` attribute which "_allows
+**Note 1** - Chrome recently introduced the `SameSite` attribute which "_allows
 servers to mitigate the risk of CSRF and information leakage attacks by
 asserting that a particular cookie should only be sent with requests initiated
-from the same registrable domain._". Although it is not (yet) standard, it has
+from the same registrable domain._". Although it is not (yet) a standard, it has
 Firefox's support and developers community interest ([source][6]).
 
 Keep in mind that **session identifiers should not be exposed in URLs or
 included in error messages or logs**.
-In the past some web frameworks and/or applications used to pass the session
+In the past, some web frameworks and/or applications used to pass the session
 identifier as `GET` parameters (`jsessionid` and `PHPSESSID` were commonly used
 parameters names). This not only is a bad practice but also leads to security
 issues like [session fixation][7]: sharing the URL may suffice to allow others
 to impersonate you.
 
 The [OWASP Secure Coding Practices - Quick Reference Guide][8] has other
-recommendations you should use to evaluate any Session Management control.
-Before showing a practical example, some general best practices your
+recommendations you should use to evaluate any Session Management controls.
+Before showing a practical example, here are some general best practices your
 application should follow regarding User Sessions:
 
-1. Consistently utilize HTTPS rather than switching between HTTP and HTTPS. If,
-   for some reason you have to switch from one to the other, you should
-   deactivate and generate a new identifier;
-2. Whenever possible you should opt by a per-request, as opposed to per-session
+1. Consistently utilize HTTPS rather than switching between HTTP and HTTPS. If
+   for whatever reason you have to switch from one to the other, you should
+   deactivate and generate a new identifier
+2. Whenever possible, you should opt by a per-request, as opposed to per-session
    identifier;
 3. Logout functionality should be available from all pages protected by
    authorization and it should fully terminate the associated session or
-   connection.
+   connection
 
 A final note about **server-side session data which should be protected from
 unauthorized access by other users of the server, by implementing appropriate
@@ -167,10 +167,10 @@ and the next one, the database entry on `sessions` tables:
 
 ![entry on database `sessions` table][14]
 
-Note that even this sample application is served over HTTP, we did set the
-'Secure' cookie attribute: this does not prevent the application from running
-and when switching to HTTP (may on production), the attribute won't be
-forgotten (or course you can set it conditionally base on, for example,
+Please note that even this sample application is served over HTTP, we did set
+the 'Secure' cookie attribute - this does not prevent the application from
+running and when switching to HTTP (may on production), the attribute won't be
+forgotten (of course, you can set it conditionally based on, for example,
 `process.env.NODE_ENV`).
 
 [^1]: For a complete list of Directives visit [Set-Cookie on MDN][15]
@@ -191,4 +191,3 @@ forgotten (or course you can set it conditionally base on, for example,
 [14]: images/database-session-entry.png
 [15]: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie#Directives
 [16]: https://www.owasp.org/index.php/OWASP_Secure_Coding_Practices_Checklist
-
