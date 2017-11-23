@@ -83,9 +83,9 @@ authentication system more resilient:
   period of time sufficient to discourage brute force guessing of credentials,
   but not so long as to allow for a denial-of-service attack to be performed_"
 
-  This is an additional protective measure against bruteforce. If possible, use
+  This is an additional protective measure against brute-force. If possible, use
   this combined with the `express-brute` (or the package chosen to deal with
-  bruteforce) to comply with good security practices.
+  brute-force) to comply with good security practices.
 
 [1]: https://www.npmjs.com/package/speakeasy
 [2]: https://www.npmjs.com/package/express-brute
