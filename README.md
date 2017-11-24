@@ -50,7 +50,7 @@ Contribute section][6].
 [5]: https://www.owasp.org/index.php/About_OWASP
 [6]: /howto-contribute.md
 [7]: https://www.twitter.com/checkmarx
-[online-reading]: https://checkmarx.gitbooks.io/go-scp
-[dpdf]: https://www.gitbook.com/download/pdf/book/checkmarx/js-scp
-[dmobi]: https://www.gitbook.com/download/mobi/book/checkmarx/js-scp
-[depub]: https://www.gitbook.com/download/epub/book/checkmarx/js-scp
+[online-reading]: https://checkmarx.gitbooks.io/JS-SCP
+[dpdf]: https://www.gitbook.com/download/pdf/book/checkmarx/JS-SCP
+[dmobi]: https://www.gitbook.com/download/mobi/book/checkmarx/JS-SCP
+[depub]: https://www.gitbook.com/download/epub/book/checkmarx/JS-SCP
