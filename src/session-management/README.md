@@ -169,8 +169,8 @@ and the next one, the database entry on `sessions` tables:
 
 Please note that even this sample application is served over HTTP, we did set
 the 'Secure' cookie attribute - this does not prevent the application from
-running and when switching to HTTP (may on production), the attribute won't be
-forgotten (of course, you can set it conditionally based on, for example,
+running and when switching to HTTPS (maybe on production), the attribute won't
+be forgotten (of course, you can set it conditionally based on, for example,
 `process.env.NODE_ENV`).
 
 [^1]: For a complete list of Directives visit [Set-Cookie on MDN][15]
