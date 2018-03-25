@@ -77,19 +77,19 @@ along to generate our random value:
 crypto.randomBytes(size[, callback])
 ```
 
-So let's look at example of it's usage. Taken from the documentation:  
+So let's look at an usage example taken from the documentation:  
 
 ```javascript
 const crypto = require('crypto');
 
 // Generate a 256 byte random value
-crypto.randomBytes(64, (err, buf) => {
+crypto.randomBytes(256, (err, buf) => {
   if (err) {
     throw err;
   }
 
-  console.log(buf.toString('hex'));
-  // 87273bd2e76021481ddb3a0aa562c182149015d91edff850b41a98b67ba77b49c87c6c32bc756fe24865d7398629fc52358e2b871163b217d8bddee5707a6043
+  console.log(`${buf.length} bytes of random data: ${buf.toString('hex')}`);
+  // 256 bytes of random data: fc1eb987fb77455d4062630629feb88aafeaa1bc5dbfb66616cf186a3d9e051222e440f28c14b2b75fb66e8bc31a89f41722f1eaa4f77739d5ead03342534d589d317b79157a28a31f47f456df62d20fc0befbff40e18bb5a26422d0952c380ea8d8e4368918c0e2ced3b75afac4cef5a215b3af33a93b3f043cd4fcbf2ed8333a046ee726f569dab1a6a15ee6a10ca1ece7c40b1b0adddd6bed04f48dbf4791bb63307855394d167dd4356738e31fbce3ce381c824b8be3b8822d8f5d4f8ff29923ce490d18779a8d448096b252ae0e107268f215d59dc5742e23db21d141db51fae7be63a36252a344fd05f4ac0e122e89bfb5981a024d40a5b17f31f571e4
 });
 ```
 
