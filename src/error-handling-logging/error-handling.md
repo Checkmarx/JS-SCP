@@ -151,8 +151,8 @@ function validateUser () {
 }
 ```
 
-With the release of ES6, `async`/`await` allows developers to write asynchronous
-code in a synchronous fashion
+[ES8/ES2017][1] introduced the `async`/`await`, which allows developers to write
+asynchronous code in a synchronous fashion
 
 ```javascript
 app.post('/login', (req, res, next) => {
@@ -277,3 +277,6 @@ session identifiers, account information, stack traces or debug information.
 
 Finally, it is necessary to ensure that in case of an error associated with the
 security controls, by default, access is denied.
+
+[1]: https://www.ecma-international.org/publications/standards/Ecma-262.htm
+
