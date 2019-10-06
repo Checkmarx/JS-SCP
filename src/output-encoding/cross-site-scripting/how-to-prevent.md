@@ -56,7 +56,7 @@ global scope[^1], but more specialized packages like the [xss-filters][1] are
 available in [npm][2].
 
 The following sample source code demonstrates how to use [xss-filters
-package][1] withing an [Express][2] web application:
+package][1] within an [Express][2] web application:
 
 ```javascript
 const express = require('express');
