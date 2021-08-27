@@ -10,9 +10,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "node_modules/.bin/gitbook serve",
-    "build-pdf": "node_modules/.bin/gitbook pdf ./ ./build/js-webapp-scp.pdf",
-    "build-epub": "node_modules/.bin/gitbook epub ./ ./build/js-webapp-scp.epub",
-    "build-mobi": "node_modules/.bin/gitbook mobi ./ ./build/js-webapp-scp.mobi",
+    "build-pdf": "node_modules/.bin/gitbook pdf ./ ./dist/js-webapp-scp.pdf",
+    "build-epub": "node_modules/.bin/gitbook epub ./ ./dist/js-webapp-scp.epub",
+    "build-mobi": "node_modules/.bin/gitbook mobi ./ ./dist/js-webapp-scp.mobi",
     "build": "npm run build-pdf; npm run build-epub; npm run build-mobi"
   },
   "keywords": [
@@ -23,5 +23,5 @@
     "Checkmarx"
   ],
   "author": "Checkmarx Security Research Team",
-  "license": "GPL-3.0"
+  "license": "CC BY-SA 4.0"
 }

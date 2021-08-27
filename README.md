@@ -1,6 +1,5 @@
-JavaScript Web Application Secure Coding Practices is available for [online
-reading][online-reading] or download in [pdf][dpdf], [MOBI][dmobi] and
-[ePub][depub].
+JavaScript Web Application Secure Coding Practices is available for download in
+[pdf][dpdf], [MOBI][dmobi], and [ePub][depub].
 
 # Introduction
 
@@ -50,7 +49,7 @@ Contribute section][6].
 [5]: https://www.owasp.org/index.php/About_OWASP
 [6]: /howto-contribute.md
 [7]: https://www.twitter.com/checkmarx
-[online-reading]: https://checkmarx.gitbooks.io/JS-SCP
-[dpdf]: https://www.gitbook.com/download/pdf/book/checkmarx/JS-SCP
-[dmobi]: https://www.gitbook.com/download/mobi/book/checkmarx/JS-SCP
-[depub]: https://www.gitbook.com/download/epub/book/checkmarx/JS-SCP
+[dpdf]: ./dist/js-webapp-scp.pdf
+[dmobi]: ./dist/js-webapp-scp.mobi
+[depub]: ./dist/js-webapp-scp.epub
+
